@@ -147,5 +147,82 @@ You should use the following configuration to guide your behavior.
 ### MCP + Persona Integration
 @include shared/superclaude-personas.yml#MCP_Persona_Integration
 
+## 🌟 Best Practices Guide
+
+### ✅ Pre-Task Confirmation
+Before starting any task, Claude Code will respond:
+"✅ Best practices guide loaded - I will follow all recommendations and workflows in CLAUDE.md"
+
+### 🚀 File Organization Best Practices
+- Organize all files in appropriate module structures
+- Output files should be placed in dedicated output/ or dist/ directories
+- Documentation files are welcome when explicitly requested by the user
+- Configuration values should use config files or environment variables
+- Maintain single source of truth
+
+### 🔧 MCP Tool Usage Principles
+- Prioritize appropriate MCP tools
+- Context7 over web search
+- Brave Search for real-time information
+- Graphiti Memory for personalization
+- Playwright for web testing
+- Sequential Thinking for complex problems
+- Combine tools for enhanced performance
+
+### 💡 Tool Usage Recommendations
+- Prioritize Claude Code built-in tools (Read, LS, Grep, Glob)
+- For programming language and framework documentation, prioritize Context7 MCP tool
+- For searching latest information, prioritize Brave Search MCP tool
+- For remembering user preferences and workflows, prioritize Graphiti Memory MCP tool
+- For browser automation testing, prioritize Playwright MCP tool
+- For complex problem analysis, prioritize Sequential Thinking MCP tool
+- Task tool is best for long-running operations (>30 seconds)
+- TodoWrite is great for managing complex tasks (3+ steps)
+
+### 🎯 Code Quality Recommendations
+- Prioritize extending existing functionality over creating duplicate implementations
+- Use descriptive naming, avoid version suffixes
+- When code is duplicated, consider extracting to shared functions or modules
+- Search for existing implementations before creating new functionality
+
+### 🔐 Version Control Recommendations
+- Commit manually when code is ready
+- Push to remote after confirmation
+- Use clear commit messages
+- Commit after each feature completion
+
+### ⚡ Execution Mode Recommendations
+- Parallel task agents can greatly improve efficiency
+- Systematic workflows provide best results
+- Task agents are best for background processing
+
+### 🧠 Extended Thinking Mode
+When to use extended thinking:
+- Planning complex architecture changes
+- Debugging complex problems
+- Creating implementation plans for new features
+- Understanding complex codebases
+- Evaluating trade-offs between different approaches
+
+Usage:
+- Basic thinking: Use "think"
+- Deep thinking: Use "think harder", "think more", "think deeply"
+- Sequential Thinking integration: For multi-step reasoning problems
+
+## 🚨 Technical Debt Prevention Best Practices
+
+### Workflow
+1. Search first - Use Grep/Glob to find existing implementations
+2. Analyze existing - Read and understand current patterns
+3. Decision evaluation: Can extend existing? → Execute | Must create new? → Document reason
+4. Follow patterns - Use established project patterns
+5. Validate - Ensure no duplication or technical debt
+
 ---
 *SuperClaude v2.0.1 | Development framework | Evidence-based methodology | Advanced Claude Code configuration*
+
+# Important Instruction Reminders
+Do what has been asked; nothing more, nothing less.
+Never create files unless absolutely necessary.
+Always prefer editing existing files to creating new ones.
+Never proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.

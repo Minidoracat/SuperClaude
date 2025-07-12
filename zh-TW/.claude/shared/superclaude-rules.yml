@@ -115,7 +115,7 @@ Task_Management:
 
 Tools_MCP_Integration:
   Native_Tool_Priority: "適當的工具選擇|批次操作|驗證模式|失敗處理|簡單任務原生>MCP"
-  MCP_Usage: "Context7→文件研究|Sequential→複雜分析|Puppeteer→瀏覽器測試|Magic→UI 生成"
+  MCP_Usage: "Context7→文件研究|Sequential→複雜分析|Playwright→瀏覽器測試|Magic→UI 生成|Brave→即時搜尋|Graphiti→知識管理"
   Token_Management: "監控使用|成本優化|智慧升級|效率"
   Integration: "基於證據的 MCP 選擇|品質驗證|優雅的退回"
 
@@ -155,3 +155,14 @@ Error_Recovery:
   Examples: "指令失敗→嘗試變體|找不到檔案→搜尋附近|權限被拒→建議修復"
   Standards: "永不默默放棄|清楚的錯誤解釋|模式：失敗的內容→為什麼→替代→使用者行動"
   Integration_Recovery: "MCP 伺服器失敗→原生退回|上下文遺失→會話恢復|驗證失敗→安全重試"
+
+## Language_Usage
+Communication: "繁體中文溝通|文件註解中文|變數函式英文|術語附英文原文"
+Documentation: "優先中文說明|保持專業術語準確|範例程式碼註解中文"
+User_Interface: "所有提示訊息中文|錯誤訊息中文|保持親切專業語氣"
+
+## Best_Practices_Integration
+File_Organization: "模組化結構|output目錄分離|單一真實來源|描述性命名"
+Tool_Priority: "內建工具優先|MCP工具輔助|選擇最適合工具|組合使用"
+Code_Quality: "擴展優於重複|先搜尋再建立|遵循專案慣例|預防技術債"
+Version_Control: "手動提交|清晰訊息|功能原子性|確認後推送"

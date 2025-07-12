@@ -26,13 +26,29 @@ Magic:
   Token_Cost: "中 | 高品質輸出 | 設計系統合規"
   Workflows: "需求 → 生成 → 精修 → 整合 → 驗證"
 
-Puppeteer:
+Playwright:
   Purpose: "瀏覽器自動化 | E2E 測試 | 效能驗證"
   Capabilities: "browser-connect | navigation | testing | screenshots | performance-monitoring"
   Best_For: "E2E 測試 | 效能監控 | 視覺驗證 | 使用者互動測試"
   Use: "品質保證 | 效能驗證 | 使用者體驗測試"
   Token_Cost: "低（基於動作）| 高可靠性 | 測試"
   Workflows: "連接 → 導航 → 互動 → 驗證 → 報告"
+
+Brave_Search:
+  Purpose: "即時網路搜尋 | 最新資訊獲取 | 趨勢追蹤"
+  Capabilities: "brave_web_search | brave_news_search | brave_local_search | brave_image_search | brave_video_search"
+  Best_For: "當前事件 | 最新技術文件 | 市場趨勢 | 地點資訊"
+  Use: "需要最新資訊時 | Context7 無法找到時的備選"
+  Token_Cost: "低 | 快速回應 | 準確結果"
+  Workflows: "查詢 → 過濾結果 → 提取相關資訊 → 引用來源"
+
+Graphiti_Memory:
+  Purpose: "知識圖譜管理 | 使用者偏好記憶 | 工作流程追蹤"
+  Capabilities: "add_memory | search_memory_nodes | search_memory_facts | delete_entity_edge | get_episodes"
+  Best_For: "個人化協助 | 長期記憶 | 專案知識管理 | 偏好追蹤"
+  Use: "記住使用者習慣 | 建立知識關係 | 實現個人化體驗"
+  Token_Cost: "低 | 持久儲存 | 快速檢索"
+  Workflows: "搜尋現有 → 記錄新資訊 → 建立關係 → 應用知識"
 
 ## Token_Economics
 Budget_Allocation: "原生(0) | 輕量_MCP(最小) | 中度_MCP(適中) | 重度_MCP(廣泛)"
@@ -57,13 +73,25 @@ UI_Development:
   Trigger: "元件需求 | 設計系統需求 | 前端開發"
   Process: "Magic 元件生成 → 設計系統整合 → 品質驗證 → 測試"
   Standards: "無障礙合規 | 設計系統遵循 | 模式"
-  Example: "'儀表板元件' → Magic('dashboard') → 整合模式 → Puppeteer 驗證"
+  Example: "'儀表板元件' → Magic('dashboard') → 整合模式 → Playwright 驗證"
 
 Testing:
   Trigger: "品質保證需求 | E2E 測試 | 效能驗證"
-  Process: "Puppeteer 自動化 → 全面測試 → 效能監控 → 品質報告"
+  Process: "Playwright 自動化 → 全面測試 → 效能監控 → 品質報告"
   Standards: "測試模式 | 覆蓋率要求 | 效能標準"
-  Example: "'E2E 測試' → Puppeteer(測試場景) → 效能監控 → 品質報告"
+  Example: "'E2E 測試' → Playwright(測試場景) → 效能監控 → 品質報告"
+
+Graphiti_Memory_Workflow:
+  Trigger: "使用者偏好表達 | 工作流程建立 | 需求記錄 | 知識管理"
+  Process: "搜尋現有知識 → 識別關係 → 儲存新資訊 → 建立連結"
+  Standards: "立即捕獲 | 清晰分類 | 維護一致性 | 定期更新"
+  Example: "'偏好 camelCase' → search_nodes → add_memory → 應用於後續工作"
+
+Browser_Testing:
+  Trigger: "E2E 測試需求 | 瀏覽器自動化 | UI 驗證 | 效能測試"
+  Process: "Playwright 連接 → 自動化操作 → 驗證結果 → 生成報告"
+  Standards: "全面覆蓋 | 穩定執行 | 清晰報告 | 效能監控"
+  Example: "'測試登入流程' → browser_navigate → browser_type → browser_click → 驗證"
 
 ## Quality_Control
 Context7_Validation:
@@ -81,7 +109,7 @@ Magic_Validation:
   Partial_Results: "需要元件精修 | 需要模式整合 | 需要客製化"
   Failure_Recovery: "搜尋現有模式 | 手動實作 | 記錄元件需求"
 
-Puppeteer_Validation:
+Playwright_Validation:
   Success_Criteria: "測試執行成功 | 收集效能指標 | 驗證使用者互動"
   Partial_Results: "有限測試可能 | 效能資料不完整 | 互動問題"
   Failure_Recovery: "原生測試指導 | 手動驗證步驟 | 替代測試方法"
@@ -90,18 +118,18 @@ Puppeteer_Validation:
 Development_Commands:
   build: "Magic 用於 UI 元件 | C7 用於框架文件 | Sequential 用於架構"
   dev_setup: "C7 用於工具文件 | Sequential 用於環境優化"
-  test: "Puppeteer 用於 E2E 測試 | C7 用於測試框架 | Sequential 用於覆蓋率分析"
+  test: "Playwright 用於 E2E 測試 | C7 用於測試框架 | Sequential 用於覆蓋率分析"
 
 Analysis_Commands:
-  analyze: "Sequential 用於複雜分析 | C7 用於模式研究 | Puppeteer 用於效能"
-  troubleshoot: "Sequential 用於根本原因分析 | C7 用於解決方案模式 | Puppeteer 用於重現"
-  improve: "Sequential 用於優化分析 | C7 用於最佳實踐 | Puppeteer 用於驗證"
+  analyze: "Sequential 用於複雜分析 | C7 用於模式研究 | Playwright 用於效能"
+  troubleshoot: "Sequential 用於根本原因分析 | C7 用於解決方案模式 | Playwright 用於重現"
+  improve: "Sequential 用於優化分析 | C7 用於最佳實踐 | Playwright 用於驗證"
   explain: "C7 用於官方文件 | Sequential 用於複雜解釋 | Magic 用於範例"
 
 Operations_Commands:
-  deploy: "Sequential 用於部署分析 | C7 用於部署模式 | Puppeteer 用於驗證"
+  deploy: "Sequential 用於部署分析 | C7 用於部署模式 | Playwright 用於驗證"
   scan: "Sequential 用於全面分析 | C7 用於安全標準 | 原生用於速度"
-  migrate: "Sequential 用於遷移規劃 | C7 用於遷移模式 | Puppeteer 用於驗證"
+  migrate: "Sequential 用於遷移規劃 | C7 用於遷移模式 | Playwright 用於驗證"
   cleanup: "Sequential 用於影響分析 | 原生用於速度 | C7 用於最佳實踐"
 
 Design_Commands:
@@ -128,11 +156,21 @@ Magic_Recovery:
   Quality_Issues: "元件審查 → 改進建議 → 替代方法"
   Integration_Problems: "記錄需求 → 提供整合步驟 → 故障排除指導"
 
-Puppeteer_Recovery:
+Playwright_Recovery:
   Browser_Connection_Failed: "原生測試命令 → 手動測試指導 → 驗證步驟"
   Test_Execution_Issues: "簡化測試場景 → 手動驗證 → 替代方法"
   Performance_Monitoring_Failed: "原生效能工具 → 手動監控 → 指標指導"
   Automation_Limitations: "混合測試方法 → 手動驗證 → 文件化程序"
+
+Brave_Search_Recovery:
+  API_Limit: "減少查詢頻率 → 批次處理搜尋 → 快取結果"
+  No_Results: "調整關鍵字 → 擴大搜尋範圍 → 使用同義詞"
+  Timeout: "重試機制 → 降級到基本搜尋 → 提供部分結果"
+
+Graphiti_Memory_Recovery:
+  Storage_Failed: "重試儲存 → 簡化資料結構 → 記錄失敗原因"
+  Search_Empty: "擴大搜尋條件 → 檢查實體類型 → 建議相關查詢"
+  Relationship_Conflict: "解決衝突 → 更新現有關係 → 記錄變更歷史"
 
 ## Best_Practices
 Research_Standards:

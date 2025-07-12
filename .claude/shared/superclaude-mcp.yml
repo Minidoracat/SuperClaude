@@ -26,13 +26,29 @@ Magic:
   Token_Cost: "Medium | High-quality output | Design system compliance"
   Workflows: "Requirements → generate → refine → integrate → validate"
 
-Puppeteer:
+Playwright:
   Purpose: "Browser automation | E2E testing | Performance validation"
   Capabilities: "browser-connect | navigation | testing | screenshots | performance-monitoring"
   Best_For: "E2E testing | Performance monitoring | Visual validation | User interaction testing"
   Use: "Quality assurance | Performance validation | User experience testing"
   Token_Cost: "Low (action-based) | High reliability | Testing"
   Workflows: "Connect → navigate → interact → validate → report"
+
+Brave_Search:
+  Purpose: "Real-time web search | Latest information retrieval | Trend tracking"
+  Capabilities: "brave_web_search | brave_news_search | brave_local_search | brave_image_search | brave_video_search"
+  Best_For: "Current events | Latest tech docs | Market trends | Location info"
+  Use: "When latest info needed | Fallback when Context7 unavailable"
+  Token_Cost: "Low | Fast response | Accurate results"
+  Workflows: "Query → filter results → extract relevant info → cite sources"
+
+Graphiti_Memory:
+  Purpose: "Knowledge graph management | User preference memory | Workflow tracking"
+  Capabilities: "add_memory | search_memory_nodes | search_memory_facts | delete_entity_edge | get_episodes"
+  Best_For: "Personalized assistance | Long-term memory | Project knowledge management | Preference tracking"
+  Use: "Remember user habits | Build knowledge relationships | Enable personalized experience"
+  Token_Cost: "Low | Persistent storage | Fast retrieval"
+  Workflows: "Search existing → record new info → build relationships → apply knowledge"
 
 ## Token_Economics
 Budget_Allocation: "Native(0) | Light_MCP(minimal) | Medium_MCP(moderate) | Heavy_MCP(extensive)"
@@ -57,13 +73,25 @@ UI_Development:
   Trigger: "Component requirements | Design system needs | Frontend development"
   Process: "Magic component generation → design system integration → quality validation → testing"
   Standards: "Accessibility compliance | Design system adherence | Patterns"
-  Example: "'Dashboard components' → Magic('dashboard') → integrate patterns → Puppeteer validation"
+  Example: "'Dashboard components' → Magic('dashboard') → integrate patterns → Playwright validation"
 
 Testing:
   Trigger: "Quality assurance needs | E2E testing | Performance validation"
-  Process: "Puppeteer automation → comprehensive testing → performance monitoring → quality reports"
+  Process: "Playwright automation → comprehensive testing → performance monitoring → quality reports"
   Standards: "Testing patterns | Coverage requirements | Performance standards"
-  Example: "'E2E testing' → Puppeteer(test scenarios) → performance monitoring → quality reports"
+  Example: "'E2E testing' → Playwright(test scenarios) → performance monitoring → quality reports"
+
+Graphiti_Memory_Workflow:
+  Trigger: "User preference expression | Workflow establishment | Requirement recording | Knowledge management"
+  Process: "Search existing knowledge → identify relationships → store new info → build connections"
+  Standards: "Immediate capture | Clear categorization | Maintain consistency | Regular updates"
+  Example: "'Prefer camelCase' → search_nodes → add_memory → apply to future work"
+
+Browser_Testing:
+  Trigger: "E2E test needs | Browser automation | UI validation | Performance testing"
+  Process: "Playwright connect → automate operations → validate results → generate reports"
+  Standards: "Comprehensive coverage | Stable execution | Clear reporting | Performance monitoring"
+  Example: "'Test login flow' → browser_navigate → browser_type → browser_click → validate"
 
 ## Quality_Control
 Context7_Validation:
@@ -81,7 +109,7 @@ Magic_Validation:
   Partial_Results: "Component refinement needed | Pattern integration required | Customization needed"
   Failure_Recovery: "Search existing patterns | Manual implementation | Document component requirements"
 
-Puppeteer_Validation:
+Playwright_Validation:
   Success_Criteria: "Test execution successful | Performance metrics collected | User interactions validated"
   Partial_Results: "Limited testing possible | Performance data incomplete | Interaction issues"
   Failure_Recovery: "Native testing guidance | Manual validation steps | Alternative testing approaches"
@@ -90,18 +118,18 @@ Puppeteer_Validation:
 Development_Commands:
   build: "Magic for UI components | C7 for framework documentation | Sequential for architecture"
   dev_setup: "C7 for tooling documentation | Sequential for environment optimization"
-  test: "Puppeteer for E2E testing | C7 for testing frameworks | Sequential for coverage analysis"
+  test: "Playwright for E2E testing | C7 for testing frameworks | Sequential for coverage analysis"
 
 Analysis_Commands:
-  analyze: "Sequential for complex analysis | C7 for pattern research | Puppeteer for performance"
-  troubleshoot: "Sequential for root cause analysis | C7 for solution patterns | Puppeteer for reproduction"
-  improve: "Sequential for optimization analysis | C7 for best practices | Puppeteer for validation"
+  analyze: "Sequential for complex analysis | C7 for pattern research | Playwright for performance"
+  troubleshoot: "Sequential for root cause analysis | C7 for solution patterns | Playwright for reproduction"
+  improve: "Sequential for optimization analysis | C7 for best practices | Playwright for validation"
   explain: "C7 for official documentation | Sequential for complex explanations | Magic for examples"
 
 Operations_Commands:
-  deploy: "Sequential for deployment analysis | C7 for deployment patterns | Puppeteer for validation"
+  deploy: "Sequential for deployment analysis | C7 for deployment patterns | Playwright for validation"
   scan: "Sequential for comprehensive analysis | C7 for security standards | Native for speed"
-  migrate: "Sequential for migration planning | C7 for migration patterns | Puppeteer for validation"
+  migrate: "Sequential for migration planning | C7 for migration patterns | Playwright for validation"
   cleanup: "Sequential for impact analysis | Native for speed | C7 for best practices"
 
 Design_Commands:
@@ -128,11 +156,21 @@ Magic_Recovery:
   Quality_Issues: "Component review → improvement suggestions → alternative approaches"
   Integration_Problems: "Document requirements → provide integration steps → troubleshooting guidance"
 
-Puppeteer_Recovery:
+Playwright_Recovery:
   Browser_Connection_Failed: "Native testing commands → manual testing guidance → validation steps"
   Test_Execution_Issues: "Simplified test scenarios → manual validation → alternative approaches"
   Performance_Monitoring_Failed: "Native performance tools → manual monitoring → metrics guidance"
   Automation_Limitations: "Hybrid testing approach → manual verification → documented procedures"
+
+Brave_Search_Recovery:
+  API_Limit: "Reduce query frequency → batch searches → cache results"
+  No_Results: "Adjust keywords → broaden search scope → use synonyms"
+  Timeout: "Retry mechanism → fallback to basic search → provide partial results"
+
+Graphiti_Memory_Recovery:
+  Storage_Failed: "Retry storage → simplify data structure → log failure reason"
+  Search_Empty: "Broaden search criteria → check entity types → suggest related queries"
+  Relationship_Conflict: "Resolve conflicts → update existing relationships → log change history"
 
 ## Best_Practices
 Research_Standards:
