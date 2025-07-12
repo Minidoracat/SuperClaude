@@ -1,0 +1,463 @@
+# 研究流程範本
+# 專業實作的統一研究模式
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 強制研究流程
+
+```yaml
+Mandatory_Research_Flows:
+  External_Library_Research:
+    Step_1: "識別提及的程式庫/框架"
+    Step_2: "Context7 查詢官方文件"
+    Step_3: "驗證 API 模式和範例"
+    Step_4: "檢查版本相容性"
+    Step_5: "在實作中記錄發現"
+    
+  Pattern_Research:
+    Step_1: "搜尋現有程式碼庫中的類似模式"
+    Step_2: "如果是 UI 相關則搜尋 Magic 元件"
+    Step_3: "WebSearch 官方文件"
+    Step_4: "使用 Sequential 思考驗證方法"
+    Step_5: "記錄模式選擇的理由"
+    
+  API_Integration_Research:
+    Step_1: "官方文件查詢"
+    Step_2: "驗證需求"
+    Step_3: "速率限制和錯誤處理"
+    Step_4: "SDK 可用性和範例"
+    Step_5: "整合測試方法"
+```
+
+## 研究觸發模式
+
+```yaml
+Detection_Triggers:
+  External_Libraries:
+    - import .* from ['"][^./]['"]  # 非相對匯入
+    - require\(['"][^./]['"]  # CommonJS 非相對
+    - from (\w+) import  # Python 匯入  
+    - using \w+;  # C# 命名空間
+    
+  UI_Components:
+    Keywords: [按鈕, 表單, 模態, 對話框, 下拉選單, 表格, 列表, 網格, 卡片, 手風琴, 導航, 選單, 側邊欄, 標頭, 頁尾, 圖表, 圖形, 視覺化, 儀表板]
+    Action: "檢查現有→Magic 搜尋→WebSearch 模式"
+    
+  API_Integration:
+    Patterns: [REST, GraphQL, WebSocket, SDK, 客戶端, 端點, 驗證]
+    Required: "官方文件→驗證→速率限制→錯誤格式"
+    
+  Unknown_Patterns:
+    Phrases_To_Block: ["可能有效", "應該大概", "我認為這", "通常會", "常見模式是"]
+    Required_Instead: ["根據 [來源]", "文件說明", "來自的驗證模式"]
+```
+
+## 強制研究流程
+
+```yaml
+Library_Research_Flow:
+  Steps:
+    1: "在程式碼/請求中偵測程式庫參考"
+    2: "檢查是否已在 package.json/requirements.txt 中"
+    3: "C7 resolve-library-id → get-docs with topic"
+    4: "如果 C7 失敗 → WebSearch '[程式庫] 官方文件'"
+    5: "擷取: 安裝|基本使用|常見模式|錯誤處理|最佳實踐"
+    6: "使用信心分數快取會話結果"
+    7: "在實作中引用來源"
+  Blocking_Conditions:
+    - "偵測到外部程式庫但沒有研究"
+    - "信心分數低於 90%"
+    - "未找到官方文件"
+    
+Component_Research_Flow:
+  Steps:
+    1: "從關鍵字識別 UI 元件需求"
+    2: "搜尋現有程式碼庫中的類似元件"
+    3: "檢查專案的設計系統/元件庫"
+    4: "使用擷取的關鍵字搜尋 Magic 建構器"
+    5: "如果沒有合適的匹配 → WebSearch '[元件] 無障礙模式'"
+    6: "使用來源引用實作"
+    7: "記錄任何與既定模式的偏差"
+  Quality_Gates:
+    - "驗證無障礙合規性"
+    - "確認響應式設計"
+    - "記錄模式來源"
+    
+API_Research_Flow:
+  Steps:
+    1: "識別 API/服務整合需求"
+    2: "WebSearch '[服務] 官方 API 文件'"
+    3: "定位驗證需求"
+    4: "尋找端點規格和範例"
+    5: "檢查官方 SDK/客戶端程式庫"
+    6: "審查錯誤處理和回應格式"
+    7: "記錄速率限制和使用限制"
+  Critical_Checks:
+    - "記錄驗證方法"
+    - "理解錯誤回應格式"
+    - "記錄速率限制"
+    - "確認 API 版本控制策略"
+```
+
+## 信心評分系統
+
+```yaml
+Evidence_Scoring:
+  Official_Documentation: 100%
+  Maintainer_Tutorial: 95%
+  Recent_Blog_Post: 85%
+  GitHub_Issue_Resolution: 85%
+  Stack_Overflow_Accepted: 80%
+  Community_Tutorial: 75%
+  No_Evidence: 0%
+  
+Age_Penalties:
+  Current_Year: 0%
+  One_Year_Old: -5%
+  Two_Years_Old: -10%
+  Three_Plus_Years: -15%
+  
+Verification_Bonus:
+  Working_Example: +10%
+  Test_Coverage: +5%
+  Multiple_Sources: +5%
+  
+Minimum_Requirements:
+  Implementation_Threshold: 90%
+  Warning_Threshold: 80%
+  Research_Required: <80%
+```
+
+## 會話研究快取
+
+```yaml
+Cache_Structure:
+  Libraries:
+    Key: "library_name@version"
+    Data: "模式、範例、最佳實踐、信心分數"
+    Validity: "直到版本變更或會話結束"
+    
+  Components:
+    Key: "component_type_keywords"
+    Data: "無障礙模式、變體、實作說明"
+    Validity: "直到設計系統變更"
+    
+  APIs:
+    Key: "service_name_endpoint_group"
+    Data: "驗證方法、端點、錯誤格式、速率限制"
+    Validity: "24 小時或 API 版本變更"
+    
+Cache_Usage:
+  Reuse_Pattern: "使用先前研究的模式用於 [X]"
+  Invalidation: "偵測到版本變更，重新研究 [X]"
+  Update: "將新模式新增到現有研究快取"
+```
+
+## 實作引用要求
+
+```yaml
+Source_Attribution:
+  Format: "// 來源: [URL 或文件參考]"
+  Placement_Rules:
+    Code: "在使用外部模式的實作上方"
+    Functions: "在 JSDoc/docstring 文件中"  
+    Commits: "在新外部模式的提交訊息中"
+    
+Citation_Examples:
+  Good_Citations:
+    - "// 來源: React hooks 文件 - https://react.dev/reference/react/useState"
+    - "// 模式來自: Express.js 中介軟體指南 v4.18"
+    - "// 基於: AWS S3 SDK 文件 v3.45"
+    - "// 無障礙模式: WCAG 2.1 按鈕指引"
+    
+  Blocked_Citations:
+    - "// 常見模式 (無來源)"
+    - "// 標準方法 (無證據)"
+    - "// 典型實作 (無研究)"
+    
+Professional_Standards:
+  Multiple_Sources: "結合模式時列出所有來源"
+  Uncertainty_Handling: "使用 TODO 標記臨時實作"
+  Alternative_Suggestions: "當主要不可用時提供備份選項"
+  Deprecation_Notes: "標記來自已棄用文件的模式"
+```
+
+## 與指令系統整合
+
+```yaml
+Pre_Execution_Research:
+  Parse_Request:
+    - "從匯入模式中擷取程式庫名稱"
+    - "從關鍵字識別 UI 元件需求"
+    - "從服務名稱偵測 API 整合需求"
+    - "檢查不熟悉的模式或框架"
+    
+  Validation_Gates:
+    CRITICAL_Block: "沒有研究文件的外部程式庫"
+    HIGH_Warning: "文件 >2 年或已棄用的模式"
+    MEDIUM_Note: "發現多個衝突的來源"
+    
+  Auto_Research_Triggers:
+    Commands: ["build", "improve", "troubleshoot", "design"]
+    File_Types: ["*.tsx", "*.jsx", "*.py", "*.js", "*.ts"]
+    Keywords: ["整合", "實作", "連接", "使用", "新增"]
+    
+Command_Specific_Integration:
+  build_command:
+    - "檢查所有匯入陳述式中的外部程式庫"
+    - "研究任何不熟悉的框架模式"
+    - "驗證元件庫使用模式"
+    
+  improve_command:
+    - "研究已識別瓶頸的最佳化模式"
+    - "在建議變更前驗證最佳實踐模式"
+    - "檢查具有更好模式的更新程式庫版本"
+    
+  troubleshoot_command:
+    - "先搜尋已知問題資料庫"
+    - "在官方文件中研究錯誤模式"
+    - "檢查具有高信心分數的社群解決方案"
+```
+
+## 品質保證模式
+
+```yaml
+Research_Validation:
+  Before_Implementation:
+    - "確認所有外部參考都有研究支援"
+    - "驗證信心分數符合最低閾值"
+    - "檢查引用格式是否正確"
+    - "確保推理中沒有被阻止的片語"
+    
+  During_Implementation:
+    - "將實作與研究的模式交叉參考"
+    - "驗證與模式的偏差已記錄"
+    - "確保錯誤處理遵循研究的最佳實踐"
+    
+  After_Implementation:
+    - "驗證所有外部模式都有來源歸屬"
+    - "使用任何新發現更新研究快取"
+    - "記錄成功的模式以供未來重用"
+    
+Pattern_Verification:
+  Official_Source_Check: "主要來源必須是官方文件"
+  Recency_Validation: "標記超過 2 年的模式以供審查"
+  Multiple_Source_Confirmation: "複雜模式需要 2+ 來源"
+  Working_Example_Requirement: "實作必須包含經過測試的範例"
+```
+
+## 錯誤預防與恢復
+
+```yaml
+Common_Research_Failures:
+  Library_Not_Found:
+    Error: "C7 resolve-library-id 沒有回傳匹配"
+    Recovery: "嘗試更廣泛的搜尋詞 → WebSearch 回退"
+    Prevention: "快取常見程式庫別名"
+    
+  Documentation_Outdated:
+    Error: "找到的文件 >2 年"
+    Recovery: "搜尋最近的遷移指南或版本變更"
+    Prevention: "總是檢查最新版本號碼"
+    
+  Conflicting_Patterns:
+    Error: "多個來源建議不同的方法"
+    Recovery: "選擇最新的官方來源 → 記錄替代方案"
+    Prevention: "優先考慮官方文件而非社群內容"
+    
+  No_Examples_Found:
+    Error: "文件缺乏實際範例"
+    Recovery: "在 GitHub 搜尋真實實作 → 測試小範例"
+    Prevention: "結合理論文件與實際儲存庫"
+    
+Research_Failure_Handling:
+  When_Blocked:
+    - "明確說明: '未找到 [X] 的官方文件'"
+    - "提供理由: '使用來自 [Y] 的類似模式因為...'"
+    - "標記臨時: '// TODO: 當官方文件可用時驗證'"
+    - "建議替代方案: '考慮改用有文件的程式庫 [Z]'"
+    
+  Partial_Research:
+    - "記錄找到的與缺少的內容"
+    - "僅實作有良好文件的部分"
+    - "為缺少的研究建立 TODO 項目"
+    - "建議手動驗證步驟"
+```
+
+## 統一: 證據與驗證模式 (來自 evidence.yml)
+
+### 測量標準
+```yaml
+Replace Hard Values:
+  Bad: "75% 效能改進"
+  Good: "<measured>% 改進"
+  Best: "<baseline>→<current> (<delta>%)"
+
+Placeholders:
+  <measured_value>: 實際測量
+  <calculated_result>: 計算結果
+  <baseline>: 起始點
+  <current>: 當前狀態
+  <delta>: 變化量
+  <threshold>: 目標值
+```
+
+### 驗證需求 (來自 evidence.yml)
+```yaml
+Perf Claims:
+  Required: 測量方法
+  Format: "透過 <tool> 測量: <metric>"
+  Example: "透過 Lighthouse 測量: FCP <value>ms"
+
+Quality Metrics:
+  Coverage: "測試覆蓋率: <measured>%"
+  Complexity: "循環複雜度: <calculated>"
+  Duplication: "DRY 分數: <measured>%"
+
+Time Estimates:
+  Format: "<min>-<max> <unit> (±<uncertainty>%)"
+  Based on: 歷史資料|複雜度分析
+
+Implementation Sources:
+  Required: 外部程式庫的文件參考
+  Format: "來源: <官方文件 URL 或參考>"
+  Placement: 在使用模式的實作上方
+  
+  Examples:
+    Good: "// 來源: React 文件 - useState hook"
+    Bad: "// 常見 React 模式"
+    
+  No Source = Block: 沒有文件的外部程式庫使用
+```
+
+### 證據收集 (來自 evidence.yml)
+```yaml
+Before: 基準測量
+During: 進度追蹤  
+After: 最終測量
+Delta: 計算改進
+
+Tools:
+  Performance: Lighthouse|DevTools|APM
+  Code: 覆蓋率報告|Linters|分析器
+  Time: Git 歷史|任務追蹤
+```
+
+### 報告格式 (來自 evidence.yml)
+```yaml
+Pattern:
+  Claim: 什麼改進了
+  Evidence: 如何測量
+  Result: 具體值
+  
+Example:
+  Claim: "最佳化查詢效能"
+  Evidence: "EXPLAIN ANALYZE 前後對比"
+  Result: "<before>ms → <after>ms (<delta>% 更快)"
+```
+
+## 解釋方法
+
+```yaml
+Explanation_Methodology:
+  Explanation_Structure:
+    Overview_Section:
+      What: "概念/主題的清晰定義"
+      Why: "為什麼重要及何時使用"
+      Context: "在更大圖景中的位置"
+      
+    Core_Concepts:
+      Building_Blocks: "基本元件"
+      Key_Principles: "管理規則和模式"
+      Relationships: "元件如何互動"
+      
+    Deep_Dive:
+      How_It_Works: "逐步機制"
+      Implementation_Details: "實際實作"
+      Edge_Cases: "限制和特殊情況"
+      
+    Practical_Examples:
+      Basic_Example: "簡單、清晰的說明"
+      Real_World_Usage: "生產場景"
+      Code_Samples: "可工作的實作"
+      
+    Common_Pitfalls:
+      Gotchas: "常見誤解"
+      Anti_Patterns: "不該做什麼"
+      Debugging_Tips: "如何故障排除"
+      
+    Further_Learning:
+      Next_Steps: "自然進展路徑"
+      Related_Concepts: "相關主題"
+      Resources: "文件和教學"
+      
+  Depth_Level_Guidelines:
+    Beginner:
+      Language: "簡單、非技術術語"
+      Examples: "相關類比"
+      Scope: "僅核心概念"
+      Format: "逐步教學"
+      
+    Intermediate:
+      Language: "標準技術術語"
+      Examples: "實際用例"
+      Scope: "常見模式和變體"
+      Format: "平衡解釋和範例"
+      
+    Advanced:
+      Language: "精確技術語言"
+      Examples: "複雜場景"
+      Scope: "邊界案例和最佳化"
+      Format: "深入分析"
+      
+    Expert:
+      Language: "領域特定術語"
+      Examples: "尖端應用"
+      Scope: "實作內部"
+      Format: "研究級深度"
+      
+  Explanation_Techniques:
+    Analogies:
+      Purpose: "使複雜概念易於理解"
+      Guidelines: "使用熟悉的領域"
+      Examples: "網路協定如郵政系統"
+      
+    Progressive_Complexity:
+      Start: "簡單基礎"
+      Build: "逐步分層複雜性"
+      Connect: "將新概念連結到先前概念"
+      
+    Visual_Aids:
+      Diagrams: "系統架構和關係"
+      Flowcharts: "流程流和決策樹"
+      Code_Annotation: "內嵌解釋"
+      Sequence_Diagrams: "互動模式"
+      
+    Interactive_Elements:
+      Examples: "可執行的程式碼範例"
+      Exercises: "實踐練習"
+      Thought_Experiments: "概念探索"
+      
+  Quality_Standards:
+    Clarity_Metrics:
+      Terminology: "使用前定義"
+      Consistency: "全文使用相同術語"
+      Context: "充足的背景"
+      Summary: "要點回顧"
+      
+    Engagement_Patterns:
+      Hook: "從引人注目的理由開始"
+      Examples: "具體先於抽象"
+      Questions: "處理常見查詢"
+      Practice: "立即應用知識"
+      
+    Accuracy_Requirements:
+      Facts: "驗證技術細節"
+      Examples: "測試程式碼範例"
+      Sources: "引用權威參考"
+      Updates: "與變更保持同步"
+```
+
+---
+*研究流程範本 v2 - 確保基於證據的專業實作與統一的研究和證據模式*

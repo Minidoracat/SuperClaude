@@ -1,0 +1,366 @@
+# 品質模式
+# 統一驗證、嚴重性回應、錯誤處理和品質控制框架
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 嚴重性框架
+
+```yaml
+Severity_Levels:
+  CRITICAL:
+    Definition: "資料遺失、安全漏洞、生產停機"
+    Response: "立即停止、警報、回滾、事件回應"
+    Recovery: "需要手動介入"
+    Response_Time: "立即"
+    Examples: ["刪除生產資料", "暴露秘密", "強制推送主分支"]
+    
+  HIGH:
+    Definition: "建置失敗、測試失敗、部署問題"
+    Response: "停止工作流程、通知使用者、建議修復"
+    Recovery: "自動重試 w/ 退避"
+    Response_Time: "快速"
+    Examples: ["語法錯誤", "權限被拒", "測試失敗"]
+    
+  MEDIUM:
+    Definition: "警告條件、效能問題、程式碼品質"
+    Response: "繼續 w/ 警告、記錄以供審查"
+    Recovery: "嘗試最佳化、監控"
+    Response_Time: "標準"
+    Examples: ["緩慢操作", "已棄用的 API", "大型檔案"]
+    
+  LOW:
+    Definition: "資訊訊息、樣式違規、建議"
+    Response: "在輸出中記錄、繼續"
+    Recovery: "背景修復、清理"
+    Response_Time: "批次處理"
+    Examples: ["程式碼樣式", "可選更新", "效能提示"]
+```
+
+## 執行前驗證
+
+```yaml
+Validation_Sequence:
+  1_Ambiguity_Check:
+    Detect: ["模糊指示", "缺少目標", "不清楚的範圍"]
+    Actions: ["請求澄清", "如果關鍵則阻止"]
+    
+  2_Security_Validation:
+    Path: "無 ../，僅絕對路徑"
+    Secrets: "掃描 API 金鑰、密碼、權杖"
+    Permissions: "使用者有所需的存取權限"
+    
+  3_Dependency_Check:
+    Tools: "已安裝必需的 CLI 工具"
+    Libraries: "套件相依性可用"
+    Services: "外部服務可存取"
+    
+  4_State_Validation:
+    Git: "git 操作的乾淨工作樹"
+    Files: "目標檔案存在且可存取"
+    Resources: "磁碟空間、記憶體充足"
+
+Risk_Assessment:
+  Score_Factors:
+    Data_Loss: "高影響 | 不可逆性: 中等影響"
+    Scope: "中等影響 | 安全性: 高影響"
+    Backup: "降低風險 | Test_Coverage: 稍微降低風險"
+    Sandbox: "降低風險 | Checkpoint: 稍微降低風險"
+  Thresholds:
+    Low: "繼續 w/ 資訊"
+    Medium: "警告並確認"
+    High: "需要核准"
+    Critical: "完全阻止"
+```
+
+## 錯誤處理模式
+
+```yaml
+Error_Categories:
+  Transient:
+    Types: ["網路逾時", "資源忙碌", "速率限制"]
+    Strategy: "指數退避重試"
+    Retry: "基礎短、最大中等持續時間、多次嘗試、帶抖動"
+    
+  Permanent:
+    Types: ["語法錯誤", "權限被拒", "未找到"]
+    Strategy: "不重試、立即回退"
+    Response: "清楚的錯誤訊息和指導"
+    
+  Context:
+    Types: ["設定錯誤", "狀態衝突", "版本不符"]
+    Strategy: "驗證和有用的指導"
+    
+  Resource:
+    Types: ["記憶體", "磁碟空間", "API 限制"]
+    Strategy: "監控、清理、佇列管理"
+
+Circuit_Breaker:
+  Threshold: "多次連續失敗"
+  Recovery: "重新啟用前的短暫暫停"
+  States:
+    Closed: "正常操作"
+    Open: "達到閾值後阻止呼叫"
+    Half_Open: "測試恢復、有限呼叫"
+```
+
+## 恢復策略
+
+```yaml
+Automatic_Recovery:
+  Retry_Patterns:
+    Simple: "多次嘗試、短延遲"
+    Exponential: "漸進退避 w/ 抖動"
+    Circuit: "達到閾值後停止"
+  Fallback_Options:
+    Alternative: "如果 MCP 失敗則使用原生"
+    Degraded: "跳過非必要功能"
+    Cached: "使用先前成功的輸出"
+  State_Management:
+    Checkpoint: "在高風險操作前儲存"
+    Rollback: "自動恢復到良好狀態"
+    Cleanup: "移除部分結果"
+
+Manual_Recovery:
+  User_Guidance:
+    Error_Format: "什麼失敗→為什麼→如何修復"
+    Actions: "使用者可以採取的具體步驟"
+    Resources: "相關幫助文件"
+  Intervention:
+    Confirm: "在破壞性操作前詢問"
+    Override: "允許跳過驗證警告"
+    Custom: "接受使用者替代方案"
+```
+
+## 設定驗證
+
+```yaml
+Required_Files:
+  Global:
+    - "~/.claude/CLAUDE.md"
+    - "~/.claude/RULES.md"
+    - "~/.claude/PERSONAS.md"
+    - "~/.claude/MCP.md"
+  Project:
+    - ".claude/commands/*.md"
+    - ".claude/commands/shared/*.yml"
+
+Syntax_Validation:
+  YAML:
+    Rules: ["有效語法", "適當縮排", "無重複鍵"]
+    Error: "檔案:行:列 - 描述"
+  Markdown:
+    Check: ["有效標頭", "程式碼區塊", "參考"]
+  References:
+    Include: "@include ([^#]+)#([^\\s]+)"
+    See: "@see shared/([^\\s]+)"
+    Validate: ["檔案存在", "章節存在", "無循環參考"]
+
+Structure_Requirements:
+  Commands:
+    Required: ["圖例", "描述", "旗標", "範例", "交付物"]
+    Flags: ["通用總是可用", "記錄所有獨特的"]
+  Dependencies:
+    MCP: ["伺服器已設定", "健康檢查通過"]
+    CLI: ["git ≥2.0", "node ≥16.0", "python ≥3.8"]
+```
+
+## 執行時監控
+
+```yaml
+Execution_Monitoring:
+  Pre:
+    Check: ["指令有效", "旗標識別", "使用者授權"]
+  During:
+    Monitor: ["進度正常", "資源在限制內", "捕獲錯誤"]
+  Post:
+    Verify: ["預期結果", "無副作用", "清理完成"]
+
+Context_Preservation:
+  Checkpoints:
+    Create: "在破壞性操作前"
+    Include: ["檔案狀態", "工作目錄", "指令上下文"]
+    Location: ".claudedocs/checkpoints/checkpoint-{timestamp}"
+  Chain_Recovery:
+    Isolate: "不丟失成功的步驟"
+    Alternative: "建議不同方法"
+    Partial: "在恢復中使用完成的工作"
+
+Health_Monitoring:
+  Frequency: "活動使用期間的定期間隔"
+  Timeout: "每次檢查的簡短逾時"
+  Degradation: "緩慢回應 → 切換替代方案"
+  Recovery: "短暫暫停後重新啟用"
+```
+
+## 指令特定恢復
+
+```yaml
+Build_Failures:
+  Clean_Retry: "移除產物、清除快取、重建"
+  Dependencies: "更新鎖定檔、重新安裝套件"
+  Compilation: "建議修復、替代方法"
+
+Test_Failures:
+  Flaky_Tests: "重試失敗、識別不穩定"
+  Environment: "重設狀態、檢查先決條件"
+  Coverage: "生成缺少的測試、更新閾值"
+
+Deploy_Failures:
+  Health_Check: "回滾、調查日誌"
+  Resources: "擴展、最佳化部署"
+  Config: "驗證設定、檢查秘密"
+
+Analysis_Failures:
+  Tool_Unavailable: "回退到替代方案"
+  Large_Codebase: "減少範圍、批次處理"
+  Permissions: "指導使用者進行存取設定"
+```
+
+## 品質報告
+
+```yaml
+Validation_Reports:
+  Location: ".claudedocs/validation/"
+  Filename: "validation-{type}-{timestamp}.md"
+  Sections:
+    Summary: ["總檢查", "✅ 通過 | ⚠ 警告 | ❌ 失敗"]
+    Details: ["逐檔案狀態", "參考完整性", "相依性"]
+    Recommendations: ["關鍵修復", "改進", "最佳化"]
+
+Auto_Repair:
+  Fixable:
+    Missing_Sections: "從範本生成"
+    Broken_References: "更新到有效目標"
+    Outdated_Syntax: "現代化到標準"
+  Manual_Required:
+    Syntax_Errors: "使用者必須修復 YAML/Markdown"
+    Missing_Files: "使用者必須建立/恢復"
+    Permission_Issues: "使用者必須授予存取權限"
+
+Error_Learning:
+  Pattern_Recognition: ["追蹤常見錯誤", "使用者模式", "系統問題"]
+  Adaptive_Response: ["個人化建議", "主動警告", "自動修復"]
+  Metrics: ["錯誤頻率", "恢復成功", "使用者滿意度"]
+```
+
+## 整合點
+
+```yaml
+Startup: "完整設定驗證 | 阻止關鍵，警告高"
+Command: "指令特定檢查 | 驗證參數、旗標、權限"
+Continuous: "監控變更 | 每日完整驗證"
+On_Demand: "/validate --full"
+
+CLI_Commands:
+  Full: "/validate --config --full"
+  Quick: "/validate --quick"
+  Fix: "/validate --fix"
+  Report: "/validate --report"
+
+Usage_Examples:
+  Manual:
+    Full_Report: "/validate --config --report"
+    Quick_Check: "/validate --quick"
+    Auto_Repair: "/validate --fix --verbose"
+  Programmatic:
+    Pre_Execution: "validate_pre_execution()"
+    Background: "validate_config_changes()"
+    Report: "create_validation_report()"
+```
+
+## 程式碼品質指標
+
+```yaml
+Code_Quality_Metrics:
+  Complexity_Metrics:
+    Cyclomatic_Complexity: "目標: <10 每函式 | 警告: >15 | 關鍵: >20"
+    Cognitive_Complexity: "目標: <15 每函式 | 警告: >25 | 關鍵: >30"
+    Nesting_Depth: "目標: <4 層級 | 警告: >5 | 關鍵: >6"
+    Function_Length: "目標: <50 行 | 警告: >100 | 關鍵: >150"
+    
+  Maintainability_Metrics:
+    DRY_Score: "目標: >90% | 警告: <80% | 關鍵: <70%"
+    Code_Duplication: "目標: <5% | 警告: >10% | 關鍵: >15%"
+    Technical_Debt: "目標: <A 評級 | 警告: B 評級 | 關鍵: C+ 評級"
+    
+  Quality_Gates:
+    Coverage: "最低 80% 行覆蓋率 | 75% 分支覆蓋率"
+    Linting: "零錯誤 | 每檔案最多 5 個警告"
+    Type_Safety: "TypeScript 100% 類型覆蓋率"
+    Security: "零高/關鍵漏洞"
+```
+
+## 測試品質標準
+
+```yaml
+Test_Quality_Standards:
+  Coverage_Requirements:
+    Statement_Coverage: "最低: 80% | 目標: 90% | 優秀: 95%+"
+    Branch_Coverage: "最低: 75% | 目標: 85% | 優秀: 90%+"
+    Function_Coverage: "最低: 90% | 目標: 95% | 優秀: 100%"
+    Line_Coverage: "最低: 80% | 目標: 90% | 優秀: 95%+"
+    
+  Test_Organization:
+    Structure: "AAA (排列-執行-斷言) | Given-When-Then (BDD)"
+    Naming: "描述性測試名稱 | should_[預期行為]_when_[條件]"
+    Isolation: "獨立測試 | 無共享狀態 | 新鮮的設定/清理"
+    
+  Test_Types:
+    Unit_Tests: "快速 (<1ms) | 隔離 | 模擬相依性 | 總計的 70-80%"
+    Integration_Tests: "元件互動 | 真實相依性 | 總計的 15-20%"
+    E2E_Tests: "完整工作流程 | 瀏覽器自動化 | 總計的 5-10%"
+    
+  Quality_Indicators:
+    Test_Reliability: "不穩定測試率 <2% | 一致的結果"
+    Execution_Speed: "單元測試套件 <10s | 完整套件 <5min"
+    Mutation_Testing: "關鍵元件的突變分數 >75%"
+```
+
+## 根因分析
+
+```yaml
+Root_Cause_Analysis:
+  Investigation_Framework:
+    Five_Whys:
+      Process: "問「為什麼」5 次以深入到根因"
+      Example: "錯誤→為什麼？→邏輯錯誤→為什麼？→缺少驗證→為什麼？→無需求→為什麼？→匆忙的時間表→為什麼？→規劃不善"
+      
+    Fishbone_Analysis:
+      Categories: ["人員", "流程", "技術", "環境", "材料", "測量"]
+      Application: "潛在原因的系統性分類"
+      
+    Timeline_Analysis:
+      Sequence: "問題何時開始 | 什麼改變了 | 相關性分析"
+      Events: "程式碼變更 | 部署 | 設定更新 | 外部因素"
+      
+  Evidence_Collection:
+    System_State:
+      Logs: "錯誤日誌 | 應用程式日誌 | 系統日誌 | 網路日誌"
+      Metrics: "效能指標 | 資源使用 | 錯誤率"
+      Configuration: "環境變數 | 功能旗標 | 資料庫狀態"
+      
+    Change_History:
+      Code_Changes: "Git 提交 | PR 歷史 | 部署歷史"
+      Infrastructure: "伺服器變更 | 資料庫遷移 | 第三方更新"
+      Process_Changes: "團隊變更 | 流程更新 | 工具更新"
+      
+  Resolution_Framework:
+    Immediate_Fix:
+      Stabilize: "止血 | 必要時回滾"
+      Workaround: "恢復服務的臨時解決方案"
+      Monitor: "驗證修復有效性 | 觀察是否復發"
+      
+    Permanent_Solution:
+      Root_Fix: "解決根本原因 | 不只是症狀"
+      Prevention: "新增保護措施 | 改進流程 | 更新文件"
+      Validation: "徹底測試修復 | 驗證無新問題引入"
+      
+    Learning_Integration:
+      Documentation: "RCA 報告 | 經驗教訓 | 知識分享"
+      Process_Improvement: "更新程序 | 新增檢查 | 培訓需求"
+      Monitoring: "新增警報 | 改進可觀察性 | 早期預警系統"
+```
+
+---
+*品質模式 v2 - 統一驗證、嚴重性回應、錯誤處理和品質控制框架*

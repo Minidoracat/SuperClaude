@@ -1,0 +1,208 @@
+# 使用者體驗與介面模式
+
+## 使用者互動原則
+
+```yaml
+Clarity & Communication:
+  Clear Intent: 每個指令都應該有明顯的目的
+  Immediate Feedback: 即時顯示正在發生的事情
+  Progress Indicators: 顯示完成 % 和預計完成時間
+  Result Summary: 簡潔概覽→完成了什麼
+  
+Predictability:
+  Consistent Behavior: 相同旗標在各指令間的運作方式相同
+  Expected Outputs: 使用者應該知道期待什麼
+  Stable Interface: 最小化破壞性變更
+  Docs: 總是最新且全面
+  
+Efficiency:
+  Smart Defaults: 最常見的選項應該是預設值
+  Minimal Typing: 簡短、易記的指令名稱和旗標
+  Context Awareness: 記住先前的操作和偏好
+  Workflow Optimization: 常見序列應該被簡化
+```
+
+## 漸進式揭露
+
+```yaml
+Beginner Mode:
+  Guided Experience: 逐步說明
+  Explanatory Output: 為什麼需要每個步驟
+  Safety Rails: 防止破壞性操作
+  Learning Resources: 文件和教學的連結
+  
+Intermediate Mode:
+  Balanced Output: 關鍵資訊而不會壓倒性的細節
+  Useful Shortcuts: 常見旗標組合和別名
+  Context Hints: 基於當前狀態的建議
+  Flexible Options: 提供更多設定選擇
+  
+Expert Mode:
+  Minimal Output: 只有必要資訊
+  Advanced Features: 完整功能和自訂
+  Direct Control: 需要時覆蓋安全檢查
+  Performance Focus: 為速度和效率最佳化
+
+Adaptive Interface:
+  Usage Detection: 根據使用者行為自動調整
+  Preference Learning: 記住使用者偏好的互動風格
+  Context Switching: 不同專案類型的不同模式
+  Customization: 允許使用者設定他們的體驗
+```
+
+## 工作流程發現與指導
+
+```yaml
+Command Suggestions:
+  Context-Aware: 基於當前狀態建議下一個邏輯步驟
+  Common Patterns: 推薦經過驗證的工作流程序列
+  Problem-Specific: 針對特定問題量身定制的建議
+  Learning Opportunities: 在相關時介紹新功能
+  
+Interactive Help:
+  Command Help: 特定指令的詳細使用
+  Flag Explanations: 每個旗標的作用和何時使用
+  Example Library: 真實世界的使用範例
+  Troubleshooting: 常見問題和解決方案
+  
+Workflow Templates:
+  Project Types: 不同專案類型的預定義工作流程
+  Use Cases: 帶有逐步指南的常見場景
+  Best Practices: 品質和安全的建議方法
+  Customization: 允許使用者建立和分享自己的範本
+```
+
+## 錯誤預防與恢復
+
+```yaml
+Proactive Prevention:
+  Validation: 執行前檢查先決條件
+  Warnings: 警告潛在問題或風險
+  Confirmation: 破壞性操作需要明確核准
+  Simulation: 試執行模式以預覽變更
+  
+Graceful Degradation:
+  Partial Success: 當某些部分失敗時繼續可能的部分
+  Alternative Paths: 當主要失敗時建議不同方法
+  Fallback Options: 自動切換到備份方法
+  Recovery Guidance: 清晰的步驟來解決問題並繼續
+  
+Learning from Errors:
+  Pattern Recognition: 識別常見的使用者錯誤
+  Preventive Measures: 為經常遇到的問題新增檢查
+  Documentation Updates: 基於常見困惑改進幫助
+  Interface Improvements: 重新設計令人困惑或容易出錯的互動
+```
+
+## 效能與回應性
+
+```yaml
+Response Time Expectations:
+  Immediate: 指令確認、簡單查詢
+  Fast: 檔案操作、簡單分析
+  Moderate: 複雜分析、建置、測試
+  Long (>10s): 部署、遷移、全面操作
+  
+Progress Communication:
+  Quick Start: 顯示立即活動指示器
+  Detailed Progress: 將長操作分解為步驟
+  Time Estimates: 提供實際的完成預測
+  Cancellation: 允許使用者中斷長操作
+  
+Resource Management:
+  Token Awareness: 監控和顯示上下文使用
+  Memory Efficiency: 為大型程式碼庫最佳化
+  Network Usage: 最小化不必要的請求
+  Caching: 適當時重用結果
+```
+
+## 無障礙與包容性
+
+```yaml
+Output Formatting:
+  Screen Readers: 結構化輸出易於閱讀
+  Color Blind: 不僅依賴顏色傳遞資訊
+  Low Vision: 高對比度、清晰的排版
+  Motor Impairments: 鍵盤快捷鍵、最少滑鼠需求
+  
+Language & Terminology:
+  Clear Language: 盡可能避免行話
+  Consistent Terms: 對相同概念使用相同詞彙
+  Internationalization: 支援多種語言
+  Cultural Sensitivity: 包容的範例和參考
+  
+Learning Styles:
+  Visual Learners: 圖表、圖表、視覺表示
+  Auditory Learners: 清晰的解釋、邏輯流程
+  Kinesthetic Learners: 互動練習、實作範例
+  Reading/Writing: 全面的文件、範例
+```
+
+## 自訂與個人化
+
+```yaml
+User Preferences:
+  Output Verbosity: 詳細、正常、最小
+  Color Schemes: 支援不同的終端主題
+  Confirmation Levels: 何時要求核准
+  Default Flags: 每個指令常用的旗標
+  
+Project Configuration:
+  Workflow Presets: 為專案儲存的指令序列
+  Quality Gates: 專案特定的標準和閾值
+  Tool Preferences: 測試框架、linter 等的選擇
+  Environment Settings: 開發、預備、生產設定
+  
+Team Settings:
+  Shared Workflows: 團隊成員間的常見模式
+  Code Standards: 強制執行的品質和風格要求
+  Review Processes: 部署前的必要步驟
+  Communication: 如何以及何時通知團隊成員
+```
+
+## 反饋與改進
+
+```yaml
+Usage Analytics:
+  Command Frequency: 哪些指令最常使用
+  Error Patterns: 常見的失敗點和使用者困惑
+  Workflow Analysis: 使用者如何組合指令
+  Performance Metrics: 回應時間和使用者滿意度
+  
+User Feedback:
+  In-App Feedback: 快速報告問題或建議的方式
+  Feature Requests: 使用者提出改進的管道
+  Bug Reports: 結構化的問題報告方式
+  Success Stories: 正面反饋和用例
+  
+Continuous Improvement:
+  Regular Updates: 基於反饋的頻繁改進
+  A/B Testing: 嘗試不同使用者的不同方法
+  Community Input: 讓使用者參與設計決策
+  Documentation: 保持幫助和範例最新且有用
+```
+
+## 整合點
+
+```yaml
+Command Integration:
+  Consistent Patterns: 所有指令的相同 UX 原則
+  Shared Components: 通用 UI 元素和行為
+  Context Preservation: 維持跨指令的使用者狀態
+  Workflow Continuity: 操作之間的平滑過渡
+  
+External Tools:
+  IDE Integration: 在開發環境中良好運作
+  Terminal Enhancement: 支援現代終端功能
+  Documentation Tools: 生成和維護幫助內容
+  Monitoring Systems: 追蹤使用者體驗指標
+  
+Platform Adaptation:
+  Operating Systems: 為 Windows、macOS、Linux 最佳化
+  Shell Environments: 與 bash、zsh、PowerShell 良好配合
+  Cloud Platforms: 與雲端開發環境整合
+  Container Systems: 在容器內有效運作
+```
+
+---
+*使用者體驗: 以人為中心的開發者生產力設計*

@@ -1,0 +1,105 @@
+# 參考模式
+# 具有扁平化階層和自動驗證的最佳化參考系統
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 關於參考捷徑的說明
+# 考慮過參考捷徑 (@legend, @flags 等) 但未實作。
+# 所有指令都使用完整的 @include 語法以保持清晰和 IDE 支援。
+# 直接參考 (例如 @include universal-constants.yml#Universal_Legend) 
+# 提供更好的可維護性和工具整合。
+
+## 參考驗證系統
+
+```yaml
+Validation_Rules:
+  Reference_Integrity:
+    Check_Targets: "驗證所有參考的檔案和章節存在"
+    Detect_Circular: "防止循環參考鏈"
+    Validate_Syntax: "確保正確的 @pattern 格式"
+    Report_Broken: "列出所有損壞的參考及其位置"
+    
+  Auto_Validation:
+    Startup_Check: "在系統啟動時驗證所有參考"
+    Git_Hook: "透過 pre-commit 掛鉤在提交前驗證"
+    File_Watch: "監控共享檔案的變更"
+    Repair_Mode: "自動修復簡單的參考錯誤"
+    
+  Validation_Report:
+    Location: ".claudedocs/validation/references-{timestamp}.md"
+    Format: "帶有嚴重性等級和修復建議的 Markdown"
+    Sections: ["摘要", "損壞的參考", "建議", "已應用的自動修復"]
+```
+
+## 檔案組織
+
+```yaml
+Pattern_Files:
+  Universal_Constants: "universal-constants.yml"
+  Command_Patterns: "command-architecture-patterns.yml"
+  Architecture: "architecture-patterns.yml"
+  Security: "security-patterns.yml"
+  Quality: "quality-patterns.yml"
+  Execution: "execution-patterns.yml"
+  Documentation: "docs-patterns.yml"
+  
+Usage:
+  Direct_Reference: "查看 shared/[file].yml#[section]"
+  No_Nesting: "保持參考簡單直接"
+  Self_Contained: "每個指令都有完整的資訊"
+```
+
+## 效能最佳化
+
+```yaml
+Reference_Performance:
+  Caching:
+    Strategy: "在會話期間快取已解析的參考"
+    Invalidation: "當共享檔案變更時清除快取"
+    Memory_Usage: "限制快取大小以防止記憶體問題"
+    
+  Lazy_Loading:
+    On_Demand: "僅在實際需要時解析參考"
+    Batch_Resolution: "在單一操作中解析多個參考"
+    Prefetch: "預載常用模式"
+    
+  Token_Efficiency:
+    Direct_Paths: "在有益的地方使用直接檔案路徑而非別名"
+    Pattern_Inlining: "內嵌小模式而非參考"
+    Compression: "對參考內容應用 UltraCompressed 模式"
+    
+Monitoring:
+  Reference_Usage: "追蹤最常使用的模式"
+  Resolution_Time: "監控解析參考的時間"
+  Cache_Hit_Rate: "衡量快取有效性"
+  Error_Frequency: "追蹤損壞的參考模式"
+  
+Benefits:
+  Token_Reduction: "參考開銷減少約 30%"
+  Complexity_Reduction: "最多 2 層 vs 3+ 層間接"
+  Maintainability: "更容易追蹤和更新參考"
+  Performance: "更快的解析和更低的記憶體使用"
+```
+
+## 整合點
+
+```yaml
+Command_File_Usage:
+  Standard_Commands: "每個指令都是自包含的"
+  Organization: "共享檔案中的常見模式"
+  Validation_Required: "所有指令都遵循標準結構"
+  
+Framework_System:
+  Direct_References: "使用明確的檔案路徑"
+  Error_Handling: "清楚的模式文件"
+  Development_Mode: "易於理解和維護"
+  
+Framework_Integration:
+  Git_Hooks: "在提交和合併時自動驗證"
+  CI_CD: "建置管線中的參考完整性檢查"
+  Editor_Support: "語法突顯和驗證"
+```
+
+---
+*參考模式 v2 - 具有扁平化階層和自動驗證的最佳化參考系統*

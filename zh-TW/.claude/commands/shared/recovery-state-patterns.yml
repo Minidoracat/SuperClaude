@@ -1,0 +1,231 @@
+# 恢復與狀態管理 - 統一模式
+# 全面的狀態保存、會話恢復和錯誤處理
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 檢查點架構
+
+```yaml
+Checkpoint_Structure:
+  Storage_Hierarchy:
+    Base_Directory: ".claudedocs/checkpoints/"
+    Active_Checkpoint: ".claudedocs/checkpoints/active/"
+    Archive_Directory: ".claudedocs/checkpoints/archive/"
+    Recovery_Cache: ".claudedocs/checkpoints/recovery/"
+    
+  Checkpoint_Components:
+    Metadata:
+      checkpoint_id: "UUID v4 格式"
+      timestamp: "ISO 8601 含時區"
+      operation: "觸發檢查點的指令"
+      risk_level: "LOW|MEDIUM|HIGH|CRITICAL"
+      
+    State_Preservation:
+      modified_files: "列表 → 快照 w/ 內容雜湊"
+      git_state: "分支、提交 SHA、未提交的變更"
+      session_context: "指令歷史、待辦事項、決策、阻礙"
+      environment: "工作目錄、環境變數、工具版本"
+      mcp_cache: "活動伺服器、快取回應、權杖使用"
+
+Automatic_Triggers:
+  Risk_Based:
+    Critical: ["資料庫遷移", "生產部署", "安全變更"]
+    High: ["多檔案重構", "相依性更新", "架構變更"]
+    Medium: ["功能實作", "影響 3+ 檔案的錯誤修復"]
+    
+  Time_Based:
+    Long_Operations: "每 10 分鐘檢查點用於 >5 分鐘的操作"
+    Session_Duration: "每 30 分鐘檢查點"
+    
+  Command_Specific:
+    Always: ["/deploy", "/migrate", "/cleanup --aggressive"]
+    Conditional: ["/build → 核心系統", "/test → 基礎設施"]
+```
+
+## 會話恢復模式
+
+```yaml
+Session_Detection:
+  Startup_Scan:
+    Locations: [".claudedocs/tasks/in-progress/", ".claudedocs/tasks/pending/"]
+    Parse_Metadata: "擷取任務 ID、標題、狀態、分支、進度"
+    Git_Validation: "檢查分支存在、乾淨的工作樹"
+    Context_Restoration: "載入會話狀態、變數、決策"
+    
+  Recovery_Decision_Matrix:
+    Active_Tasks_Found: "自動恢復最近或最高優先級"
+    Multiple_Tasks: "呈現選擇選單 w/ 進度摘要"
+    Stale_Tasks: ">7 天的任務需要確認"
+    Corrupted_State: "回退 → 手動恢復提示"
+
+Context_Recovery:
+  State_Reconstruction:
+    File_Context: "恢復工作檔案列表和修改追蹤"
+    Variable_Context: "重新載入會話變數和設定"
+    Decision_Context: "恢復架構和實作決策"
+    Progress_Context: "從任務分解和階段重建待辦事項列表"
+    
+  Automatic_Recovery:
+    Seamless_Resume: "單一活動任務的靜默恢復"
+    Smart_Restoration: "從任務狀態和進度重建 TodoWrite"
+    Blocker_Detection: "識別並呈現先前的阻礙"
+    Next_Step_ID: "確定最佳下一步動作"
+
+session_state_format:
+  current_files: [path1, path2]
+  key_variables:
+    api_endpoint: "https://api.example.com"
+    database_name: "myapp_prod"
+  decisions:
+    - "因團隊熟悉度選擇 React 而非 Vue"
+  blockers:
+    - issue: "API 呼叫的 CORS 錯誤"
+      attempted: ["標頭", "代理設定"]
+      solution: "需要伺服器端 CORS 設定"
+```
+
+## 錯誤分類與恢復
+
+```yaml
+Error_Categories:
+  Transient_Errors:
+    Examples: ["網路逾時", "資源不可用", "API 速率限制"]
+    Recovery: "指數退避重試 (最多 3 次嘗試)"
+    
+  Environment_Errors:
+    Examples: ["找不到指令", "未安裝模組", "權限被拒"]
+    Recovery: "指導使用者 → 環境修復"
+    Auto_Fix: "如果可能則嘗試"
+    
+  Validation_Errors:
+    Examples: ["無效格式", "語法錯誤", "缺少參數"]
+    Recovery: "請求有效輸入 w/ 具體範例"
+    
+  Logic_Errors:
+    Examples: ["循環相依性", "衝突需求"]
+    Recovery: "解釋問題並提供替代方案"
+    
+  Critical_Errors:
+    Examples: ["資料損壞", "安全違規", "系統故障"]
+    Recovery: "安全模式 + 檢查點 + 使用者介入"
+
+Standard_Recovery_Patterns:
+  Retry_Strategies:
+    Exponential_Backoff:
+      Initial_Delay: 1000ms
+      Max_Delay: 30000ms
+      Multiplier: 2
+      Jitter: "隨機 0-500ms"
+      
+    Circuit_Breaker:
+      Failure_Threshold: 5
+      Reset_Timeout: 60000ms
+      Use_Case: "保護故障服務"
+
+  Fallback_Chains:
+    Tool_Failures: "grep → rg → 原生搜尋 → 指導使用者"
+    MCP_Cascades:
+      Context7: "→ WebSearch → 本地快取 → 繼續 w/ 警告"
+      Sequential: "→ 原生分析 → 簡化 → 使用者輸入"
+      Magic: "→ 範本生成 → 手動指南 → 範例"
+      
+  Graceful_Degradation:
+    Feature_Reduction: "完整 → 基本 → 最小 → 手動指南"
+    Performance_Adaptation: "減少範圍 → 更快的替代方案 → 漸進式輸出"
+```
+
+## 恢復實作
+
+```yaml
+Recovery_Framework:
+  Error_Handler_Lifecycle:
+    Detect: "捕獲 → 分類 → 評估嚴重性 → 擷取上下文"
+    Analyze: "確定恢復選項 → 檢查重試資格 → 識別回退"
+    Respond: "記錄 w/ 上下文 → 嘗試恢復 → 追蹤嘗試 → 升級"
+    Report: "使用者友好訊息 → 技術細節 → 動作 → 後續步驟"
+
+  Progressive_Escalation:
+    Level_1: "自動重試/恢復"
+    Level_2: "替代方法"
+    Level_3: "降級操作"
+    Level_4: "手動介入"
+    Level_5: "中止 w/ 回滾"
+
+Recovery_Commands:
+  Checkpoint_Management:
+    Create: "/checkpoint [--full|--light] [--note '訊息']"
+    List: "/checkpoint --list [--recent|--today|--filter]"
+    Inspect: "/checkpoint --inspect {id}"
+    Rollback: "/rollback [--quick|--full] [--files|--git|--env] [{id}]"
+    
+  Recovery_Actions:
+    Quick_Rollback: "僅檔案內容 (次秒級)"
+    Full_Restoration: "完整狀態 (檔案、git、環境)"
+    Selective_Recovery: "僅特定元件"
+    Progressive_Recovery: "逐步瀏覽檢查點歷史"
+```
+
+## 整合模式
+
+```yaml
+Command_Integration:
+  Lifecycle_Hooks:
+    Pre_Execution: "在高風險操作前建立檢查點"
+    During_Execution: "長操作的漸進式更新"
+    Post_Execution: "根據結果完成或清理檢查點"
+    On_Failure: "保留檢查點 → 提供立即回滾"
+
+  Error_Context_Capture:
+    Operation: "正在嘗試什麼"
+    Environment: "工作目錄、使用者、權限"
+    Input: "失敗的指令/參數"
+    Output: "錯誤訊息和日誌"
+    State: "錯誤發生時的系統狀態"
+
+Common_Error_Scenarios:
+  Development:
+    Module_Not_Found: "檢查 package.json → npm install → 驗證匯入"
+    Build_Failures: "清理快取 → 檢查語法 → 驗證相依性 → 部分建置"
+    Test_Failures: "隔離失敗 → 檢查環境 → 跳過並繼續"
+    
+  System:
+    Permission_Denied: "chmod/chown 建議 → 替代位置 → 使用者目錄回退"
+    Disk_Space: "清理臨時檔案 → 建議清理 → 壓縮 → 最小模式"
+    Memory_Exhaustion: "減少範圍 → 串流 → 批次處理 → 手動分塊"
+    
+  Integration:
+    API_Failures: "401/403→驗證 | 429→速率限制 | 500→重試 | 快取回退"
+    Network_Issues: "重試 w/ 退避 → 替代端點 → 快取資料 → 離線模式"
+
+User_Experience:
+  Status_Messages:
+    Starting_Recovery: "🔄 偵測先前的會話狀態..."
+    Task_Found: "📋 找到活動任務: {title} ({progress}% 完成)"
+    Context_Restored: "✅ 會話上下文已恢復 - 繼續工作"
+    Recovery_Failed: "⚠ 需要手動恢復"
+    
+  Error_Communication:
+    What: "建置失敗: 找不到模組"
+    Why: "套件 'react' 未安裝"
+    How: "執行: npm install react"
+    Then: "重試建置指令"
+```
+
+## 效能最佳化
+
+```yaml
+Efficiency_Strategies:
+  Incremental_Checkpoints: "基礎檢查點 + 增量更新"
+  Parallel_Processing: "並行檔案備份和狀態收集"
+  Smart_Selection: "僅備份受影響的檔案 → 淺複製未變更的"
+  Resource_Management: "串流大檔案 → 限制 CPU → 低優先級 I/O"
+
+Retention_Policy:
+  Automatic_Cleanup: "7 天期限 | 20 個計數限制 | 1GB 大小限制"
+  Protected_Checkpoints: "使用者標記 → 永不自動刪除"
+  Archive_Strategy: "Tar.gz 舊檢查點 → 中繼資料保留"
+```
+
+---
+*恢復與狀態管理 v3 - 狀態保存、會話恢復和錯誤處理的統一模式*

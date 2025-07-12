@@ -1,0 +1,294 @@
+---
+# 文件模式
+# 統一文件標準、目錄結構、格式要求
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+Directory_Standards:
+  Documentation_Structure:
+    Claude_Internal: ".claudedocs/"
+    Project_Documentation: "docs/"
+
+    Claude_Subdirectories:
+      Reports: ".claudedocs/reports/"
+      Metrics: ".claudedocs/metrics/"
+      Summaries: ".claudedocs/summaries/"
+      Checkpoints: ".claudedocs/checkpoints/"
+      Validation: ".claudedocs/validation/"
+      Audit: ".claudedocs/audit/"
+      Incidents: ".claudedocs/incidents/"
+      Tasks: ".claudedocs/tasks/"
+      Task_States:
+        - ".claudedocs/tasks/pending/"
+        - ".claudedocs/tasks/in-progress/"
+        - ".claudedocs/tasks/completed/"
+        - ".claudedocs/tasks/cancelled/"
+
+    Project_Subdirectories:
+    API_Docs: "docs/api/"
+    User_Docs: "docs/user/"
+    Developer_Docs: "docs/dev/"
+    Architecture: "docs/architecture/"
+    Guides: "docs/guides/"
+    References: "docs/references/"
+
+  Auto_Creation_Rules:
+    Create_On_Demand: "寫入檔案前使用 mkdir -p"
+    Validate_Permissions: "操作前檢查寫入權限"
+    Ignore_Patterns: "如果尚未存在，加入 .gitignore"
+    Permissions: "目錄 755，檔案 644"
+```
+
+## 命名慣例
+
+```yaml
+File_Naming:
+  Reports: "<command>-<type>-<timestamp>.md"
+  Metrics: "<metric>-<date>.md|html|json"
+  Audit: "audit-<YYYY-MM-DD>.log"
+  Tasks: "{type}-{id}-{slug}.md"
+
+Examples:
+  Analysis_Report: "analysis-security-20240115-143022.md"
+  Coverage_Report: "coverage-20240115.html"
+  Audit_Log: "audit-2024-01-15.log"
+  RCA_Report: "rca-api-timeout-20240115-143022.md"
+  Task_File: "feature-001-auth-system.md"
+
+Task_ID_Format: "YYYYMMDD-HHMMSS"
+Task_Types: ["feature", "bugfix", "refactor", "docs", "test"]
+
+Git_Branches:
+  Task_Branch: "task/{id}-{slug}"
+  Feature_Branch: "feature/{name}"
+  Bugfix_Branch: "bugfix/{name}"
+  Release_Branch: "release/{version}"
+```
+
+## 格式要求
+
+```yaml
+Document_Standards:
+  Markdown_Format:
+    Headers: "主要部分使用 ##，子部分使用 ###"
+    Code_Blocks: "總是指定語言以進行語法突顯"
+    Tables: "使用管道格式 w/ 標頭分隔符"
+    Links: "使用描述性文字，避免原始 URL"
+
+  Report_Templates:
+    Analysis_Report:
+      Structure: "執行摘要 → 發現 → 建議 → 附錄"
+      Length: "標準分析 2-5 頁"
+      Format: "Markdown w/ 嵌入式指標"
+
+    Performance_Report:
+      Structure: "指標概覽 → 趨勢分析 → 問題 → 行動"
+      Charts: "CLI 相容的 ASCII 圖表"
+      Data_Format: "JSON 用於機器處理，Markdown 用於人類閱讀"
+
+    Security_Report:
+      Structure: "風險摘要 → 漏洞 → 緩解措施 → 驗證"
+      Risk_Levels: "CRITICAL|HIGH|MEDIUM|LOW w/ CVSS 分數"
+      Remediation: "可執行步驟 w/ 優先順序"
+
+  Required_Headers:
+    Generated_By: "SuperClaude v2"
+    Command: "/<command> [flags]"
+    Timestamp: "ISO 8601 格式"
+    Duration: "操作時間"
+
+  UltraCompressed_Mode:
+    Token_Reduction: "從標準格式大幅減少"
+    Symbols_Required: "→ & @ ∀ ∃ ∴ ∵ 基於圖例"
+    Structure: "YAML > 表格 > 列表 > 散文"
+    Legend_Requirement: "自動生成符號/縮寫圖例"
+```
+
+## 輸出通知
+
+```yaml
+Standard_Notifications:
+  File_Operations:
+    Created: "📝 已建立: {file_path}"
+    Updated: "✏ 已更新: {file_path}"
+    Deleted: "🗑 已刪除: {file_path}"
+    Moved: "➡ 已移動: {old_path} → {new_path}"
+
+  Report_Generation:
+    Analysis_Complete: "📄 分析報告已儲存至: {path}"
+    Metrics_Updated: "📊 指標已更新: {path}"
+    Summary_Generated: "📋 摘要已儲存至: {path}"
+    Checkpoint_Created: "💾 檢查點已建立: {path}"
+    Documentation_Created: "📚 文件已建立: {path}"
+    Directory_Created: "📁 已建立目錄: {path}"
+
+  Process_Status:
+    Started: "▶ 開始 {operation}"
+    In_Progress: "🔄 處理 {operation} ({progress}%)"
+    Completed: "✅ {operation} 成功完成"
+    Failed: "❌ {operation} 失敗: {reason}"
+    Warning: "⚠ {operation} 完成但有警告"
+
+  Performance_Alerts:
+    Slow_Operation: "⚠ 操作耗時超過預期 ({duration}s)"
+    High_Memory: "⚠ 偵測到高記憶體使用 ({usage}MB)"
+    Large_Output: "⚠ 產生大型輸出 ({size}MB)"
+
+Quality_Standards:
+  Consistency: "所有通知遵循表情符號 + 訊息格式"
+  Actionability: "在適用處包含檔案路徑和後續步驟"
+  Brevity: "盡可能保持訊息在 80 字元以內"
+  Context: "包含相關細節 (大小、持續時間、進度)"
+```
+
+## 指令整合
+
+```yaml
+Command_To_Directory_Mapping:
+  analyze: ".claudedocs/reports/analysis-*.md"
+  scan: ".claudedocs/reports/scan-*.md"
+  test: ".claudedocs/metrics/coverage-*.html"
+  improve: ".claudedocs/metrics/quality-*.md"
+  troubleshoot: ".claudedocs/incidents/rca-*.md"
+  estimate: ".claudedocs/summaries/estimate-*.md"
+  document: "docs/[category]/*.md"
+  git: ".claudedocs/audit/git-operations-*.log"
+  deploy: ".claudedocs/audit/deployment-*.log"
+
+Directory_Creation_Logic:
+  Pre_Write_Check:
+    - "驗證父目錄存在"
+    - "如果缺少則以適當權限建立"
+    - "驗證寫入權限"
+    - "優雅地處理錯誤"
+
+  Auto_Create_Paths:
+    - ".claudedocs/ 和所有子目錄"
+    - "docs/ 和專案文件結構"
+    - "尊重現有的 .gitignore 模式"
+```
+
+## 文件標準
+
+```yaml
+Project_Documentation:
+  Organization_Rules:
+    - "每個層級都有 README.md"
+    - "用於導航的 index.md"
+    - "需要時的版本化子目錄"
+    - "專用資料夾中的資產"
+
+  Content_Standards:
+    - "清楚的章節標題"
+    - "長文件的目錄"
+    - "具有語法突顯的程式碼範例"
+    - "相關文件的交叉參考"
+
+Operational_Reports:
+  Structure_Requirements:
+    - "執行摘要優先"
+    - "詳細發現隨後"
+    - "可執行的建議"
+    - "嚴重性/優先級指標"
+
+  Format_Standards:
+    - "Markdown 用於人類可讀報告"
+    - "JSON 用於機器可讀指標"
+    - "HTML 用於覆蓋率報告"
+    - "純文字用於日誌"
+```
+
+## Standard_Notifications
+
+```yaml
+Standard_Notifications:
+  Operation_Start: "▶ 開始 {operation}"
+  Operation_Complete: "✅ {operation} 成功完成"
+  File_Created: "📝 已建立: {file_path}"
+  File_Updated: "✏ 已更新: {file_path}"
+  Report_Generated: "📄 報告已儲存至: {path}"
+  Error_Occurred: "❌ {operation} 失敗: {reason}"
+  Warning_Issued: "⚠ {warning_message}"
+  Info_Message: "ℹ {information}"
+
+Output_Notifications:
+  Success_Format: "✅ {operation} 在 {duration} 內完成"
+  Error_Format: "❌ {operation} 失敗: {error_details}"
+  Warning_Format: "⚠ {warning}: {details}"
+  Info_Format: "ℹ {message}"
+  Progress_Format: "🔄 {operation}: {current}/{total} ({percentage}%)"
+```
+
+## Gitignore 建議
+
+```yaml
+# 建議的 .gitignore 模式:
+Exclude_From_Git:
+  - ".claudedocs/audit/"        # 操作日誌
+  - ".claudedocs/metrics/"      # 效能資料
+  - ".claudedocs/incidents/"    # 敏感的 RCA
+  - ".claudedocs/validation/"   # 驗證報告
+
+Include_In_Git:
+  - ".claudedocs/reports/"      # 有用的分析報告
+  - ".claudedocs/summaries/"    # 重要摘要
+  - "docs/"                     # 所有專案文件
+  - ".claudedocs/tasks/"        # 任務追蹤檔案
+```
+
+## 任務檔案格式
+
+```yaml
+Task_File_Structure:
+  Always_Compressed: true
+  No_Exceptions: "所有任務檔案使用 UltraCompressed 格式"
+
+  Header_Template: |
+    # 圖例: {僅使用的符號}
+
+    T: {標題}
+    ID: {id} | S: {狀態} | P: {優先級}
+    分支: {branch}
+
+  Phase_Format:
+    Template: "- {symbol} {phase}: {簡要描述}"
+    Symbols:
+      "□": "待處理階段"
+      "◐": "進行中階段"
+      "✓": "已完成階段"
+      "⚠": "已阻塞階段"
+
+  Context_Format:
+    Decisions: "決策: {關鍵決策}"
+    Blockers: "阻礙: {活動阻礙}"
+    Files: "檔案: {受影響的檔案}"
+    Next: "下一步: {立即下一步}"
+
+  Progress_Format:
+    Todos: "待辦: {活動}/{總計}"
+    Completion: "完成: {百分比}%"
+    Time: "預估: {預估剩餘時間}"
+```
+
+## 驗證與執行
+
+```yaml
+Directory_Validation:
+  Check_On_Startup: "驗證所有必需目錄存在"
+  Auto_Repair: "以適當權限建立缺少的目錄"
+  Permission_Check: "操作前驗證寫入權限"
+
+Content_Validation:
+  Format_Compliance: "檢查 markdown 語法和結構"
+  Reference_Integrity: "驗證所有內部連結"
+  Required_Sections: "確保所有必需標頭存在"
+
+Notification_Standards:
+  Emoji_Consistency: "使用標準表情符號映射"
+  Path_Accuracy: "總是在通知中包含完整路徑"
+  Status_Clarity: "清楚的成功/失敗指示"
+```
+
+---
+*文件模式 v2 - 文件、結構、格式要求和通知的統一標準*

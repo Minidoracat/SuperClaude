@@ -1,0 +1,131 @@
+# 系統設定 - 統一執行時和會話設定
+# 統一常見的系統級設定模式
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 會話管理
+
+```yaml
+Session_Settings:
+  Memory_Management:
+    Context_Limit: "高使用警告，非常高關鍵"
+    Cache_Duration: "30 分鐘活動會話"
+    Auto_Cleanup: "每 5 分鐘清除過期的上下文"
+    Persistence: "跨會話儲存成功的工作流程"
+    
+  Context_Sharing:
+    Chain_Results: "自動在指令之間傳遞相關結果"
+    Intelligent_Workflows: "analyze→improve, build→test, scan→fix"
+    Result_Reuse: "會話內相同目標+旗標"
+    Invalidation: "修改的檔案觸發快取重新整理"
+
+Recovery_Settings:
+  Session_Recovery:
+    Auto_Save: "每 10 個操作儲存狀態"
+    Checkpoint_Triggers: ["高風險操作前", "主要狀態變更"]
+    Recovery_Options: ["從檢查點恢復", "重新開始"]
+    State_Validation: "恢復時驗證系統狀態"
+    
+  Error_Recovery:
+    Retry_Patterns: "3 次嘗試，指數退避"
+    Fallback_Strategies: "如果 MCP 失敗則使用原生工具"
+    User_Guidance: "失敗時清晰的後續步驟"
+    Context_Preservation: "錯誤期間維持進度"
+```
+
+## 效能監控
+
+```yaml
+Performance_Settings:
+  Timing_Metrics:
+    Command_Duration: "追蹤開始/結束時間"
+    Phase_Breakdown: "分析、執行、報告階段"
+    Token_Usage: "監控 MCP 伺服器消耗"
+    Resource_Usage: "記憶體、CPU、網路追蹤"
+    
+  Thresholds:
+    Command_Timeout: "300 秒 (5 分鐘)"
+    Token_Warning: ">70% 預算消耗"
+    Memory_Alert: ">500MB CLI 使用"
+    Performance_Degradation: ">30s 典型操作"
+    
+  Optimization:
+    Lazy_Loading: "按需載入設定/模式"
+    Batch_Operations: "群組類似的檔案操作"
+    Caching_Strategy: "結果、模式、常用資料"
+    Resource_Cleanup: "自動清理臨時檔案和快取"
+```
+
+## 規劃與風險評估
+
+```yaml
+Planning_Control:
+  Flag_Based:
+    --plan: "強制任何指令進入規劃模式"
+    --skip-plan: "立即執行 (覆蓋風險觸發)"
+    default: "除非指定 --plan 否則立即執行"
+    
+  Risk_Triggers:
+    Production: "deploy --env prod, 遷移生產資料"
+    Data_Loss: "cleanup --all, 破壞性操作"
+    System_Wide: "spawn agents, 全域改進"
+    Security_Critical: "scan --security, 驗證變更"
+    
+  Assessment_Factors:
+    Scope: "受影響的檔案/系統數量"
+    Reversibility: "操作是否可以輕易撤銷"
+    Data_Impact: "資料遺失/損壞的潛力"
+    Security_Impact: "驗證、授權變更"
+```
+
+## 使用者體驗設定
+
+```yaml
+Interface_Patterns:
+  Progress_Indicators:
+    Long_Operations: "顯示 >30 秒操作的進度"
+    Multi_Step: "為工作流程顯示步驟 N/M"
+    Real_Time: "--watch 模式的即時更新"
+    
+  Feedback_Patterns:
+    Success_Messages: "清楚確認完成"
+    Error_Messages: "什麼失敗、為什麼、如何修復"
+    Warning_Messages: "潛在問題、使用者確認"
+    Info_Messages: "有用的上下文、後續步驟"
+    
+  Output_Formatting:
+    Structured: "跨指令的一致格式"
+    Compressed: "使用 --uc 旗標以提高權杖效率"
+    Visual_Aids: "表格、項目符號、清晰的階層"
+    File_References: "可點擊的路徑、行號"
+```
+
+## 整合點
+
+```yaml
+Command_Integration:
+  Pre_Execution:
+    Config_Loading: "載入使用者、專案、系統設定"
+    Validation: "檢查先決條件、權限"
+    Risk_Assessment: "評估操作安全性"
+    
+  During_Execution:
+    Progress_Tracking: "監控操作進度"
+    Resource_Monitoring: "追蹤效能指標"
+    Error_Detection: "捕獲並處理失敗"
+    
+  Post_Execution:
+    Result_Storage: "快取結果以供重用"
+    Cleanup: "移除臨時檔案、釋放資源"
+    Reporting: "生成摘要、日誌"
+    
+System_Health:
+  Monitoring: "追蹤指令成功率、效能"
+  Alerting: "對降級的效能、錯誤發出警告"
+  Auto_Maintenance: "清理、最佳化、更新"
+  Diagnostics: "健康檢查、系統驗證"
+```
+
+---
+*系統設定 v2 - 統一執行時、會話、效能和使用者體驗設定*

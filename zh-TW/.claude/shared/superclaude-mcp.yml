@@ -1,0 +1,172 @@
+# SuperClaude MCP 整合詳細資訊
+# 來自 MCP.md 但不在全域模式中的內容
+
+## Server_Capabilities_Extended
+Context7:
+  Purpose: "官方程式庫文件與程式碼範例 | 研究標準"
+  Capabilities: "resolve-library-id | get-library-docs | 版本特定文件"
+  Best_For: "API 整合 | 框架模式 | 程式庫採用 | 官方標準"
+  Use: "研究優先方法論 | 基於證據的實作"
+  Token_Cost: "低-中 | 高準確度 | 權威來源"
+  Workflows: "程式庫偵測 → resolve-id → get-docs → 帶引用的實作"
+
+Sequential:
+  Purpose: "多步驟複雜問題解決 | 架構思維 | 分析"
+  Capabilities: "sequentialthinking | 適應性推理 | 系統性問題分解"
+  Best_For: "系統設計 | 根本原因分析 | 複雜除錯 | 架構審查"
+  Use: "深度技術分析 | 基於證據的推理 | 品質調查"
+  Token_Cost: "中-高 | 全面分析 | 洞察"
+  Workflows: "問題 → 分解 → 分析 → 綜合 → 建議"
+
+Magic:
+  Purpose: "UI 元件生成 | 設計系統整合"
+  Capabilities: "component-builder | component-refiner | component-inspiration | logo-search"
+  Best_For: "React/Vue 元件 | 設計系統 | UI 模式 | 快速原型設計"
+  Use: "一致的設計實作 | 模式遵循 | 品質元件"
+  Token_Cost: "中 | 高品質輸出 | 設計系統合規"
+  Workflows: "需求 → 生成 → 精修 → 整合 → 驗證"
+
+Puppeteer:
+  Purpose: "瀏覽器自動化 | E2E 測試 | 效能驗證"
+  Capabilities: "browser-connect | navigation | testing | screenshots | performance-monitoring"
+  Best_For: "E2E 測試 | 效能監控 | 視覺驗證 | 使用者互動測試"
+  Use: "品質保證 | 效能驗證 | 使用者體驗測試"
+  Token_Cost: "低（基於動作）| 高可靠性 | 測試"
+  Workflows: "連接 → 導航 → 互動 → 驗證 → 報告"
+
+## Token_Economics
+Budget_Allocation: "原生(0) | 輕量_MCP(最小) | 中度_MCP(適中) | 重度_MCP(廣泛)"
+Intelligent_Escalation: "原生→C7→Sequential→多MCP | 成本感知進展"
+Abort_Conditions: "高上下文使用 | MCP 逾時/錯誤 | 收益遞減"
+Efficiency_Patterns: "批次處理相似操作 | 快取結果 | 漸進式載入"
+
+## Workflows
+Library_Research:
+  Trigger: "外部程式庫偵測 | 導入語句分析 | 框架問題"
+  Process: "C7 resolve-library-id → 驗證文件 → 提取模式 → 帶引用的實作"
+  Standards: "需要官方文件 | 檢查版本相容性 | 記錄最佳實踐"
+  Example: "'React hooks 實作' → C7('react') → get-docs('hooks') → 實作"
+
+Complex_Analysis:
+  Trigger: "多步驟問題 | 系統設計 | 架構問題 | 效能問題"
+  Process: "Sequential 分解 → 引導研究 → 全面分析 → 行動計畫"
+  Standards: "基於證據的推理 | 方法論 | 記錄決策過程"
+  Example: "'效能優化' → Sequential(分析瓶頸) → C7(優化模式) → 實作"
+
+UI_Development:
+  Trigger: "元件需求 | 設計系統需求 | 前端開發"
+  Process: "Magic 元件生成 → 設計系統整合 → 品質驗證 → 測試"
+  Standards: "無障礙合規 | 設計系統遵循 | 模式"
+  Example: "'儀表板元件' → Magic('dashboard') → 整合模式 → Puppeteer 驗證"
+
+Testing:
+  Trigger: "品質保證需求 | E2E 測試 | 效能驗證"
+  Process: "Puppeteer 自動化 → 全面測試 → 效能監控 → 品質報告"
+  Standards: "測試模式 | 覆蓋率要求 | 效能標準"
+  Example: "'E2E 測試' → Puppeteer(測試場景) → 效能監控 → 品質報告"
+
+## Quality_Control
+Context7_Validation:
+  Success_Criteria: "找到相關文件 | 確認官方來源 | 驗證版本相容性"
+  Partial_Results: "嘗試替代搜尋詞 | 驗證官方來源 | 記錄限制"
+  Failure_Recovery: "WebSearch 官方文件 | 快取部分結果 | 帶警告繼續"
+
+Sequential_Validation:
+  Success_Criteria: "提供清晰分析 | 邏輯步驟進展 | 可行建議"
+  Partial_Results: "使用可用分析 | 註記限制 | 需要時請求澄清"
+  Failure_Recovery: "進一步分解問題 | 使用原生分析 | 記錄推理差距"
+
+Magic_Validation:
+  Success_Criteria: "元件符合需求 | 設計系統合規 | 無障礙標準"
+  Partial_Results: "需要元件精修 | 需要模式整合 | 需要客製化"
+  Failure_Recovery: "搜尋現有模式 | 手動實作 | 記錄元件需求"
+
+Puppeteer_Validation:
+  Success_Criteria: "測試執行成功 | 收集效能指標 | 驗證使用者互動"
+  Partial_Results: "有限測試可能 | 效能資料不完整 | 互動問題"
+  Failure_Recovery: "原生測試指導 | 手動驗證步驟 | 替代測試方法"
+
+## Command_Integration
+Development_Commands:
+  build: "Magic 用於 UI 元件 | C7 用於框架文件 | Sequential 用於架構"
+  dev_setup: "C7 用於工具文件 | Sequential 用於環境優化"
+  test: "Puppeteer 用於 E2E 測試 | C7 用於測試框架 | Sequential 用於覆蓋率分析"
+
+Analysis_Commands:
+  analyze: "Sequential 用於複雜分析 | C7 用於模式研究 | Puppeteer 用於效能"
+  troubleshoot: "Sequential 用於根本原因分析 | C7 用於解決方案模式 | Puppeteer 用於重現"
+  improve: "Sequential 用於優化分析 | C7 用於最佳實踐 | Puppeteer 用於驗證"
+  explain: "C7 用於官方文件 | Sequential 用於複雜解釋 | Magic 用於範例"
+
+Operations_Commands:
+  deploy: "Sequential 用於部署分析 | C7 用於部署模式 | Puppeteer 用於驗證"
+  scan: "Sequential 用於全面分析 | C7 用於安全標準 | 原生用於速度"
+  migrate: "Sequential 用於遷移規劃 | C7 用於遷移模式 | Puppeteer 用於驗證"
+  cleanup: "Sequential 用於影響分析 | 原生用於速度 | C7 用於最佳實踐"
+
+Design_Commands:
+  design: "Sequential 用於架構思維 | C7 用於設計模式 | Magic 用於原型"
+  spawn: "基於任務類型的智慧 MCP 路由 | 專業知識匹配"
+  document: "C7 用於文件標準 | Sequential 用於複雜主題 | Magic 用於範例"
+
+## Error_Recovery
+Context7_Recovery:
+  Library_Not_Found: "更廣泛的搜尋詞 → WebSearch 官方文件 → 快取替代方案"
+  Documentation_Incomplete: "嘗試特定主題 → 搜尋最新版本 → 註記限制"
+  API_Timeout: "快取部分結果 → 繼續使用原生工具 → 記錄限制"
+  Version_Conflicts: "搜尋特定版本 → 識別相容性 → 記錄需求"
+
+Sequential_Recovery:
+  Analysis_Timeout: "使用部分分析 → 註記限制 → 繼續使用可用洞察"
+  Token_Limit: "總結關鍵發現 → 專注於關鍵問題 → 提供可行建議"
+  Complex_Problems: "分解為更小的元件 → 迭代分析 → 漸進式理解"
+  Unclear_Requirements: "請求澄清 → 做出合理假設 → 記錄假設"
+
+Magic_Recovery:
+  Component_Generation_Failed: "搜尋現有模式 → 提供範本 → 手動實作指導"
+  Design_System_Mismatch: "元件精修 → 模式客製化 → 整合指導"
+  Quality_Issues: "元件審查 → 改進建議 → 替代方法"
+  Integration_Problems: "記錄需求 → 提供整合步驟 → 故障排除指導"
+
+Puppeteer_Recovery:
+  Browser_Connection_Failed: "原生測試命令 → 手動測試指導 → 驗證步驟"
+  Test_Execution_Issues: "簡化測試場景 → 手動驗證 → 替代方法"
+  Performance_Monitoring_Failed: "原生效能工具 → 手動監控 → 指標指導"
+  Automation_Limitations: "混合測試方法 → 手動驗證 → 文件化程序"
+
+## Best_Practices
+Research_Standards:
+  External_Libraries: "Context7 查找必需 | 僅官方文件 | 版本驗證"
+  Unknown_Patterns: "實作前研究 | 基於證據的決策 | 來源引用"
+  Low_Confidence: "在研究完成前阻止實作 | 維持標準"
+
+Implementation_Standards:
+  Source_Attribution: "記錄 MCP 來源 | 引用權威文件 | 維護證據軌跡"
+  Quality_Validation: "實作前驗證 | 全面測試 | 監控效能"
+  Patterns: "遵循產業標準 | 保持一致性 | 基於證據的選擇"
+
+Optimization_Guidelines:
+  Token_Efficiency: "匹配 MCP 與使用者需求 | 設定適當預算 | 優雅的退回"
+  Performance_Management: "監控回應時間 | 快取成功模式 | 批次處理相似操作"
+  Quality_Assurance: "驗證輸出 | 測試實作 | 維持標準"
+
+Workflows:
+  Complex_Projects: "多 MCP 協調 | 智慧協調 | 品質整合"
+  Simple_Operations: "優先使用原生工具 | 僅在增值時使用 MCP | 成本意識決策"
+  Quality_Focus: "基於證據的標準 | 驗證 | 全面測試"
+
+## Session_Management
+Context_Preservation:
+  MCP_State: "活動伺服器 | Token 使用追蹤 | 效能監控"
+  Result_Caching: "成功模式 | 文件發現 | 元件庫"
+  Session_Continuity: "伺服器健康監控 | 優雅降級 | 狀態恢復"
+
+Performance_Optimization:
+  Server_Health: "定期健康檢查 | 效能監控 | 負載平衡"
+  Resource_Management: "Token 預算追蹤 | 成本優化 | 智慧路由"
+  Quality_Monitoring: "成功率追蹤 | 錯誤模式分析 | 持續改進"
+
+Standards:
+  Evidence_Requirements: "所有外部程式庫的文件 | 效能聲明的指標"
+  Quality_Gates: "實作前驗證 | 部署後測試 | 生產監控"
+  Research_Methodology: "需要官方來源 | 基於證據的決策 | 標準"

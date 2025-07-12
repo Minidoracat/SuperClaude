@@ -1,0 +1,318 @@
+# 安全模式與定義
+# 擷取的安全知識模式，可在指令間重複使用
+
+@include universal-constants.yml#Universal_Legend
+
+## OWASP 前 10 大安全模式
+
+```yaml
+OWASP_Top_10:
+  A01_Injection:
+    Name: "注入缺陷"
+    Types: ["SQL", "NoSQL", "OS 指令", "LDAP", "XPath", "XXE"]
+    Description: "不受信任的資料作為指令/查詢的一部分發送到解譯器"
+    Detection: "輸入驗證差距、動態查詢建構"
+    Mitigation: "參數化查詢、輸入驗證、輸出編碼"
+    
+  A02_Authentication:
+    Name: "失效的身分鑑別與工作階段管理"
+    Types: ["弱密碼", "會話固定", "憑證填充"]
+    Description: "身分鑑別和工作階段管理缺陷"
+    Detection: "弱驗證邏輯、暴露的會話權杖、不良的密碼政策"
+    Mitigation: "強驗證、安全會話管理、多因素驗證"
+    
+  A03_Data_Exposure:
+    Name: "敏感資料外洩"
+    Types: ["未加密資料", "弱加密", "資料洩漏"]
+    Description: "敏感資料未受到適當保護"
+    Detection: "未加密的儲存/傳輸、弱演算法"
+    Mitigation: "強加密、資料分類、安全儲存"
+    
+  A04_XXE:
+    Name: "XML 外部實體 (XXE)"
+    Types: ["檔案洩露", "SSRF", "DoS 攻擊"]
+    Description: "具有外部實體參考的 XML 處理器"
+    Detection: "XML 解析未進行實體驗證"
+    Mitigation: "停用外部實體、輸入驗證"
+    
+  A05_Access_Control:
+    Name: "無效的存取控制"
+    Types: ["權限提升", "未授權存取", "IDOR"]
+    Description: "存取控制執行失敗"
+    Detection: "缺少驗證檢查、角色繞過、直接物件參考"
+    Mitigation: "最小權限原則、適當的驗證檢查"
+    
+  A06_Configuration:
+    Name: "安全設定缺陷"
+    Types: ["預設設定", "開放雲端儲存", "詳細錯誤"]
+    Description: "不安全的預設設定"
+    Detection: "預設帳戶、不必要的功能、除錯資訊"
+    Mitigation: "安全預設值、設定審查、強化"
+    
+  A07_XSS:
+    Name: "跨站腳本攻擊 (XSS)"
+    Types: ["反映型", "儲存型", "基於 DOM"]
+    Description: "不受信任的資料包含在網頁中"
+    Detection: "HTML 輸出中未驗證的輸入"
+    Mitigation: "輸入驗證、輸出編碼、CSP 標頭"
+    
+  A08_Deserialization:
+    Name: "不安全的反序列化"
+    Types: ["遠端程式碼執行", "物件注入"]
+    Description: "不受信任的資料反序列化缺陷"
+    Detection: "使用者控制的序列化、不安全的反序列化器"
+    Mitigation: "輸入驗證、完整性檢查、隔離"
+    
+  A09_Components:
+    Name: "使用已知漏洞的元件"
+    Types: ["過時的程式庫", "未修補的系統"]
+    Description: "應用程式中的易受攻擊元件"
+    Detection: "過時的相依性、缺少修補程式"
+    Mitigation: "定期更新、漏洞掃描、監控"
+    
+  A10_Monitoring:
+    Name: "記錄與監控不足"
+    Types: ["缺少日誌", "檢測不佳", "回應緩慢"]
+    Description: "不充分的記錄和事件回應"
+    Detection: "缺少稽核日誌、無警報、延遲檢測"
+    Mitigation: "全面記錄、即時監控、事件回應"
+```
+
+## 安全分析類別
+
+```yaml
+Code_Security_Analysis:
+  Input_Validation:
+    Patterns: ["SQL 注入點", "XSS 漏洞", "指令注入"]
+    Checks: ["參數驗證", "輸入消毒", "類型檢查"]
+    
+  Output_Encoding:
+    Patterns: ["HTML 編碼", "URL 編碼", "JavaScript 跳脫"]
+    Checks: ["上下文感知編碼", "輸出驗證", "Content-Type 標頭"]
+    
+  Authentication_Weaknesses:
+    Patterns: ["弱密碼政策", "會話管理", "憑證儲存"]
+    Checks: ["驗證邏輯審查", "會話安全", "密碼處理"]
+    
+  Authorization_Flaws:
+    Patterns: ["權限提升", "角色繞過", "資源存取"]
+    Checks: ["存取控制邏輯", "權限驗證", "角色分配"]
+    
+  Cryptographic_Problems:
+    Patterns: ["弱演算法", "金鑰管理", "隨機數生成"]
+    Checks: ["加密實作", "金鑰儲存", "演算法強度"]
+    
+  Error_Handling_Leaks:
+    Patterns: ["堆疊追蹤", "除錯資訊", "內部路徑"]
+    Checks: ["錯誤訊息", "例外處理", "資訊洩露"]
+    
+  Session_Management:
+    Patterns: ["會話固定", "會話劫持", "逾時處理"]
+    Checks: ["會話生成", "會話儲存", "會話失效"]
+    
+  File_Operation_Safety:
+    Patterns: ["路徑遍歷", "檔案上傳", "目錄列表"]
+    Checks: ["路徑驗證", "檔案類型檢查", "存取控制"]
+```
+
+## 相依性安全模式
+
+```yaml
+Dependency_Scanning:
+  CVE_Detection:
+    Description: "已知的常見漏洞和暴露"
+    Sources: ["NVD 資料庫", "GitHub 公告", "供應商公告"]
+    Metrics: ["CVSS 分數", "可利用性", "影響評估"]
+    
+  Outdated_Packages:
+    Description: "具有可用安全更新的元件"
+    Checks: ["版本比較", "安全修補程式可用性", "EOL 狀態"]
+    Priority: ["關鍵修補程式", "高風險元件", "已棄用的套件"]
+    
+  License_Compliance:
+    Description: "許可證的法律和安全影響"
+    Checks: ["GPL 相容性", "商業限制", "歸屬要求"]
+    Risks: ["Copyleft 義務", "專利影響", "合規違規"]
+    
+  Transitive_Dependencies:
+    Description: "間接相依性漏洞"
+    Analysis: ["相依性樹", "版本衝突", "更新路徑"]
+    Mitigation: ["版本固定", "相依性更新", "替代程式庫"]
+    
+  Typosquatting_Detection:
+    Description: "具有相似名稱的惡意套件"
+    Patterns: ["字元替換", "域名搶註", "命名空間混淆"]
+    Validation: ["套件真實性", "維護者驗證", "下載模式"]
+    
+  Security_Patch_Availability:
+    Description: "已知漏洞的可用修復"
+    Tracking: ["修補程式發布日期", "相容性測試", "更新緊急性"]
+    Planning: ["修補程式排程", "風險評估", "回滾程序"]
+```
+
+## 設定安全模式
+
+```yaml
+Configuration_Security:
+  Hardcoded_Secrets:
+    Patterns: ["API 金鑰", "密碼", "權杖", "憑證"]
+    Detection: ["字串模式", "熵分析", "已知秘密格式"]
+    Mitigation: ["環境變數", "秘密管理", "金鑰輪換"]
+    
+  Environment_Variables:
+    Security: ["敏感資料暴露", "注入攻擊", "預設值"]
+    Best_Practices: ["驗證", "消毒", "安全預設值"]
+    
+  Permission_Configurations:
+    File_Permissions: ["讀/寫/執行", "擁有者/群組/其他", "特殊位元"]
+    Service_Permissions: ["使用者帳戶", "服務隔離", "能力刪除"]
+    Network_Permissions: ["防火牆規則", "埠限制", "協定過濾"]
+    
+  Network_Exposure:
+    Open_Ports: ["不必要的服務", "預設埠", "管理介面"]
+    Protocol_Security: ["未加密的協定", "弱密碼", "版本漏洞"]
+    
+  TLS_SSL_Settings:
+    Configuration: ["協定版本", "密碼套件", "憑證驗證"]
+    Best_Practices: ["完美前向保密", "HSTS 標頭", "憑證固定"]
+    
+  CORS_Policies:
+    Misconfiguration: ["萬用字元來源", "憑證共享", "寬鬆標頭"]
+    Security: ["來源驗證", "預檢處理", "錯誤回應"]
+    
+  Security_Headers:
+    Required: ["CSP", "HSTS", "X-Frame-Options", "X-Content-Type-Options"]
+    Configuration: ["政策定義", "報告 URI", "執行模式"]
+```
+
+## 基礎設施安全模式
+
+```yaml
+Infrastructure_Security:
+  Network_Security:
+    Open_Ports: "掃描不必要的暴露服務"
+    Firewall_Rules: "驗證存取控制清單和政策"
+    Service_Discovery: "識別執行的服務和版本"
+    
+  Access_Control:
+    User_Accounts: "審查帳戶權限和特權"
+    Service_Accounts: "驗證服務對服務驗證"
+    Admin_Access: "稽核管理權限"
+    
+  Data_Protection:
+    Encryption_Transit: "驗證 TLS/SSL 實作"
+    Encryption_Rest: "檢查資料儲存加密"
+    Key_Management: "審查加密金鑰處理"
+    
+  Monitoring_Security:
+    Log_Collection: "確保全面的稽核記錄"
+    Security_Events: "監控安全事件"
+    Anomaly_Detection: "實施行為分析"
+    
+  Backup_Security:
+    Backup_Encryption: "加密備份資料"
+    Access_Controls: "限制備份存取"
+    Recovery_Testing: "驗證恢復程序"
+```
+
+## 安全驗證模式
+
+```yaml
+Validation_Levels:
+  Quick_Scan:
+    Scope: "僅關鍵安全問題"
+    Time: "簡短持續時間"
+    Focus: ["硬編碼秘密", "SQL 注入", "XSS", "已知 CVE"]
+    Output: "僅高優先級發現"
+    
+  Standard_Scan:
+    Scope: "全面的安全分析"
+    Time: "2-5 分鐘"
+    Focus: ["OWASP 前 10", "相依性漏洞", "設定問題"]
+    Output: "詳細發現 w/ 修復"
+    
+  Deep_Scan:
+    Scope: "徹底的安全稽核"
+    Time: "10-30 分鐘"
+    Focus: ["程式碼分析", "架構審查", "合規檢查"]
+    Output: "完整的安全評估"
+    
+  Compliance_Scan:
+    Scope: "法規合規驗證"
+    Frameworks: ["SOC 2", "PCI DSS", "HIPAA", "GDPR"]
+    Focus: ["資料保護", "存取控制", "稽核軌跡"]
+    Output: "合規報告 w/ 差距"
+```
+
+## 風險評估範本
+
+```yaml
+Risk_Scoring:
+  Critical_10:
+    Criteria: ["資料洩露潛力", "系統入侵", "生產影響"]
+    Response: "需要立即行動"
+    Examples: ["SQL 注入", "遠端程式碼執行", "憑證暴露"]
+    
+  High_7_9:
+    Criteria: ["顯著的安全影響", "可利用的漏洞"]
+    Response: "部署前修復"
+    Examples: ["XSS 漏洞", "驗證繞過", "權限提升"]
+    
+  Medium_4_6:
+    Criteria: ["安全顧慮", "最佳實踐違規"]
+    Response: "在下個 sprint 中處理"
+    Examples: ["缺少標頭", "弱設定", "資訊洩露"]
+    
+  Low_1_3:
+    Criteria: ["安全改進", "強化機會"]
+    Response: "最佳實踐實施"
+    Examples: ["安全標頭", "錯誤處理", "記錄改進"]
+    
+Severity_Factors:
+  Exploitability: ["攻擊複雜度", "存取要求", "使用者互動"]
+  Impact: ["機密性", "完整性", "可用性"]
+  Scope: ["系統元件", "資料敏感度", "使用者基礎"]
+  Context: ["環境類型", "資料分類", "法規要求"]
+```
+
+## 安全修復模式
+
+```yaml
+Remediation_Strategies:
+  Immediate_Actions:
+    Critical_Issues:
+      - "停用易受攻擊的功能"
+      - "阻止攻擊向量"
+      - "實施緊急修補程式"
+      - "監控利用情況"
+      
+  Short_Term_Fixes:
+    High_Priority:
+      - "應用安全修補程式"
+      - "實施輸入驗證"
+      - "設定安全標頭"
+      - "更新易受攻擊的相依性"
+      
+  Long_Term_Improvements:
+    Security_Architecture:
+      - "實施安全設計"
+      - "建立安全測試"
+      - "建立安全政策"
+      - "培訓開發團隊"
+      
+Prevention_Strategies:
+  Secure_Development:
+    - "安全需求定義"
+    - "威脅建模"
+    - "安全編碼實踐"
+    - "安全測試整合"
+    
+  Operational_Security:
+    - "定期安全評估"
+    - "漏洞管理"
+    - "事件回應程序"
+    - "安全監控"
+```
+
+---
+*安全模式 v2 - SuperClaude 指令的全面安全知識模式*

@@ -1,0 +1,155 @@
+# 載入設定以進行權杖最佳化和效能
+
+## 核心設定 (總是載入)
+```yaml
+Core:
+  Always: [CLAUDE.md, RULES.md, PERSONAS.md, MCP.md]
+  Priority: 關鍵行為規則、人格設定和 MCP 模式
+  Size: ~4600 權杖
+  Reason: 所有 Claude Code 行為的必要元素，人格設定全域可用
+  
+Global Availability:
+  PERSONAS.md: 所有 9 個認知原型透過 /persona 可用：
+  MCP.md: 所有 MCP 模式自動可用
+  
+Commands:
+  Trigger: /
+  Path: .claude/commands/
+  Size: 每個指令約 50 權杖
+  Cache: 最近 5 個指令
+  Index: 僅指令名稱和風險等級
+  
+SharedResources:
+  LoadWith: 相關指令
+  Path: .claude/commands/shared/
+  Size: 每個 YAML 約 150 權杖
+  Examples:
+    - cleanup-patterns.yml→與 /cleanup 一起載入
+    - git-workflow.yml→與 git 操作一起載入
+    - planning-mode.yml→與高風險指令一起載入
+```
+
+## 進階載入最佳化
+```yaml
+Smart Loading Strategies:
+  Predictive: 根據指令模式預測可能需要的資源
+  Contextual: 根據專案類型和使用者行為載入資源
+  Lazy: 延遲載入非關鍵資源直到明確需要
+  Incremental: 先載入最少，隨複雜度增加而擴展
+  
+Intelligent Caching:
+  Command Frequency: 永久快取最常用的指令
+  Workflow Patterns: 為常見指令序列預載資源
+  User Preferences: 記住並預載使用者偏好的工具
+  Session Context: 跨相關操作保持相關上下文
+  
+Token Efficiency:
+  Base load: 4600 權杖 (CLAUDE.md + RULES.md + PERSONAS.md + MCP.md)
+  Optimized commands: 4650-4700 權杖 (每個指令約 50 權杖)
+  Smart shared resources: 僅在需要時載入，平均 150-300 權杖
+  Performance gain: 通過智慧載入減少約 20-30%
+  Trade-off: 為一致的全域功能提供更高的基礎載入
+  
+Context Compression:
+  Auto UltraCompressed: 當上下文接近限制時啟用
+  Selective Detail: 保留摘要，按需載入詳細資訊
+  Result Caching: 儲存並重用昂貴的分析結果
+  Pattern Recognition: 學習並根據使用模式最佳化
+```
+
+## 效能監控整合
+```yaml
+Loading Metrics:
+  Time to Load: 追蹤元件載入速度
+  Cache Hit Rate: 衡量快取策略的有效性
+  Memory Usage: 監控總上下文大小和最佳化機會
+  User Satisfaction: 追蹤指令完成成功率
+  
+Adaptive Optimization:
+  Slow Loading: 自動切換到更輕的替代方案
+  High Memory: 觸發上下文壓縮和清理
+  Cache Misses: 根據使用模式調整快取策略
+  Performance Degradation: 回退到最小載入模式
+```
+
+## 載入策略
+
+```yaml
+Loading_Strategies:
+  Core_Loading:
+    Essential_Files:
+      Always_Load: ["CLAUDE.md", "RULES.md", "PERSONAS.md", "MCP.md"]
+      Token_Budget: "約 4600 權杖基礎成本"
+      Load_Order: "CLAUDE.md → RULES.md → PERSONAS.md → MCP.md"
+      Validation: "在繼續之前確保所有檔案存在且有效"
+      
+    Command_Loading:
+      Discovery_Method: "掃描 .claude/commands/ 目錄中的 .md 檔案"
+      Index_Creation: "建立包含指令名稱和旗標的輕量索引"
+      Lazy_Loading: "僅在調用時載入完整指令內容"
+      Cache_Strategy: "在記憶體中保留最後 5 個使用的指令"
+      
+  Progressive_Loading:
+    Minimal_Start:
+      Initial_Load: "僅核心檔案 + 指令索引"
+      Token_Cost: "約 4650 權杖 (基礎 + 指令索引)"
+      Expansion_Triggers: "指令調用、旗標使用、複雜度偵測"
+      
+    Context_Expansion:
+      Shared_Resources: "在參考時從 shared/ 載入 .yml 檔案"
+      Pattern_Files: "根據指令需求載入特定模式檔案"
+      MCP_Resources: "在使用 MCP 旗標時載入 MCP 特定模式"
+      Research_Resources: "在偵測到外部程式庫時載入研究模式"
+      
+  Intelligent_Caching:
+    Usage_Patterns:
+      Frequency_Based: "永久快取最常使用的指令"
+      Sequence_Based: "為常見指令鏈預載資源"
+      Context_Based: "快取與當前專案類型相關的資源"
+      Time_Based: "快取最近使用的資源以便快速存取"
+      
+    Cache_Management:
+      Size_Limits: "最大快取大小以防止記憶體膨脹"
+      Eviction_Policy: "用於快取清理的 LRU (最近最少使用)"
+      Preemptive_Loading: "在空閒時間載入可能需要的資源"
+      Cache_Warming: "在啟動時用常見模式預填充快取"
+      
+  Context_Optimization:
+    Token_Management:
+      Budget_Tracking: "持續監控總上下文權杖使用"
+      Threshold_Alerts: "70% 時警告，85% 容量時關鍵"
+      Auto_Compression: "接近限制時啟用 UltraCompressed 模式"
+      Cleanup_Triggers: "需要空間時移除未使用的資源"
+      
+    Smart_Compression:
+      Selective_Detail: "保留摘要，按需載入詳細資訊"
+      Result_Caching: "儲存昂貴的分析結果以供重用"
+      Pattern_Recognition: "學習使用者模式以最佳化載入"
+      Adaptive_Strategies: "根據會話特徵調整載入"
+      
+  Performance_Optimization:
+    Loading_Speed:
+      Parallel_Loading: "並行載入獨立資源"
+      Streaming_Parse: "增量處理大檔案"
+      Incremental_Updates: "更新快取而無需完全重新載入"
+      Background_Refresh: "在空閒期間更新快取資源"
+      
+    Memory_Efficiency:
+      Lazy_Initialization: "僅在需要時建立物件"
+      Resource_Pooling: "跨指令重用常見物件"
+      Garbage_Collection: "定期清理未使用的資源"
+      Memory_Profiling: "追蹤記憶體使用模式以進行最佳化"
+      
+  Failure_Handling:
+    Resource_Unavailable:
+      Missing_Files: "以降級功能繼續，警告使用者"
+      Parse_Errors: "跳過損壞的檔案，使用後備模式"
+      Permission_Issues: "優雅降級並通知使用者"
+      Network_Failures: "在可用時使用快取版本"
+      
+    Fallback_Strategies:
+      Minimal_Mode: "資源不可用時僅使用核心檔案操作"
+      Alternative_Sources: "使用備份位置或嵌入的預設值"
+      Graceful_Degradation: "減少功能而非完全失敗"
+      Recovery_Attempts: "使用指數退避重試失敗的載入"
+```

@@ -1,0 +1,53 @@
+# 功能開發任務範本
+# 由任務管理系統用於結構化功能追蹤
+
+Task_Template:
+  Metadata:
+    id: "{TASK_ID}"
+    title: "{TASK_TITLE}"
+    status: "待處理"
+    priority: "中"
+    created: "{TIMESTAMP}"
+    updated: "{TIMESTAMP}"
+    assignee: "Claude"
+    branch: "feature/{TASK_ID}"
+    
+  Requirement:
+    description: "{REQUIREMENT_DESCRIPTION}"
+    
+  Breakdown:
+    Analysis_Phase:
+      - "理解需求"
+      - "識別受影響的檔案"
+      - "規劃架構變更"
+      - "建立 git 分支"
+      
+    Implementation_Phase:
+      - "{STEP_1}"
+      - "{STEP_2}"
+      - "{STEP_3}"
+      
+    Testing_Phase:
+      - "撰寫測試"
+      - "執行測試套件"
+      - "手動測試"
+      
+    Completion_Phase:
+      - "程式碼審查"
+      - "文件更新"
+      - "合併到主分支"
+      
+  Files_Affected:
+    new: []
+    modified: []
+    deleted: []
+    
+  Context_Preservation:
+    key_decisions: []
+    blockers: []
+    notes: []
+    session_state: {}
+    
+  Checkpoints:
+    commits: []
+    branches: []

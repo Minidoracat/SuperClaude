@@ -1,0 +1,181 @@
+# 規劃模式設定
+
+## 通用規劃控制
+
+```yaml
+Planning_Flags:
+  --plan: "強制任何指令進入規劃模式"
+  --skip-plan: "跳過規劃模式 (立即執行)"
+  default: "除非有 --plan 旗標，否則立即執行"
+  
+Risk_Assessment:
+  description: "使用者通過明確旗標控制規劃"
+  recommendation: "對修改系統狀態的高風險操作使用 --plan"
+  
+Universal_Planning_Behavior:
+  All_Commands: "支援使用者控制規劃的 --plan 旗標"
+  Planning_Output: "使用 exit_plan_mode 工具呈現結構化計畫"
+  User_Approval: "在執行計畫前等待使用者確認"
+  Execution_Flow: "解析 → 規劃 (如果要求) → 執行 → 報告"
+```
+
+## 指令特定規劃模式
+
+```yaml
+Analysis_Commands:
+  Commands: ["analyze", "scan", "troubleshoot", "explain"]
+  Planning_Focus:
+    - "分析範圍和方法"
+    - "要使用的工具和技術"
+    - "預期輸出格式和位置"
+    - "分析的時間估計"
+  Planning_Template: |
+    ## 分析計畫
+    **範圍:** {analysis_target}
+    **方法:** {analysis_approach}
+    **工具:** {tools_to_use}
+    **輸出:** {expected_deliverables}
+    **持續時間:** {time_estimate}
+    
+Build_Commands:
+  Commands: ["build", "spawn", "design"]
+  Planning_Focus:
+    - "要建立/修改的元件"
+    - "技術選擇和相依性"
+    - "整合點和需求"
+    - "測試策略和驗證"
+  Planning_Template: |
+    ## 建置計畫
+    **目標:** {build_target}
+    **堆疊:** {technology_choices}
+    **元件:** {components_to_create}
+    **相依性:** {required_dependencies}
+    **測試:** {testing_approach}
+    
+Operations_Commands:
+  Commands: ["deploy", "migrate", "cleanup", "git"]
+  Planning_Focus:
+    - "要執行的操作"
+    - "風險評估和緩解"
+    - "回滾程序"
+    - "驗證和監控"
+  Planning_Template: |
+    ## 操作計畫
+    **操作:** {operation_type}
+    **目標:** {operation_target}
+    **風險:** {identified_risks}
+    **緩解:** {risk_mitigation}
+    **回滾:** {rollback_procedure}
+    
+Quality_Commands:
+  Commands: ["test", "improve", "document"]
+  Planning_Focus:
+    - "要實施的品質改進"
+    - "指標和目標"
+    - "驗證標準"
+    - "成功衡量"
+  Planning_Template: |
+    ## 品質計畫
+    **目標:** {quality_goal}
+    **指標:** {success_metrics}
+    **方法:** {improvement_method}
+    **驗證:** {validation_criteria}
+```
+
+## 風險評估模式
+```yaml
+Risk Triggers:
+  Prod: deploy --env prod | migrate --rollback false
+  Data Loss: cleanup --all | migrate w/o --dry-run
+  System Wide: spawn --task | improve --iterate
+  Arch: design --api | troubleshoot --prod
+  
+Checkpoint Required:
+  - Before: deploy, migrate, cleanup --all
+  - During: 長時間執行的 improve --iterate
+  - After: 任何有警告的操作
+
+Safety Overrides:
+  --no-plan: 僅對 SKIP_PLANNING 指令跳過規劃
+  --plan: 強制任何指令進行規劃
+  --dry-run: 安全預覽模式，跳過規劃
+```
+
+## 規劃工作流程整合
+
+```yaml
+Pre-Execution_Check:
+  1: "解析指令名稱和旗標"
+  2: "檢查使用者 --plan 旗標請求"
+  3: "評估操作複雜度和風險"
+  4: "如果要求規劃 → 生成計畫 → exit_plan_mode"
+  5: "在執行前等待使用者核准"
+  6: "如果是高風險操作則建立檢查點"
+  7: "繼續執行"
+
+Planning_Content_Requirements:
+  Always_Include:
+    - "指令意圖和目標"
+    - "要影響/修改的資源"
+    - "風險評估和緩解"
+    - "預期結果和交付物"
+  
+  Conditionally_Include:
+    - "時間估計 (對於複雜操作)"
+    - "相依性和先決條件"
+    - "驗證步驟和成功標準"
+    - "回滾程序 (對於高風險操作)"
+  
+  Format_Requirements:
+    - "使用 exit_plan_mode 工具進行計畫呈現"
+    - "結構化 markdown 格式"
+    - "清晰的章節和項目符號"
+    - "可操作和具體的細節"
+
+Claude_Code_Compliance:
+  Planning_Mode_Support:
+    - "所有指令必須支援 --plan 旗標"
+    - "規劃行為必須一致"
+    - "使用者控制何時進行規劃"
+    - "無自動強制規劃"
+  
+  Plan_Quality_Standards:
+    - "計畫必須全面且可操作"
+    - "高風險操作需要風險評估"
+    - "定義清晰的成功標準"
+    - "使用者可以做出明智的核准決定"
+  
+  Execution_Patterns:
+    - "預設立即執行"
+    - "--plan 旗標強制規劃模式"
+    - "規劃後需要使用者核准"
+    - "優雅處理計畫拒絕"
+```
+
+## 與指令檔案整合
+
+```yaml
+Command_Header_Pattern:
+  Standard_Text: "執行: 立即。--plan→先顯示計畫"
+  Enhanced_Documentation: "@include planning-mode.yml#Planning_Behavior"
+  
+Planning_Behavior:
+  Default_Execution: "指令預設立即執行而不進行規劃"
+  Plan_Flag_Behavior: "--plan 旗標先顯示詳細執行計畫"
+  User_Control: "使用者決定何時使用規劃模式"
+  Plan_Approval: "使用者必須在執行前核准計畫"
+  
+Example_Usage:
+  Basic_Planning: "/command --plan"
+  Complex_Operation: "/deploy --env prod --plan"
+  Risk_Assessment: "/cleanup --all --plan"
+  
+Planning_Benefits:
+  Risk_Mitigation: "在執行前預覽操作"
+  Resource_Planning: "理解影響和需求"
+  Decision_Making: "對操作做出明智的選擇"
+  Learning_Tool: "理解指令將做什麼"
+```
+
+---
+*規劃模式設定 v2 - Claude Code 合規的全面規劃模式*

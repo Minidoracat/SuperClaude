@@ -1,0 +1,507 @@
+# 執行模式
+# 統一工作流程系統、MCP 協調、git 操作和執行生命週期
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 通用執行生命週期
+
+```yaml
+Standard_Lifecycle:
+  Pre_Execution:
+    Risk_Assessment:
+      Calculate: "評估操作風險等級"
+      Factors: ["資料遺失可能性", "不可逆性", "範圍", "安全性"]
+      Actions:
+        Low: "繼續並監控"
+        Medium: "警告並記錄"
+        High: "需要確認"
+        Critical: "阻止並警報"
+    Environment_Validation:
+      Check: ["必需工具", "權限", "資源", "相依性"]
+      Verify: ["Git 狀態", "網路存取", "磁碟空間", "記憶體"]
+      MCP_Health: "測試伺服器連線和回應"
+    State_Preparation:
+      TodoList_Triggers: "@include task-management-patterns.yml#Auto_Trigger_Rules"
+      Checkpoint: "@include recovery-state-patterns.yml#Automatic_Triggers"
+      Cache: "先前結果以提高效率"
+      Lock: "防止並行修改"
+      MCP_Cache_Init: "@include mcp-cache-patterns.yml#Cache_Storage"
+      
+  During_Execution:
+    Progress_Monitoring:
+      Track: ["操作進度", "資源使用", "錯誤率", "權杖消耗"]
+      Alert: ["效能降級", "接近限制", "異常", "MCP 失敗"]
+    Dynamic_Optimization:
+      Adapt: ["調整平行性", "切換策略", "快取結果", "回退到原生"]
+      Fallback: ["如果主要失敗則使用替代方案", "優雅降級"]
+    Error_Handling:
+      "@include recovery-state-patterns.yml#Recovery_Framework"
+      
+  Post_Execution:
+    Verification:
+      Confirm: ["達成預期結果", "無副作用", "狀態一致"]
+      Validate: ["輸出品質", "效能指標", "安全合規"]
+    Cleanup:
+      Remove: ["臨時檔案", "鎖定", "快取資料"]
+      Update: ["稽核日誌", "指標", "文件"]
+    Reporting:
+      Generate: ["成功/失敗報告", "效能指標", "建議"]
+      Store: ".claudedocs/lifecycle/execution-{timestamp}.md"
+```
+
+## MCP 伺服器註冊與協調
+
+```yaml
+Servers:
+  Context7:
+    Purpose: "程式庫文件和程式碼範例"
+    Best_For: ["API 使用", "框架模式", "程式庫整合"]
+    Token_Cost: "低-中使用"
+    Capabilities:
+      - resolve-library-id: "尋找 Context7 相容的程式庫 ID"
+      - get-library-docs: "擷取最新文件"
+    Success_Rate: "熱門程式庫非常高"
+    Fallback: "WebSearch 官方文件"
+    
+  Sequential:
+    Purpose: "逐步複雜問題解決"
+    Best_For: ["架構", "除錯", "系統設計", "根因分析"]
+    Token_Cost: "中-高使用"
+    Capabilities:
+      - sequentialthinking: "適應性多步驟推理"
+    Success_Rate: "複雜問題高"
+    Fallback: "原生逐步分析"
+    
+  Magic:
+    Purpose: "使用 21st.dev 生成 UI 元件"
+    Best_For: ["React/Vue 元件", "UI 模式", "原型"]
+    Token_Cost: "中使用"
+    Capabilities:
+      - 21st_magic_component_builder: "生成 UI 元件"
+      - 21st_magic_component_refiner: "改進現有元件"
+      - 21st_magic_component_inspiration: "搜尋元件庫"
+      - logo_search: "在 TSX/JSX/SVG 中尋找公司標誌"
+    Success_Rate: "常見元件高"
+    Fallback: "在專案中搜尋現有元件"
+    
+  Puppeteer:
+    Purpose: "瀏覽器自動化和測試"
+    Best_For: ["E2E 測試", "截圖", "網頁爬蟲", "效能測試"]
+    Token_Cost: "低 (最少權杖，主要是動作)"
+    Capabilities:
+      - connect_active_tab: "連接到 Chrome 除錯"
+      - navigate: "導航到 URL"
+      - screenshot: "擷取頁面/元素截圖"
+      - click: "點擊元素"
+      - fill: "填寫表單輸入"
+      - evaluate: "執行 JavaScript"
+    Success_Rate: "標準網頁互動非常高"
+    Fallback: "手動測試指導"
+
+MCP_Parallel_Execution:
+  "@include mcp-cache-patterns.yml#Parallel_MCP_Execution"
+
+MCP_Cache_Integration:
+  Context7_Caching: "@include mcp-cache-patterns.yml#Context7_Cache"
+  Sequential_Caching: "@include mcp-cache-patterns.yml#Sequential_Cache"
+  Magic_Caching: "@include mcp-cache-patterns.yml#Magic_Cache"
+  Performance: "@include mcp-cache-patterns.yml#Cache_Performance_Optimization"
+
+MCP_Control_Flags:
+  Individual:
+    --c7: "僅啟用 Context7"
+    --no-c7: "停用 Context7"
+    --seq: "僅啟用 Sequential"
+    --no-seq: "停用 Sequential"
+    --magic: "僅啟用 Magic"
+    --no-magic: "停用 Magic"
+    --pup: "僅啟用 Puppeteer"
+    --no-pup: "停用 Puppeteer"
+    
+  Combined:
+    --all-mcp: "啟用所有 MCP 伺服器"
+    --no-mcp: "停用所有 MCP 伺服器 (僅原生工具)"
+    
+  Priority: "明確旗標 > 指令預設 > 上下文觸發"
+  Override: "--no-mcp 覆蓋所有個別旗標"
+```
+
+## 鏈式執行模式
+
+```yaml
+Execution_Types:
+  Sequential: "A→B→C | 線性進展 w/ 上下文傳遞"
+  Parallel: "A&B&C | 並行執行 w/ 結果聚合"
+  Conditional: "A&&B||C | 成功/失敗分支路徑"
+  Iterative: "A→B→檢查→A | 循環直到條件滿足"
+
+Chain_Control:
+  Success_Rules:
+    Continue: "傳遞豐富的上下文到下一個指令"
+    Cache: "儲存中間結果以供重用"
+    Skip: "如果快取則跳過冗餘操作"
+  Failure_Rules:
+    Critical: "STOP: 停止鏈，保留上下文"
+    Recoverable: "RETRY: 3 次嘗試 w/ 指數退避"
+    Non_Critical: "CONTINUE: 記錄警告，降級繼續"
+    Validation: "BRANCH: 替代路徑或手動修復"
+  Context_Flow:
+    Persist: "在整個鏈中保持上下文"
+    Selective: "僅在指令之間傳遞相關結果"
+    Cleanup: "鏈完成後清除上下文"
+    Checkpoint: "關鍵操作前自動儲存狀態"
+
+Intelligent_MCP_Selection:
+  Command_Defaults:
+    analyze + --architecture: "建議 --seq 進行系統分析"
+    build + --react: "建議 --magic 用於 UI 元件"
+    test + --e2e: "建議 --pup 用於瀏覽器測試"
+    explain + library_name: "建議 --c7 用於文件"
+    design + --api: "建議 --seq --c7 進行全面設計"
+    troubleshoot + --investigate: "建議 --seq 進行根因分析"
+    improve + --performance: "建議 --seq --pup 進行最佳化分析"
+    
+  Context_Triggers:
+    Import_Errors: "→ C7 查詢必需"
+    Complex_Debugging: "→ Sequential 思考"
+    UI_Requests: "→ Magic 建構器"
+    E2E_Testing: "→ Puppeteer 自動化"
+
+## 自動 MCP 上下文偵測
+
+```yaml
+Context_Detection_Patterns:
+  Library_References:
+    Triggers:
+      - "import .* from ['\"][^./].*['\"]"  # 非相對匯入
+      - "require\\(['\"][^./].*['\"]\\)"     # CommonJS 外部
+      - "from \\w+ import"                   # Python 外部
+      - "@\\w+/"                           # 範圍套件
+    Action: "→ C7 resolve-library-id 必需"
+    Blocking: "在找到文件之前實作被阻止"
+    
+  Complex_Problem_Indicators:
+    Keywords: ["架構", "設計", "系統", "複雜", "除錯", "調查", "根因", "瓶頸"]
+    Error_Patterns: ["多個錯誤", "級聯失敗", "效能降級"]
+    Scope_Indicators: ["多檔案", "跨元件", "全系統"]
+    Action: "→ Sequential 思考建議"
+    
+  UI_Component_Requests:
+    Keywords: ["按鈕", "表單", "模態", "對話框", "下拉選單", "表格", "圖表", "儀表板", "元件"]
+    Framework_Mentions: ["react", "vue", "svelte", "angular"]
+    File_Types: ["*.tsx", "*.jsx", "*.vue", "*.svelte"]
+    Action: "→ Magic 建構器建議"
+    
+  Browser_Automation_Needs:
+    Keywords: ["截圖", "e2e", "整合測試", "瀏覽器", "selenium", "自動化"]
+    Test_Patterns: ["cypress", "playwright", "puppeteer", "webdriver"]
+    Action: "→ Puppeteer 自動化建議"
+    
+Research_Requirements:
+  External_Library_Detection:
+    Pattern: "任何來自非相對路徑的 import/require"
+    Rule: "關鍵 → 實作前需要研究"
+    Process:
+      1: "使用偵測到的程式庫名稱 C7 resolve-library-id"
+      2: "如果未找到 → WebSearch '[程式庫] 官方文件'"
+      3: "擷取: 安裝、基本使用、常見模式"
+      4: "如果信心 < 90% 則阻止實作"
+      
+  Unknown_Pattern_Detection:
+    Triggers: ["不熟悉的語法", "新框架", "未知的 API"]
+    Phrases_To_Block: ["可能有效", "大概", "我認為", "典型模式"]
+    Required_Instead: "文件確認", "官方來源說明"
+    Action: "研究 → 驗證 → 記錄來源 → 實作"
+    
+  Low_Confidence_Indicators:
+    Uncertainty_Language: ["也許", "應該", "通常", "一般"]
+    Missing_Evidence: "無可用的來源引用"
+    Action: "阻止實作直到研究完成"
+
+Auto_Activation_Rules:
+  Command_Based:
+    /build + UI_keywords: "建議 --magic 用於元件生成"
+    /analyze + complexity_indicators: "建議 --seq 用於深度分析"
+    /test + browser_keywords: "建議 --pup 用於自動化"
+    /explain + library_name: "建議 --c7 用於文件"
+    
+  File_Based:
+    "*.tsx|*.jsx": "前端上下文 → --magic 可用"
+    "*.test.*|*.spec.*": "測試上下文 → --pup 可用"
+    "*api*|*server*": "後端上下文 → --seq 用於設計"
+    
+  Error_Based:
+    "ModuleNotFoundError": "→ C7 查詢必需"
+    "TypeError": "→ Sequential 分析建議"
+    "Build failures": "→ Sequential 故障排除"
+    
+Override_Controls:
+  User_Flags_Priority: "明確旗標 > 自動偵測 > 預設"
+  Disable_All: "--no-mcp 覆蓋所有自動偵測"
+  Selective_Disable: "--no-c7, --no-seq, --no-magic, --no-pup"
+  Force_Enable: "--c7, --seq, --magic, --pup 覆蓋上下文偵測"
+```
+    
+  Synergistic_Patterns:
+    --magic + --pup: "生成 UI 元件並立即測試"
+    --seq + --c7: "複雜分析與權威文件"
+    --seq + --think-hard: "深度架構分析與文件"
+    --c7 + --uc: "研究與壓縮輸出以提高權杖效率"
+```
+
+## 開發工作流程
+
+```yaml
+Full_Stack_Development:
+  Chain: "load→analyze→design→build→test→scan→deploy"
+  Flags: ["--think", "--magic", "--validate"]
+  MCP_Usage: ["--c7 用於文件", "--magic 用於 UI", "--seq 用於設計"]
+  Time: "典型開發會話"
+  Context_Handoff:
+    load→analyze: "專案理解"
+    analyze→design: "問題與架構"
+    design→build: "模式與結構"
+    build→test: "實作"
+    test→scan: "覆蓋率與結果"
+    scan→deploy: "安全驗證"
+
+Feature_Implementation:
+  Chain: "analyze --code→design --feature→build --feature→test→git --commit"
+  Flags: ["--think", "--magic"]
+  MCP_Usage: ["--magic 用於元件", "--c7 用於模式"]
+  Time: "中等持續時間"
+
+Bug_Investigation_Fix:
+  Chain: "troubleshoot --investigate→analyze --code→improve --quality→test→git --commit"
+  Flags: ["--think-hard", "--seq"]
+  MCP_Usage: ["--seq 用於調查", "--c7 用於解決方案"]
+  Time: "可變持續時間"
+
+Tech_Debt_Reduction:
+  Chain: "analyze --architecture→design --refactor→improve --quality→test→document"
+  Flags: ["--think-hard", "--refactor", "--quality"]
+  MCP_Usage: ["--seq 用於分析", "--c7 用於模式"]
+  Time: "延長會話"
+```
+
+## Git 整合模式
+
+```yaml
+Git_Workflows:
+  Auto_Safety_Checks:
+    Before_Commit:
+      - "git status → 驗證預期檔案"
+      - "git diff --staged → 檢視變更"
+      - "如果設定則執行 pre-commit 掛鉤"
+      - "如果可用則執行測試"
+      - "檢查秘密/憑證"
+    Before_Push:
+      - "驗證目標分支和遠端"
+      - "檢查強制推送影響"
+      - "確保 CI/CD 就緒"
+    Before_Merge:
+      - "測試衝突"
+      - "驗證分支政策"
+      - "檢查核准要求"
+      
+  Commit_Standards:
+    Format: "{type}: {description}\n\n{body}\n\n🤖 使用 [Claude Code] 生成\n\nCo-Authored-By: Claude"
+    Types: ["feat", "fix", "docs", "style", "refactor", "test", "chore"]
+    Validation:
+      - "類型符合變更性質"
+      - "描述 < 50 字元"
+      - "正文解釋為什麼，而非什麼"
+      
+  Branch_Management:
+    Strategy:
+      Feature: "feature/{description}"
+      Bugfix: "bugfix/{description}"
+      Release: "release/{version}"
+      Hotfix: "hotfix/{description}"
+    Protection:
+      Main: "無直接推送，需要 PR"
+      Release: "需要管理員核准"
+      Feature: "合併後自動刪除"
+      
+  Conflict_Resolution:
+    Detection: "在 pull/merge 期間自動偵測"
+    Strategies:
+      Simple: "如果不重疊則自動解決"
+      Complex: "互動式 3 向合併"
+      Binary: "明確選擇版本"
+    Recovery:
+      Abort: "git merge --abort → 恢復狀態"
+      Stash: "git stash → 嘗試不同方法"
+      Branch: "建立衝突解決分支"
+```
+
+## 檢查點與恢復系統
+
+```yaml
+Checkpoint_Integration:
+  "@include recovery-state-patterns.yml#Checkpoint_Structure"
+  "@include recovery-state-patterns.yml#Automatic_Triggers"
+  "@include recovery-state-patterns.yml#Recovery_Commands"
+  "@include recovery-state-patterns.yml#Recovery_Framework"
+```
+
+## 權杖預算管理
+
+```yaml
+Cost_Categories:
+  Native_Tools: "無權杖成本"
+  Light_MCP: "最少使用"
+  Medium_MCP: "中等使用"
+  Heavy_MCP: "大量使用"
+  
+Budget_Escalation:
+  1: "簡單任務優先使用原生"
+  2: "程式庫問題使用 C7"
+  3: "複雜分析使用 Sequential"
+  4: "結合 MCP 以發揮協同效應"
+  
+Abort_Conditions:
+  Context_Usage: "高上下文使用 → 原生工具"
+  Timeout_Errors: "MCP 逾時/錯誤 → 回退"
+  Diminishing_Returns: "結果不佳 → 停止 MCP 使用"
+
+Failover_Integration:
+  "@include recovery-state-patterns.yml#Standard_Recovery_Patterns"
+  
+Error_Recovery_Standards:
+  "@include recovery-state-patterns.yml#Standard_Recovery_Patterns"
+```
+
+## 效能與監控
+
+```yaml
+Performance_Tracking:
+  Metrics:
+    Build_Times: "追蹤持續時間趨勢"
+    Test_Execution: "監控套件效能"
+    Bundle_Sizes: "追蹤資產大小變化"
+    Memory_Usage: "監控 CLI 消耗"
+    MCP_Response_Times: "追蹤伺服器效能"
+    Token_Consumption: "監控 MCP 使用效率"
+  Baselines:
+    Initial: "首次執行時擷取"
+    Update: "每週更新"
+    Analysis: "識別退化"
+  Alert_Thresholds:
+    Build_Time: "從基準顯著增加"
+    Bundle_Size: "從基準明顯增加"
+    Test_Time: "從基準大幅增加"
+    Memory: "從基準主要增加"
+    MCP_Timeout: "延長持續時間"
+  Storage: ".claudedocs/metrics/performance-{YYYY-MM-DD}.jsonl"
+
+Server_Performance:
+  Response_Times:
+    Context7: "快速回應 (取決於網路)"
+    Sequential: "中等持續時間 (取決於複雜度)"
+    Magic: "快速到中等 (元件複雜度)"
+    Puppeteer: "快速到中等 (取決於頁面載入)"
+    
+  Resource_Usage:
+    Context7: "低 CPU，中等網路"
+    Sequential: "高 CPU，低網路"
+    Magic: "中等 CPU，高網路"
+    Puppeteer: "中等 CPU，低網路"
+    
+  Reliability_Scores:
+    Context7: "非常高 (取決於程式庫可用性)"
+    Sequential: "非常高 (內部處理)"
+    Magic: "高 (外部服務相依性)"
+    Puppeteer: "非常高 (瀏覽器相依性)"
+```
+
+## 指令整合
+
+```yaml
+Chain_Commands:
+  Execute:
+    Predefined: "/chain 'feature-dev' --magic --think"
+    Custom: "/analyze → /build → /test"
+    Conditional: "/test && /deploy || /troubleshoot"
+  Control:
+    Status: "/chain-status | 顯示當前進度"
+    Results: "/chain-results | 顯示累積的上下文"
+    Pause: "/chain-pause | 在當前步驟暫停"
+    Resume: "/chain-resume | 從暫停繼續"
+    Abort: "/chain-abort | 停止並清理"
+    Retry: "/chain-retry | 重試失敗的步驟"
+
+Command_Hooks:
+  Build_Hooks:
+    Pre: ["清理產物", "驗證相依性", "設定環境", "檢查 MCP 健康"]
+    During: ["監控進度", "快取層", "處理錯誤", "追蹤權杖使用"]
+    Post: ["驗證輸出", "執行煙霧測試", "更新清單", "記錄 MCP 效能"]
+    
+  Test_Hooks:
+    Pre: ["重設測試資料", "啟動服務", "清除快取", "如需要連接 Puppeteer"]
+    During: ["追蹤覆蓋率", "監控效能", "擷取日誌", "處理瀏覽器事件"]
+    Post: ["生成報告", "清理測試資料", "封存結果", "斷開瀏覽器連接"]
+    
+  Deploy_Hooks:
+    Pre: ["驗證環境", "檢查權限", "備份當前", "使用 Sequential 驗證"]
+    During: ["監控健康", "追蹤進度", "處理回滾", "記錄部署事件"]
+    Post: ["驗證部署", "執行健康檢查", "更新文件", "生成部署報告"]
+```
+
+## 估算方法
+
+```yaml
+Estimation_Methodology:
+  Time_Estimation_Framework:
+    Development_Phases:
+      Planning: "需求分析和設計: 總計的 10-15%"
+      Implementation: "核心開發工作: 總計的 50-60%"
+      Testing: "單元、整合和系統測試: 總計的 15-25%"
+      Integration: "系統整合和部署: 總計的 5-10%"
+      Buffer: "未知的未知和應急: 總計的 10-20%"
+      
+  Complexity_Scoring:
+    Low_Complexity: "充分理解，既定模式: 1-3 天"
+    Medium_Complexity: "一些未知，中等整合: 3-10 天"
+    High_Complexity: "需要研究，複雜整合: 1-4 週"
+    Very_High_Complexity: "新技術，架構變更: 1-3 個月"
+    
+  Team_Velocity_Factors:
+    Solo_Developer: "乘數: 1.0 (基準)"
+    Small_Team_2_3: "乘數: 0.8 (協調開銷)"
+    Medium_Team_4_8: "乘數: 0.6 (溝通開銷)"
+    Large_Team_9Plus: "乘數: 0.4 (顯著協調)"
+    
+  Risk_Assessment_Framework:
+    Technical_Risks:
+      New_Technology: "學習曲線影響: +25-50% 時間"
+      Complex_Integration: "多個系統接觸點: +20-40% 時間"
+      Performance_Requirements: "最佳化需求: +15-30% 時間"
+      Legacy_System_Integration: "技術債務影響: +30-60% 時間"
+      
+    Resource_Risks:
+      Key_Person_Dependency: "需要單一專家: +20-40% 時間"
+      External_Dependencies: "第三方交付物: +10-30% 時間"
+      Skill_Gap: "需要團隊學習: +25-50% 時間"
+      
+  Estimation_Output_Format:
+    Three_Point_Estimation:
+      Optimistic: "最佳情況 (10% 機率)"
+      Realistic: "最可能結果 (50% 機率)"
+      Pessimistic: "最壞情況 (90% 機率)"
+      
+    Confidence_Levels:
+      High_Confidence: "充分理解的需求: ±10%"
+      Medium_Confidence: "存在一些未知: ±25%"
+      Low_Confidence: "顯著不確定性: ±50%"
+      
+    Resource_Planning:
+      Developer_Hours: "總開發工作量"
+      QA_Hours: "測試和品質保證工作量"
+      DevOps_Hours: "部署和基礎設施設定"
+      Project_Management: "協調和溝通開銷"
+```
+
+---
+*執行模式 v2 - 統一工作流程系統、MCP 協調、git 操作和執行生命週期*

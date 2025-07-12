@@ -1,0 +1,287 @@
+# 任務管理模式 - 統一任務系統
+# 全面的任務追蹤、待辦事項整合和工作流程管理
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 兩層架構
+
+```yaml
+Task_Management_Hierarchy:
+  Level_1_Tasks: "高階功能 (./claudedocs/tasks/ 資料夾)"
+    Purpose: "會話持久性、git 分支、需求追蹤"
+    Scope: "跨越多個會話的功能"
+    Examples: ["建置驗證系統", "實作儀表板", "建立 API"]
+    Format: "包含完整上下文的全面 markdown 檔案"
+    
+  Level_2_Todos: "立即可執行的步驟 (TodoWrite/TodoRead)"
+    Purpose: "會話內的即時執行追蹤"
+    Scope: "當前會話特定動作"
+    Examples: ["更新 user.js", "新增驗證", "撰寫測試"]
+    Format: "具有狀態追蹤的 JSON 物件"
+
+Integration_Flow:
+  Task_Creation: "使用者請求 → 任務分解 → 待辦事項生成"
+  Session_Start: "掃描任務 → 載入上下文 → 生成待辦事項"
+  Progress_Sync: "待辦事項完成 → 任務進度更新"
+  Session_End: "儲存上下文 → 更新任務狀態"
+```
+
+## 自動觸發偵測模式
+
+```yaml
+Complexity_Triggers:
+  File_Count_Thresholds:
+    Single_File: "不需要自動觸發"
+    Multiple_Files_3_5: "如果操作相互依賴則考慮 TodoList"
+    Many_Files_6_Plus: "自動觸發 TodoList 進行協調"
+    
+  Operation_Complexity:
+    Simple_Commands: "讀取、分析單一檔案 → 無待辦事項"
+    Multi_Step_Workflows: "建置、測試、部署序列 → 自動觸發"
+    Cross_Component_Changes: "多個模組受影響 → 自動觸發"
+    Architecture_Changes: "全系統影響 → 自動觸發"
+    
+  Time_Estimation_Triggers:
+    Quick_Tasks_Under_5_Min: "直接執行，無待辦事項"
+    Medium_Tasks_5_30_Min: "考慮使用待辦事項進行追蹤"
+    Long_Tasks_Over_30_Min: "自動觸發待辦事項進行管理"
+    
+  Risk_Level_Triggers:
+    Low_Risk: "文件、簡單修復 → 可選待辦事項"
+    Medium_Risk: "功能新增、重構 → 建議待辦事項"
+    High_Risk: "資料庫變更、部署 → 需要待辦事項"
+    Critical_Risk: "安全、生產 → 強制待辦事項 + 檢查點"
+
+Auto_Trigger_Rules:
+  Command_Patterns:
+    build + multiple_targets: "自動觸發: 需要協調"
+    migrate + database: "自動觸發: 需要風險管理"
+    deploy + production: "自動觸發: 安全協定"
+    refactor + architecture: "自動觸發: 複雜度管理"
+    
+  Context_Patterns:
+    Multiple_Repos: "自動觸發: 跨儲存庫協調"
+    Team_Collaboration: "自動觸發: 進度可見性"
+    Learning_New_Tech: "自動觸發: 學習進度追蹤"
+    Debug_Complex_Issue: "自動觸發: 調查步驟"
+```
+
+## UltraCompressed 任務範本
+
+```yaml
+UltraCompressed_Task_Format:
+  Header: "T: {TASK_TITLE} | ID: {TASK_ID} | S: {STATUS} | P: {PRIORITY} | 分支: {BRANCH}"
+  
+  Essential_Phases:
+    Analysis: "□ 需求和設計"
+    Implementation: "□ 核心功能"
+    Testing: "□ 單元和整合"
+    Deployment: "□ 預備和生產"
+    
+  Critical_Context:
+    Decisions: "{KEY_DECISIONS}"
+    Blockers: "{BLOCKERS}"
+    Progress: "{COMPLETED}/{TOTAL} ({PERCENTAGE}%)"
+    
+  Workflow_State:
+    Current_Focus: "{ACTIVE_TODO}"
+    Next_Action: "{NEXT_LOGICAL_STEP}"
+    Risk_Level: "{LOW|MEDIUM|HIGH|CRITICAL}"
+
+Compression_Patterns:
+  Status_Codes: "P(待處理) | IP(進行中) | B(已阻塞) | C(已完成) | A(已封存)"
+  Priority_Codes: "C(關鍵) | H(高) | M(中) | L(低)"
+  Phase_Symbols: "□(待處理) | ⏳(進行中) | ⚠(已阻塞) | ✅(已完成)"
+  
+Token_Optimization:
+  Standard_Format: "每個任務約 200-300 權杖"
+  UltraCompressed: "每個任務約 50-80 權杖"
+  Reduction_Rate: "70-75% 權杖節省"
+  Information_Density: "可操作資料的更高濃度"
+```
+
+## 任務生命週期管理
+
+```yaml
+Task_Creation_Workflow:
+  User_Request_Analysis:
+    Parse_Intent: "擷取核心需求和限制"
+    Scope_Assessment: "確定複雜度和相依性"
+    Breakdown_Strategy: "分割成可管理的階段"
+    
+  Task_Structure_Generation:
+    Title: "清晰、可操作的任務描述"
+    ID: "用於追蹤的唯一識別碼"
+    Phases: "工作的邏輯進展"
+    Context: "關鍵決策和限制"
+    
+  Git_Integration:
+    Branch_Creation: "feature/{task-id}-{description}"
+    Checkpoint_Setup: "初始狀態保存"
+    Progress_Tracking: "提交 → 階段完成映射"
+
+Task_Progress_Tracking:
+  Phase_Completion:
+    Analysis_Done: "需求明確 → 實作階段"
+    Implementation_Done: "核心功能完成 → 測試階段"
+    Testing_Done: "品質驗證 → 部署階段"
+    Deployment_Done: "上線並驗證 → 任務完成"
+    
+  Todo_Synchronization:
+    Phase_Start: "為當前階段生成待辦事項"
+    Todo_Completion: "更新任務進度百分比"
+    Phase_End: "標記階段完成，推進到下一個"
+    
+  Context_Preservation:
+    Decision_Tracking: "架構和實作選擇"
+    Blocker_Management: "問題和嘗試的解決方案"
+    Learning_Capture: "獲得的新知識和見解"
+
+Task_Recovery_Integration:
+  Session_Detection: "掃描 ./claudedocs/tasks/in-progress/"
+  Context_Restoration: "載入任務狀態、決策、阻礙"
+  Todo_Regeneration: "從任務狀態建立當前階段待辦事項"
+  Seamless_Resume: "從前一個會話離開的地方繼續"
+```
+
+## 待辦事項整合模式
+
+```yaml
+Todo_Generation_Rules:
+  From_Task_Phases:
+    Analysis_Phase: "研究、需求、設計待辦事項"
+    Implementation_Phase: "檔案建立、功能待辦事項"
+    Testing_Phase: "單元、整合、E2E 待辦事項"
+    Deployment_Phase: "建置、部署、驗證待辦事項"
+    
+  Smart_Todo_Creation:
+    Dependency_Aware: "按相依性排序待辦事項"
+    Context_Specific: "在待辦事項描述中包含相關細節"
+    Progress_Aligned: "待辦事項符合當前任務階段"
+    Recovery_Ready: "待辦事項可以從任務狀態重新生成"
+
+Todo_Status_Mapping:
+  pending: "尚未開始"
+  in_progress: "目前正在工作 (限制 1 個活動)"
+  completed: "成功完成"
+  blocked: "無法繼續 (擷取阻礙資訊)"
+  
+Todo_Lifecycle_Hooks:
+  On_Todo_Start: "標記進行中，更新任務上下文"
+  On_Todo_Complete: "標記已完成，推進任務進度"
+  On_Todo_Block: "擷取阻礙，更新任務狀態"
+  On_Phase_Complete: "生成下一階段待辦事項"
+
+Real_Time_Synchronization:
+  Todo_Changes: "立即更新任務進度"
+  Task_Updates: "重新生成相關待辦事項"
+  Context_Changes: "更新任務和待辦事項上下文"
+  Session_Breaks: "在兩個系統中保留狀態"
+```
+
+## 進階任務管理
+
+```yaml
+Multi_Task_Coordination:
+  Concurrent_Tasks:
+    Max_Active: "同時 3 個任務"
+    Priority_Rules: "高優先級阻止其他"
+    Resource_Conflicts: "偵測檔案修改衝突"
+    
+  Task_Switching:
+    Auto_Save: "當前上下文保存"
+    Checkpoint: "建立恢復點"
+    Branch_Switch: "Git 分支管理"
+    Context_Restore: "載入新任務上下文"
+
+Task_Dependencies:
+  Prerequisite_Management: "任務 A 阻止任務 B 直到完成"
+  Shared_Resources: "協調對通用檔案的存取"
+  Integration_Points: "管理跨任務相依性"
+  
+Task_Quality_Control:
+  Definition_Validation: "清晰的需求和驗收標準"
+  Progress_Verification: "實際進度 vs. 感知進度"
+  Completion_Criteria: "客觀的任務完成規則"
+  Quality_Gates: "階段推進前需要驗證"
+```
+
+## 智慧工作流程模式
+
+```yaml
+Workflow_Recognition:
+  Pattern_Detection:
+    Feature_Development: "analyze → design → build → test → deploy"
+    Bug_Investigation: "troubleshoot → analyze → fix → test → verify"
+    Quality_Improvement: "scan → analyze → improve → test → document"
+    Research_Task: "research → experiment → document → implement"
+    
+  Auto_Phase_Generation:
+    Feature_Tasks: "需求 → 設計 → 實作 → 測試 → 部署"
+    Bug_Tasks: "調查 → 根因 → 修復 → 驗證 → 文件"
+    Refactor_Tasks: "分析 → 規劃 → 實作 → 測試 → 整合"
+    
+Success_Pattern_Learning:
+  Effective_Sequences: "追蹤成功的任務完成模式"
+  Time_Estimation: "從實際 vs 估計持續時間中學習"
+  Blocker_Prevention: "識別常見的失敗點"
+  User_Preferences: "適應個人工作風格"
+
+Task_Optimization:
+  Parallel_Opportunities: "識別可以並行執行的任務"
+  Dependency_Optimization: "最小化阻塞相依性"
+  Resource_Efficiency: "最佳化工具和資源使用"
+  Context_Reuse: "利用先前的任務學習"
+```
+
+## 與指令系統整合
+
+```yaml
+Command_Task_Integration:
+  Task_Aware_Commands:
+    /analyze + active_task: "將分析集中在當前任務範圍"
+    /build + active_task: "建置與任務相關的元件"
+    /test + active_task: "測試在當前任務中開發的功能"
+    
+  Automatic_Task_Context:
+    Command_Execution: "在指令決策中考慮活動任務上下文"
+    Result_Integration: "將指令結果回饋到任務進度"
+    Context_Enrichment: "使用指令學習更新任務上下文"
+    
+Task_Command_Coordination:
+  Command_Triggers_Todos: "複雜指令自動生成待辦事項"
+  Todo_Triggers_Commands: "待辦事項完成可能觸發下一個指令"
+  Task_Guides_Commands: "任務上下文影響指令選擇"
+  
+Progress_Visibility:
+  Command_Progress: "在指令輸出中顯示任務進度"
+  Task_Dashboard: "任務和待辦事項的整合檢視"
+  Session_Summary: "會話結束進度報告"
+```
+
+## 錯誤恢復與韌性
+
+```yaml
+Task_Recovery_Scenarios:
+  Partial_State_Recovery:
+    Task_Only: "任務檔案存在，待辦事項缺失 → 重新生成待辦事項"
+    Todos_Only: "待辦事項存在，任務缺失 → 繼續並警告"
+    Corrupted_Task: "解析可恢復部分，提示缺失"
+    Git_Mismatch: "任務分支缺失 → 提供分支建立"
+    
+  Fallback_Strategies:
+    Manual_Recovery: "向使用者呈現恢復選項"
+    Fresh_Start: "放棄恢復的選項，重新開始"
+    Partial_Import: "匯入可恢復資料，其餘重新開始"
+    Checkpoint_Rollback: "從最後已知良好狀態恢復"
+
+Task_Validation:
+  Integrity_Checks: "驗證任務結構和必需欄位"
+  Context_Completeness: "確保關鍵上下文元素存在"
+  Progress_Consistency: "驗證待辦事項進度 vs 任務進度"
+  Git_Alignment: "驗證 git 狀態符合任務期望"
+```
+
+---
+*任務管理模式 v3 - 統一任務追蹤、待辦事項整合和工作流程管理*

@@ -1,0 +1,367 @@
+# 通用常數與共享值
+# 所有圖例、符號、路徑和通用常數的單一真實來源
+
+## Universal_Legend
+| 符號 | 意義 | | 縮寫 | 意義 |
+|--------|---------|---|--------|---------|
+| → | 導致 | | cfg | 設定 |
+| & | 和/與 | | impl | 實作 |
+| w/ | 與 | | perf | 效能 |
+| @ | 在/位於 | | ops | 操作 |
+| > | 大於 | | val | 驗證 |
+| ∀ | 對於所有/每個 | | req | 需求 |
+| ∃ | 存在/有 | | deps | 相依性 |
+| ∴ | 因此 | | env | 環境 |
+| ∵ | 因為 | | db | 資料庫 |
+| ≡ | 等同 | | api | 介面 |
+| ≈ | 大約 | | docs | 文件 |
+| 📁 | 目錄/路徑 | | std | 標準 |
+| 🔢 | 數字/計數 | | def | 預設 |
+| 📝 | 文字/字串 | | ctx | 上下文 |
+| ⚙ | 設定/設定 | | err | 錯誤 |
+| 🎛 | 控制/旗標 | | exec | 執行 |
+| 🔧 | 設定 | | qual | 品質 |
+| 📋 | 群組/類別 | | rec | 恢復 |
+| 🚨 | 關鍵/緊急 | | sev | 嚴重性 |
+| ⚠ | 警告/注意 | | resp | 回應 |
+| 🔄 | 重試/恢復 | | esc | 升級 |
+| ✅ | 成功/已修復 | | tok | 權杖 |
+| ❌ | 失敗/錯誤 | | opt | 最佳化 |
+| ℹ | 資訊 | | UX | 使用者體驗 |
+| ⚡ | 快速/迅速 | | UI | 使用者介面 |
+| 🐌 | 緩慢/延遲 | | C | 關鍵 |
+| ✨ | 完成/已完成 | | H | 高 |
+| 📖 | 讀取操作 | | M | 中 |
+| ✏ | 編輯操作 | | L | 低 |
+| 🗑 | 刪除操作 | | |
+
+## 通用符號與流程
+
+```yaml
+Process_Flow:
+  Leads_To: "→"
+  Combine: "&"
+  With: "w/"
+  At_Location: "@"
+  Greater_Than: ">"
+  For_All: "∀"
+  Exists: "∃"
+  Therefore: "∴"
+  Because: "∵"
+  Equivalent: "≡"
+  Approximately: "≈"
+  
+Status_Indicators:
+  Success: "✅"
+  Failure: "❌"
+  Warning: "⚠"
+  Information: "ℹ"
+  Critical: "🚨"
+  Fast: "⚡"
+  Slow: "🐌"
+  Progress: "🔄"
+  Complete: "✨"
+  
+File_Operations:
+  Read: "📖"
+  Write: "📝"
+  Edit: "✏"
+  Delete: "🗑"
+  Copy: "📋"
+  Move: "➡"
+  Create: "➕"
+  Directory: "📁"
+  
+Control_Elements:
+  Controls: "🎛"
+  Configuration: "🔧"
+  Settings: "⚙"
+  Group: "📋"
+  Count: "🔢"
+  Text: "📝"
+```
+
+## 標準路徑與目錄
+
+```yaml
+Documentation_Paths:
+  Claude_Docs: ".claudedocs/"
+  Reports: ".claudedocs/reports/"
+  Metrics: ".claudedocs/metrics/"
+  Summaries: ".claudedocs/summaries/"
+  Checkpoints: ".claudedocs/checkpoints/"
+  Tasks: ".claudedocs/tasks/"
+  Task_Pending: ".claudedocs/tasks/pending/"
+  Task_In_Progress: ".claudedocs/tasks/in-progress/"
+  Task_Completed: ".claudedocs/tasks/completed/"
+  Task_Cancelled: ".claudedocs/tasks/cancelled/"
+  
+Project_Documentation:
+  Documentation: "docs/"
+  API_Docs: "docs/api/"
+  User_Docs: "docs/user/"
+  Developer_Docs: "docs/dev/"
+  
+Build_Artifacts:
+  Build_Dir: "build/"
+  Dist_Dir: "dist/"
+  Output_Dir: "out/"
+  Next_Dir: ".next/"
+  Temp_Dir: "tmp/"
+  Cache_Dir: ".cache/"
+  Node_Modules: "node_modules/"
+  
+Git_Paths:
+  Git_Dir: ".git/"
+  Git_Hooks: ".git/hooks/"
+  Git_Config: ".git/config"
+  Gitignore: ".gitignore"
+```
+
+## 標準縮寫與技術術語
+
+```yaml
+Technical_Terms:
+  Configuration: "cfg"
+  Implementation: "impl"
+  Performance: "perf"
+  Validation: "val"
+  Requirements: "req"
+  Dependencies: "deps"
+  Environment: "env"
+  Database: "db"
+  Interface: "api"
+  Documentation: "docs"
+  Operations: "ops"
+  Standard: "std"
+  Default: "def"
+  Context: "ctx"
+  Error: "err"
+  Recovery: "rec"
+  Execution: "exec"
+  Token: "tok"
+  Optimization: "opt"
+  Quality: "qual"
+  Severity: "sev"
+  Response: "resp"
+  Escalation: "esc"
+  
+Action_Abbreviations:
+  Analyze: "anlz"
+  Build: "bld"
+  Deploy: "dply"
+  Test: "tst"
+  Configure: "cfg"
+  Implement: "impl"
+  Validate: "val"
+  Execute: "exec"
+  Optimize: "opt"
+  
+Severity_Levels:
+  Critical: "C"
+  High: "H"
+  Medium: "M"
+  Low: "L"
+```
+
+## 標準時間與大小限制
+
+```yaml
+Time_Limits:
+  Quick_Operation: "快速"
+  Standard_Operation: "中等持續時間"
+  Long_Operation: "延長持續時間"
+  Critical_Timeout: "最大允許持續時間"
+  Session_Timeout: "延長會話限制"
+  
+Token_Limits:
+  Small_Response: "最少使用"
+  Medium_Response: "中等使用"
+  Large_Response: "大量使用"
+  Context_Warning: "高上下文使用"
+  Context_Critical: "非常高的上下文使用"
+  
+File_Size_Limits:
+  Small_File: "最小大小"
+  Medium_File: "中等大小"
+  Large_File: "大型大小"
+  Huge_File: "非常大的大小"
+  Max_Analysis: "最大可分析大小"
+  
+Retry_Limits:
+  Default_Retries: "多次嘗試"
+  Network_Retries: "數次嘗試"
+  File_Lock_Retries: "多次嘗試"
+  MCP_Server_Retries: "多次嘗試"
+  Max_Consecutive_Failures: "數次失敗"
+```
+
+## 標準優先級與狀態值
+
+```yaml
+Priority_Levels:
+  Critical: "critical"
+  High: "high"
+  Medium: "medium"
+  Low: "low"
+  
+Severity_Numbers:
+  Critical: "最高嚴重性"
+  High: "高嚴重性"
+  Medium: "中等嚴重性"
+  Low: "低嚴重性"
+  
+Status_Values:
+  Pending: "pending"
+  In_Progress: "in_progress"
+  Completed: "completed"
+  Failed: "failed"
+  Cancelled: "cancelled"
+  Paused: "paused"
+```
+
+## 標準工具名稱與指令
+
+```yaml
+Native_Tools:
+  File_Tools: ["Read", "Write", "Edit", "MultiEdit", "Glob"]
+  System_Tools: ["Bash", "LS"]
+  Search_Tools: ["Grep", "Task"]
+  Notebook_Tools: ["NotebookRead", "NotebookEdit"]
+  Web_Tools: ["WebFetch", "WebSearch"]
+  Task_Tools: ["TodoRead", "TodoWrite"]
+  
+MCP_Servers:
+  Context7: "mcp__context7__*"
+  Sequential: "mcp__sequential-thinking__*"
+  Magic: "mcp__magic__*"
+  Puppeteer: "mcp__puppeteer__*"
+  
+Universal_Flags:
+  Planning: "--plan"
+  Thinking: ["--think", "--think-hard", "--ultrathink"]
+  Compression: ["--uc", "--ultracompressed"]
+  MCP_Control: ["--c7", "--seq", "--magic", "--pup", "--all-mcp", "--no-mcp"]
+  Execution: ["--dry-run", "--watch", "--interactive", "--force"]
+  Quality: ["--tdd", "--iterate", "--threshold", "--validate", "--security"]
+  
+Common_Commands:
+  Git_Commands: ["status", "add", "commit", "push", "pull", "checkout", "branch", "merge"]
+  Build_Commands: ["build", "test", "lint", "format", "typecheck"]
+  Package_Commands: ["install", "update", "audit", "outdated"]
+```
+
+## 標準訊息範本
+
+```yaml
+Success_Messages:
+  Operation_Complete: "✅ {operation} 成功完成"
+  File_Created: "📝 已建立: {file_path}"
+  File_Updated: "✏ 已更新: {file_path}"
+  Task_Complete: "✨ 任務完成: {task_title}"
+  
+Warning_Messages:
+  Performance_Warning: "⚠ 操作耗時超過預期"
+  Context_Warning: "⚠ 上下文大小接近限制"
+  Token_Warning: "⚠ 偵測到高權杖使用"
+  Fallback_Warning: "⚠ 使用回退方法"
+  
+Error_Messages:
+  File_Not_Found: "❌ 找不到檔案: {file_path}"
+  Permission_Denied: "❌ 權限被拒: {operation}"
+  Operation_Failed: "❌ {operation} 失敗: {reason}"
+  Timeout_Error: "❌ 操作在 {duration} 後逾時"
+  
+Info_Messages:
+  Operation_Started: "▶ 開始 {operation}"
+  Checkpoint_Created: "💾 檢查點已建立: {checkpoint_id}"
+  Optimization_Applied: "⚡ 已應用最佳化: {optimization}"
+  Fallback_Used: "🔄  使用替代方法: {method}"
+  
+Report_References:
+  Report_Saved: "📄 報告已儲存至: {path}"
+  Metrics_Updated: "📊 指標已更新: {path}"
+  Log_Entry: "📝 記錄至: {path}"
+  Checkpoint_Reference: "🔖 檢查點: {id}"
+```
+
+## 檔案命名慣例
+
+```yaml
+Report_Files:
+  Analysis_Report: "analysis-{type}-{timestamp}.md"
+  Performance_Report: "performance-{date}.md"
+  Security_Report: "security-scan-{timestamp}.md"
+  Daily_Summary: "daily-summary-{YYYY-MM-DD}.md"
+  Weekly_Trends: "weekly-trends-{YYYY-WW}.md"
+  Monthly_Insights: "monthly-insights-{YYYY-MM}.md"
+  
+Task_Files:
+  Task_Format: "{type}-{id}-{slug}.md"
+  Task_ID_Format: "YYYYMMDD-HHMMSS"
+  Task_Types: ["feature", "bugfix", "refactor", "docs", "test"]
+  
+Git_Branches:
+  Task_Branch: "task/{id}-{slug}"
+  Feature_Branch: "feature/{name}"
+  Bugfix_Branch: "bugfix/{name}"
+  Release_Branch: "release/{version}"
+  
+Log_Files:
+  Performance_Log: "performance-{YYYY-MM-DD}.jsonl"
+  Error_Log: "errors-{YYYY-MM-DD}.log"
+  Audit_Log: "audit-{YYYY-MM-DD}.log"
+  Debug_Log: "debug-{timestamp}.log"
+```
+
+## 環境與框架常數
+
+```yaml
+Environment_Types:
+  Development: "dev"
+  Testing: "test"
+  Staging: "staging"
+  Production: "prod"
+  Local: "local"
+  
+File_Extensions:
+  Markdown: [".md", ".markdown"]
+  Code: [".js", ".ts", ".tsx", ".jsx", ".py", ".go", ".rs", ".cpp", ".c", ".java"]
+  Config: [".json", ".yml", ".yaml", ".toml", ".ini", ".env"]
+  Documentation: [".md", ".rst", ".txt", ".adoc"]
+  
+Supported_Frameworks:
+  Frontend: ["React", "Vue", "Angular", "Svelte", "Next.js", "Nuxt.js"]
+  Backend: ["Express", "FastAPI", "Django", "Rails", "Spring", "Gin"]
+  Database: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite"]
+  Testing: ["Jest", "Mocha", "Pytest", "JUnit", "Cypress", "Playwright"]
+```
+
+## 參考系統
+
+```yaml
+File_Organization:
+  Constants_File: "shared/universal-constants.yml"
+  Patterns_Directory: "shared/*.yml"
+  Commands_Directory: "commands/*.md"
+  
+Common_References:
+  Legend: "見上方通用圖例部分"
+  Symbols: "見上方流程符號部分"
+  Paths: "見上方文件路徑部分"
+  Limits: "見上方時間限制部分"
+  Messages: "見上方成功訊息部分"
+  Flags: "@include universal-constants.yml#Universal_Flags"
+  
+Usage_Examples:
+  Command_Header: |
+    @include universal-constants.yml#Universal_Legend
+    @include universal-constants.yml#Process_Flow
+  Report_Location: |
+    Reports: @include universal-constants.yml#Documentation_Paths.Reports
+  Success_Format: |
+    @include universal-constants.yml#Success_Messages.Operation_Complete
+```
+
+---
+*通用常數 v2 - 所有 SuperClaude 共享值的單一真實來源*

@@ -1,0 +1,263 @@
+# MCP 快取模式 - MCP 伺服器結果的會話級快取
+# 通過智慧快取和平行執行進行效能最佳化
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## MCP 會話快取架構
+
+```yaml
+Cache_Storage:
+  Base_Directory: ".claude/.cache/"
+  Structure:
+    Context7: ".claude/.cache/context7/"
+    Sequential: ".claude/.cache/sequential/"
+    Magic: ".claude/.cache/magic/"
+    Puppeteer: ".claude/.cache/puppeteer/"
+  
+  Session_Management:
+    Session_ID: "在會話開始時生成"
+    Session_File: ".claude/.cache/session-{id}.json"
+    Cleanup: "在會話結束時移除過期的快取"
+    
+  Memory_Cache:
+    In_Memory: "活動會話期間的快速存取"
+    Disk_Backup: "持久化以進行會話恢復"
+    Size_Limit: "每個會話 100MB"
+```
+
+## Context7 快取實作
+
+```yaml
+Context7_Cache:
+  TTL: 3600  # 1 小時
+  Key_Format: "{library_name}_{version}_{topic}"
+  
+  Cache_Structure:
+    key: "react_18.2.0_hooks"
+    value:
+      documentation: "完整文件內容"
+      examples: "程式碼範例"
+      timestamp: "快取建立時間"
+      hit_count: "快取命中次數"
+      
+  Cache_Operations:
+    Before_Lookup:
+      - Check_Memory_Cache: "最快存取"
+      - Check_Disk_Cache: "如果不在記憶體中"
+      - Validate_TTL: "確保未過期"
+      
+    After_Lookup:
+      - Store_Memory: "保留在會話記憶體中"
+      - Store_Disk: "持久化到 .cache/context7/"
+      - Update_Metadata: "命中次數、最後存取"
+      
+  Invalidation:
+    TTL_Expired: "從快取中移除"
+    Version_Change: "清除舊版本快取"
+    Manual_Clear: "--no-cache 旗標"
+```
+
+## Sequential 快取實作
+
+```yaml
+Sequential_Cache:
+  TTL: "會話持續時間"  # 持續整個會話
+  Key_Format: "{problem_hash}_{thinking_depth}_{context_hash}"
+  
+  Problem_Hashing:
+    Include: ["核心問題陳述", "關鍵約束", "上下文類型"]
+    Exclude: ["確切措辭", "使用者格式", "時間戳記"]
+    Algorithm: "標準化問題的 SHA256"
+    
+  Cache_Structure:
+    key: "a7f3b2c1_ultrathink_ctx9d8e7"
+    value:
+      analysis: "完整順序分析"
+      steps: "採取的思考步驟"
+      conclusions: "關鍵發現"
+      recommendations: "行動項目"
+      timestamp: "分析時間"
+      reusable: "可以適應類似問題"
+      
+  Reuse_Patterns:
+    Exact_Match: "100% 問題相似度"
+    Partial_Match: "核心問題相同，細節不同"
+    Pattern_Match: "類似問題類型"
+    
+  Storage:
+    Location: ".claude/.cache/sequential/"
+    Compression: "大型分析使用 Gzip"
+    Index: "問題類型分類"
+```
+
+## Magic 快取實作
+
+```yaml
+Magic_Cache:
+  TTL: 7200  # 2 小時
+  Key_Format: "{component_type}_{props_hash}_{framework}"
+  
+  Component_Hashing:
+    Include: ["元件類型", "核心屬性", "框架"]
+    Exclude: ["樣式細節", "次要屬性", "名稱"]
+    
+  Cache_Structure:
+    key: "button_a3f2b1c_react"
+    value:
+      component_code: "完整元件實作"
+      dependencies: "必需的匯入"
+      usage_example: "如何使用元件"
+      variations: "不同的屬性組合"
+      timestamp: "生成時間"
+      quality_score: "元件品質指標"
+      
+  Variation_Handling:
+    Base_Component: "核心實作已快取"
+    Prop_Variations: "快取常見變體"
+    Style_Variations: "應用在基礎之上"
+    
+  Storage:
+    Location: ".claude/.cache/magic/"
+    Organization: "按元件類型"
+    Cleanup: "移除最少使用的元件"
+```
+
+## 平行執行模式
+
+```yaml
+Parallel_MCP_Execution:
+  Detection:
+    Multiple_Servers_Needed: "當指令使用多個 MCP 旗標時"
+    Independent_Operations: "當 MCP 呼叫彼此不依賴時"
+    
+  Execution_Patterns:
+    Independent_Parallel:
+      Example: "/analyze --c7 --seq"
+      Pattern: |
+        Promise.all([
+          Context7.lookup(library),
+          Sequential.analyze(problem)
+        ])
+      Benefits: "更快執行，減少等待時間"
+      
+    Dependent_Sequential:
+      Example: "C7 查詢 → 結果的 Sequential 分析"
+      Pattern: |
+        const docs = await Context7.lookup(library);
+        const analysis = await Sequential.analyze(docs);
+      Requirements: "順序很重要，無法平行化"
+      
+    Batch_Operations:
+      Example: "多個程式庫查詢"
+      Pattern: |
+        Promise.all(
+          libraries.map(lib => Context7.lookup(lib))
+        )
+      Optimization: "單次往返，批次處理"
+      
+  Error_Handling:
+    Partial_Success: "使用成功結果，記錄失敗"
+    Fallback_Sequential: "如果平行失敗，嘗試順序執行"
+    Timeout_Management: "每個操作的個別逾時"
+```
+
+## 快取效能最佳化
+
+```yaml
+Performance_Strategies:
+  Memory_Management:
+    LRU_Eviction: "最近最少使用移除"
+    Size_Limits: "每個快取類型限制"
+    Compression: "Gzip 大型條目"
+    
+  Access_Optimization:
+    Memory_First: "在磁碟之前檢查記憶體"
+    Batch_Reads: "一起載入相關條目"
+    Prefetch: "預測下一個可能的請求"
+    
+  Hit_Rate_Improvement:
+    Key_Normalization: "一致的金鑰生成"
+    Fuzzy_Matching: "尋找類似的快取結果"
+    Pattern_Recognition: "識別可快取模式"
+    
+  Monitoring:
+    Hit_Rate: "追蹤快取有效性"
+    Miss_Patterns: "識別未快取模式"
+    Performance_Gains: "衡量節省的時間"
+```
+
+## 與指令整合
+
+```yaml
+Command_Integration:
+  Cache_Aware_Commands:
+    analyze: "檢查 Sequential 快取以尋找類似分析"
+    build: "檢查 Magic 快取以尋找元件"
+    explain: "檢查 Context7 快取以尋找文件"
+    test: "快取測試結果和設定"
+    
+  Cache_Control_Flags:
+    --cache: "強制使用快取 (預設)"
+    --no-cache: "完全繞過快取"
+    --refresh-cache: "使用新資料更新快取"
+    --cache-only: "僅使用快取資料，無 MCP 呼叫"
+    
+  Cache_Reporting:
+    Show_Hit_Rate: "顯示快取有效性"
+    List_Cached: "顯示可用的快取資料"
+    Cache_Stats: "效能改進"
+```
+
+## 會話恢復與持久性
+
+```yaml
+Session_Recovery:
+  Checkpoint_Creation:
+    Trigger: "在主要操作之前"
+    Content: "當前快取狀態 + 會話資料"
+    Location: ".claude/.cache/checkpoints/"
+    
+  Recovery_Process:
+    Detect_Session: "尋找最近的會話"
+    Load_Cache: "從磁碟恢復記憶體快取"
+    Validate: "檢查 TTL 和完整性"
+    Resume: "使用快取上下文繼續"
+    
+  Cross_Session_Learning:
+    Pattern_Storage: "儲存成功模式"
+    Problem_Templates: "可重用的分析範本"
+    Component_Library: "建立的元件目錄"
+```
+
+## 實作檢查清單
+
+```yaml
+Phase_2_Implementation:
+  Core_Infrastructure:
+    - [ ] 建立快取目錄結構
+    - [ ] 實作快取金鑰生成
+    - [ ] 新增 TTL 管理
+    - [ ] 建立記憶體/磁碟快取層
+    
+  MCP_Integration:
+    - [ ] 修改 Context7 呼叫以檢查快取
+    - [ ] 新增 Sequential 結果快取
+    - [ ] 實作 Magic 元件快取
+    - [ ] 新增 Puppeteer 結果快取
+    
+  Parallel_Execution:
+    - [ ] 偵測平行機會
+    - [ ] 實作 Promise.all 模式
+    - [ ] 新增逾時管理
+    - [ ] 處理部分失敗
+    
+  Performance_Monitoring:
+    - [ ] 追蹤快取命中率
+    - [ ] 衡量效能增益
+    - [ ] 報告最佳化機會
+    - [ ] 生成效能報告
+```
+
+---
+*MCP 快取模式 v2 - 用於最佳效能的會話級快取和平行執行*

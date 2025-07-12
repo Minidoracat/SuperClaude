@@ -1,0 +1,73 @@
+# 參考索引 - 快速查詢指南
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 指令檔案 (19)
+```yaml
+analyze.md: 分析程式碼/資料/效能/架構
+build.md: 建立元件/功能/系統
+cleanup.md: 安全地移除程式碼/檔案/資源
+deploy.md: 部署應用程式/服務/基礎設施
+design.md: 設計系統/API/架構
+dev-setup.md: 設定開發環境
+document.md: 建立/更新文件
+estimate.md: 估算工作量/時間/資源
+explain.md: 解釋程式碼/概念/模式
+git.md: Git 操作和工作流程
+improve.md: 最佳化/重構/增強程式碼
+index.md: SuperClaude 指令參考
+load.md: 批量檔案/上下文操作
+migrate.md: 遷移程式碼/資料/系統
+scan.md: 安全性/品質/合規掃描
+spawn.md: 建立專案/元件/代理
+test.md: 測試操作和策略
+troubleshoot.md: 除錯/診斷/修復問題
+```
+
+## 最佳化的共享資源 (12 核心)
+```yaml
+根層級:
+  architecture-patterns.yml: DDD/微服務/事件模式
+  command-architecture-patterns.yml: 指令設計模式
+  feature-template.md: 標準功能範本
+  security-patterns.yml: 安全模式和控制
+  task-management-patterns.yml: 任務和待辦事項管理
+  universal-constants.yml: 通用常數和值
+
+統一模式:
+  compression-performance-patterns.yml: 權杖最佳化和效能
+  execution-patterns.yml: 統一工作流程、MCP 協調和生命週期
+  docs-patterns.yml: 文件系統模式
+  flag-inheritance.yml: 旗標繼承規則
+  quality-patterns.yml: 品質控制和驗證模式
+  research-patterns.yml: 研究流程模式
+  reference-patterns.yml: 最佳化的參考系統
+  recovery-state-patterns.yml: 恢復和狀態管理
+```
+
+## 快速參考映射
+```yaml
+常數: → universal-constants.yml
+錯誤處理: → quality-patterns.yml
+驗證: → quality-patterns.yml
+Git 工作流程: → execution-patterns.yml
+壓縮: → compression-performance-patterns.yml
+文件: → docs-patterns.yml
+研究: → research-patterns.yml
+工作流程: → execution-patterns.yml
+MCP 協調: → execution-patterns.yml
+參考: → reference-patterns.yml
+```
+
+## 檔案組織
+```yaml
+指令: .claude/commands/[command].md
+共享資源: .claude/commands/shared/[pattern].yml
+範本: .claude/commands/shared/[template].md
+專案文件: docs/
+Claude 工作文件: .claudedocs/
+```
+
+---
+*SuperClaude v2 | 快速查詢的參考索引*

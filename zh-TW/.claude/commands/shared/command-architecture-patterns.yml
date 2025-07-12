@@ -1,0 +1,268 @@
+# 指令架構模式 - 統一指令設計
+# 綜合指令結構、記憶體管理和範本模式
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 指令結構標準
+
+```yaml
+Required_Sections:
+  1_Purpose: "**目的**: 單句描述指令功能"
+  2_Legend: "@include universal-constants.yml#Universal_Legend"
+  3_Execution: "執行: 立即。--plan→先顯示計畫"
+  4_Description: "[指令特定描述]"
+  5_Flags: "@include flag-inheritance.yml#Universal_Always"
+  6_Examples: "最少 3 個範例 → 預期結果"
+  7_Integration: "先決條件與後續步驟"
+
+Command_Categories:
+  Analysis: ["analyze", "load", "explain", "troubleshoot"]
+  Build: ["build", "spawn"] 
+  Quality: ["test", "scan", "improve"]
+  Operations: ["deploy", "migrate", "cleanup"]
+  Documentation: ["document", "estimate"]
+
+Standard_Structure:
+  Header_Format: "**目的**: {簡要描述}"
+  Execution_Pattern: "執行: 立即。--plan→先顯示計畫"
+  Flag_Reference: "@include flag-inheritance.yml#Universal_Always"
+  Example_Pattern: "- `/{command} --flag` - 描述"
+```
+
+## 增強的結果儲存與上下文管理
+
+```yaml
+Cache_Architecture:
+  Storage_Format:
+    analyze: "{issues[], metrics{}, hotspots[], patterns[]}"
+    build: "{artifacts[], errors[], warnings[], perf{}}"
+    test: "{passed[], failed[], coverage%, flaky[]}"
+    scan: "{vulns[], risks{}, fixes[], compliance{}}"
+    design: "{arch{}, patterns[], decisions[]}"
+    troubleshoot: "{findings[], root_causes[], solutions[]}"
+
+  Reuse_Rules:
+    Same_Target_Flags: "使用快取 | 修改的檔案 → 使快取失效"
+    Chained_Commands: "自動傳遞結果 | 時限: 30分鐘"
+    Persistent_Patterns: "跨會話儲存成功的工作流程"
+    Context_Sharing: "傳遞相關子集 → 下一個指令"
+
+Intelligent_Workflows:
+  analyze→improve: "使用發現的問題作為目標 + 優先順序排序"
+  build→test: "專注於變更的模組 + 整合點"
+  scan→fix: "優先處理關鍵漏洞 + 上下文"
+  design→build: "應用架構模式 + 決策"
+  troubleshoot→improve: "使用根因分析進行針對性修復"
+  any→deploy: "驗證所有檢查通過 + 就緒評估"
+
+Context_Enrichment:
+  File_Change_Detection: "追蹤自上次分析以來的修改"
+  Dependency_Mapping: "理解元件關係"
+  Performance_Baseline: "與歷史指標比較"
+  Quality_Trends: "追蹤隨時間的改進"
+  User_Patterns: "從成功的工作流程中學習"
+```
+
+## 指令範本與最佳化
+
+```yaml
+Optimized_Command_Template:
+  Header: "**目的**: {描述}"
+  Legend: "@include universal-constants.yml#Universal_Legend"
+  Execution: "執行: 立即。--plan→預覽"
+  Description: "[指令特定功能]"
+  Flags: "@include flag-inheritance.yml#Universal_Always"
+  Examples: "/{command} --flag → 結果"
+  Integration: "先決條件 → 後續步驟"
+
+UltraCompressed_Structure:
+  Command_Header:
+    Execute: "立即。--plan→預覽"
+    Purpose: "[動作][主題] 在 $ARGUMENTS"
+    
+  Universal_Flags:
+    Planning: "@see flag-inheritance.yml"
+    Thinking: "@see flag-inheritance.yml" 
+    MCP_Control: "@see flag-inheritance.yml"
+    
+  Shared_References:
+    MCP_Explanations: "@see flag-inheritance.yml#MCP_Control"
+    Thinking_Modes: "@see flag-inheritance.yml#Thinking_Modes"
+    Research_Standards: "@see research-patterns.yml#Mandatory_Research_Flows"
+    Validation_Rules: "@see quality-patterns.yml#Pre_Execution_Validation"
+
+Token_Optimization_Patterns:
+  Compression_Rules:
+    Articles: "在清楚的地方移除 'the|a|an'"
+    Conjunctions: "'and'→'&' | 'with'→'w/'"
+    Prepositions: "'at'→'@' | 'to'→'→'"
+    Verbose_Phrases: "'in order to'→'to' | 'make sure'→'ensure'"
+    
+  Symbol_Expansion:
+    Process: "▶(開始) ⏸(暫停) ⏹(停止) ⚡(快速) 🔄(循環)"
+    Quality: "✅(成功) ❌(失敗) ⚠(警告) 📊(指標)"
+    
+  Structure_Priority:
+    1_YAML: "最緊湊的結構化資料"
+    2_Tables: "比較和參考資料"
+    3_Lists: "列舉和序列"
+    4_Prose: "僅在必要時"
+```
+
+## 旗標繼承與控制
+
+```yaml
+Universal_Flags_Always_Available:
+  Planning:
+    --plan: "執行前顯示執行計畫"
+    
+  Thinking_Modes:
+    --think: "多檔案分析 w/ 上下文 (4K 權杖)"
+    --think-hard: "深度系統分析 (10K 權杖)"
+    --ultrathink: "全面分析 (32K 權杖)"
+    
+  Compression:
+    --uc: "UltraCompressed 模式 (~70% 權杖減少)"
+    
+  MCP_Control:
+    --c7: "Context7→文件和範例"
+    --seq: "Sequential→複雜思考"
+    --magic: "Magic→UI 元件生成"
+    --pup: "Puppeteer→瀏覽器自動化"
+    --all-mcp: "啟用所有 MCP 伺服器"
+    --no-mcp: "停用所有 MCP 伺服器"
+
+Command_Specific_Flag_Patterns:
+  Analysis_Commands: "--code --arch --security --performance"
+  Build_Commands: "--init --feature --tdd --watch"
+  Quality_Commands: "--coverage --validate --strict --security"
+  Operations_Commands: "--env --dry-run --rollback --monitor"
+  Documentation_Commands: "--api --user --format"
+
+Flag_Override_Priority:
+  1_Explicit_User_Flags: "直接命令列旗標"
+  2_Command_Defaults: "內建指令偏好"
+  3_Context_Triggers: "基於內容的自動偵測"
+  Override_Rule: "--no-mcp 覆蓋所有個別 MCP 旗標"
+```
+
+## 指令關係矩陣
+
+```yaml
+Command_Chains:
+  Feature_Development:
+    Primary: "analyze → design → build → test"
+    Secondary: "scan → document → deploy"
+    
+  Bug_Investigation:
+    Primary: "troubleshoot → analyze → improve"
+    Secondary: "test → document"
+    
+  Quality_Improvement:
+    Primary: "scan → analyze → improve → test"
+    Secondary: "document → deploy"
+
+Prerequisites:
+  build: "analyze (理解程式碼庫)"
+  test: "build (有東西要測試)"
+  deploy: "test (驗證功能)"
+  improve: "analyze (理解問題)"
+  scan: "load (載入程式碼庫)"
+
+Common_Workflows:
+  Full_Stack: "load→analyze→design→build→test→scan→deploy"
+  Feature_Dev: "analyze→build→test→improve→commit"
+  Bug_Fix: "troubleshoot→fix→test→verify→commit"
+  Quality: "analyze→improve→scan→test"
+```
+
+## 記憶體管理與效能
+
+```yaml
+Smart_Context_Optimization:
+  Memory_Management:
+    Essential_Context: "保持關鍵資訊可存取"
+    Token_Optimization: "壓縮冗長結果以提高效率"
+    Selective_Loading: "每個指令只載入所需的上下文"
+    Background_Processing: "預先計算可能需要的上下文"
+
+  Pattern_Learning:
+    Workflow_Recognition: "識別常見的指令序列"
+    Success_Patterns: "從有效方法中學習"
+    Error_Prevention: "記住失敗模式以避免"
+    User_Preferences: "適應個人工作風格"
+
+UltraCompressed_Mode_Integration:
+  Activation_Patterns:
+    Manual: "--uc 旗標 | 'ultracompressed' 關鍵字"
+    Auto: "上下文 >70% | 指定權杖預算"
+    Smart: "大型文件 → 建議壓縮"
+    
+  Token_Savings:
+    Headers: "60-80% 減少"
+    Paragraphs: "70-75% 減少"
+    Lists: "50-60% 減少"
+    Overall: "~70% 平均減少"
+```
+
+## 交付物範本
+
+```yaml
+Code_Deliverables:
+  Commits: "type: description | feat|fix|refactor|perf|test|docs | Why>What"
+  Documentation: "API(端點|參數|範例) | Code(JSDoc|README) | User(指南|FAQ)"
+  Tests: "Unit(函式|邏輯) | Integration(API|服務) | E2E(流程|路徑)"
+
+Report_Deliverables:
+  Performance: "基準→當前→改進% | 時間|記憶體|CPU|網路"
+  Security: "漏洞→風險→修復 | OWASP|相依性|驗證|資料"
+  Quality: "覆蓋率|複雜度|重複 → 問題→嚴重性→解決方案"
+
+Artifact_Deliverables:
+  Configs: ".env|設定|部署 | Scripts: 建置|測試|部署|遷移"
+  Schemas: "資料庫|API|驗證 | Assets: 圖片|樣式|元件"
+```
+
+## 驗證與品質控制
+
+```yaml
+Validation_Checklist:
+  Required_Elements:
+    Structure: "所有必需部分都存在"
+    Legend: "只包含使用的符號"
+    Examples: "至少 3 個有效範例"
+    Flags: "所有都有描述的文件"
+    Integration: "包含生命週期掛鉤"
+    
+  Quality_Checks:
+    Links: "所有 @include 參考有效"
+    Consistency: "遵循命名慣例"
+    Completeness: "無佔位符文字"
+    Accuracy: "範例實際有效"
+
+Consistency_Patterns:
+  Naming_Conventions:
+    Commands: "動詞形式: analyze, build, deploy"
+    Flags: "短劃線命名: --think-hard, --no-magic"
+    Outputs: "{command}-{timestamp}.{ext}"
+    
+  Language_Patterns:
+    Present_Tense: "分析程式碼庫"
+    Active_Voice: "建立元件"
+    Imperative: "使用此旗標來..."
+```
+
+## 整合參考
+
+```yaml
+Cross_Reference_System:
+  Error_Handling: "@see recovery-state-patterns.yml#Error_Classification"
+  Research_Flow: "@see research-patterns.yml#Research_Validation"
+  MCP_Patterns: "@see execution-patterns.yml#MCP_Server_Registry"
+  Performance: "@see compression-performance-patterns.yml#Performance_Monitoring_System"
+  Quality_Control: "@see quality-patterns.yml#Validation_Sequence"
+```
+
+---
+*指令架構模式 v3 - 統一指令結構、記憶體管理和範本模式*

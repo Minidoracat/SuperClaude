@@ -1,0 +1,266 @@
+# 壓縮與效能模式 - 統一最佳化
+# UltraCompressed 模式、權杖最佳化和效能監控
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## UltraCompressed 模式設定
+
+```yaml
+Activation_Triggers:
+  Explicit_Flags: ["--ultracompressed", "--uc"]
+  Natural_Language: ["compress", "concise", "brief", "minimal", "telegram style"]
+  Automatic_Triggers:
+    High_Context_Usage: "上下文使用 >75% → 自動啟用"
+    Token_Budget_Pressure: "接近權杖限制 → 自動啟用"
+    Large_Codebases: "專案 >10k 檔案 → 建議 --uc"
+    Long_Sessions: "會話 >2 小時 → 建議 --uc"
+    Task_Operations: "任務檔案總是使用"
+
+Core_Compression_Rules:
+  Remove_Words:
+    Articles: ["the", "a", "an"]
+    Conjunctions: ["and", "or", "but", "however", "therefore"]
+    Prepositions: ["of", "in", "on", "at", "to", "for", "with", "from"]
+    Fillers: ["that", "which", "who", "very", "really", "quite"]
+    Verbose_Phrases:
+      "in order to": "to"
+      "make sure": "ensure"
+      "as well as": "&"
+      "due to the fact that": "∵"
+
+Symbol_Substitutions:
+  Logical: "→(導致) &(和) |(或) ∵(因為) ∴(所以) ≡(等同)"
+  Mathematical: "∀(所有) ∃(存在) ∈(屬於) ⊂(子集) ∪(聯集) ∩(交集)"
+  Process: "▶(開始) ⏸(暫停) ⏹(停止) ⚡(快速) 🔄(循環) ✅(成功) ❌(失敗)"
+  Technical: "cfg(設定) impl(實作) perf(效能) val(驗證)"
+```
+
+## 權杖最佳化模式
+
+```yaml
+Structure_Optimization:
+  Priority_Order:
+    1_YAML: "最緊湊的結構化資料"
+    2_Tables: "比較和參考資料"
+    3_Lists: "列舉和序列"
+    4_Prose: "僅在絕對必要時"
+
+  Compression_Techniques:
+    Headers: "透過符號替換減少 60-80%"
+    Paragraphs: "透過詞彙移除減少 70-75%"
+    Lists: "透過縮寫減少 50-60%"
+    Overall_Target: "~70% 平均權杖減少"
+
+Content_Compression:
+  Technical_Abbreviations:
+    analyze→anlz | build→bld | deploy→dply | test→tst
+    database→db | interface→api | environment→env | dependency→dep
+    configuration→cfg | implementation→impl | performance→perf
+    
+  Communication_Patterns:
+    Telegram_Style: "直接、無贅述、行動導向"
+    Bullet_Lists: "• 要點 | • 行動項目 | • 結果"
+    Symbol_Heavy: "持續使用既定符號"
+    Context_Aware: "僅在意義清楚時縮寫"
+
+UltraCompressed_Templates:
+  Command_Output:
+    Status: "✅ 完成 | ❌ 失敗 | ⚠ 警告 | ℹ 資訊"
+    Progress: "3/5 完成 (60%)"
+    Files: "修改: 3 | 新增: 1 | 刪除: 0"
+    
+  Task_Format:
+    Header: "T: {標題} | S: {狀態} | P: {優先級}"
+    Progress: "{已完成}/{總計} ({%})"
+    Focus: "→ {當前動作}"
+```
+
+## 效能監控系統
+
+```yaml
+Command_Performance_Metrics:
+  Timing_Analysis:
+    Start_Time: "記錄指令啟動時間戳記"
+    End_Time: "記錄指令完成時間戳記"
+    Duration: "end_time - start_time"
+    Phase_Breakdown: "分析、執行、報告階段"
+    
+  Token_Economics:
+    Input_Tokens: "使用者指令 + 上下文"
+    Output_Tokens: "回應 + 工具呼叫"
+    MCP_Tokens: "MCP 伺服器消耗"
+    Efficiency_Ratio: "output_value / total_tokens"
+    Context_Growth: "追蹤整個操作的上下文大小"
+    
+  Operation_Analytics:
+    Tools_Used: "Read, Edit, Bash, MCP 呼叫"
+    Files_Accessed: "讀取/寫入/分析的數量"
+    MCP_Usage: "伺服器呼叫 + 頻率"
+    Error_Count: "遇到的錯誤 + 恢復成功"
+    
+  Success_Indicators:
+    Task_Completion: "達成的目標 vs. 嘗試的"
+    Quality_Metrics: "程式碼品質、測試覆蓋率、安全性"
+    User_Satisfaction: "明確反饋 + 使用模式"
+
+Performance_Baselines:
+  Command_Benchmarks:
+    Simple_Commands: "<5 秒 (讀取、分析單一檔案)"
+    Medium_Commands: "5-30 秒 (建置、測試、多檔案)"
+    Complex_Commands: "30-300 秒 (部署、遷移、分析)"
+    
+  Token_Budgets:
+    Light_Operations: "<1K 權杖"
+    Standard_Operations: "1K-5K 權杖"
+    Heavy_Operations: "5K-20K 權杖"
+    Critical_Operations: "20K+ 權杖 (需合理說明)"
+    
+  Resource_Thresholds:
+    Memory_Usage: "監控記憶體洩漏"
+    CPU_Utilization: "追蹤密集操作"
+    Network_Usage: "MCP 伺服器通訊開銷"
+    Disk_I_O: "檔案操作效率"
+    
+  Review_Scope_Limits:
+    Single_File: "檔案 >1000 行標記為審查範圍"
+    Directory: "目錄 >50 個檔案需要批次處理"  
+    Repository: "儲存庫 >10K 檔案進行增量分析"
+    Large_File_Warning: "檔案 >5MB 可能需要串流分析"
+```
+
+## MCP 效能整合
+
+```yaml
+MCP_Server_Performance:
+  Response_Time_Targets:
+    Context7: "快速回應 (取決於網路)"
+    Sequential: "中等持續時間 (取決於複雜度)"
+    Magic: "快速到中等 (元件複雜度)"
+    Puppeteer: "快速到中等 (取決於頁面載入)"
+    
+  Resource_Usage_Profiles:
+    Context7: "低 CPU，中等網路"
+    Sequential: "高 CPU，低網路"
+    Magic: "中等 CPU，高網路"
+    Puppeteer: "中等 CPU，低網路"
+    
+  Reliability_Scoring:
+    Context7: "非常高 (取決於程式庫可用性)"
+    Sequential: "非常高 (內部處理)"
+    Magic: "高 (外部服務相依性)"
+    Puppeteer: "非常高 (瀏覽器相依性)"
+
+MCP_Optimization_Strategies:
+  Caching_Patterns:
+    Context7_Cache: "程式庫文件 + 範例 (會話持久)"
+    Sequential_Cache: "分析模式 + 解決方案 (跨會話)"
+    Magic_Cache: "元件範本 + 變體 (持久)"
+    
+  Fallback_Performance:
+    MCP_Timeout: "5-10 秒逾時 → 回退到原生"
+    Network_Issues: "自動回退 → 快取資料 → 手動指導"
+    Service_Degradation: "漸進降級 → 減少功能"
+```
+
+## 壓縮演算法實作
+
+```yaml
+Text_Compression_Pipeline:
+  Phase_1_Structure:
+    Convert_To_YAML: "轉換散文 → 結構化資料"
+    Table_Optimization: "多欄資料 → 緊湊表格"
+    List_Compression: "段落列表 → 項目符號"
+    
+  Phase_2_Language:
+    Remove_Articles: "在清楚的地方系統性移除冠詞"
+    Compress_Conjunctions: "and→& | with→w/ | to→→"
+    Symbol_Substitution: "用符號替換常見片語"
+    
+  Phase_3_Technical:
+    Abbreviate_Terms: "使用既定的技術縮寫"
+    Compress_Patterns: "重複模式 → @include 參考"
+    Context_Awareness: "儘管壓縮仍保持意義"
+
+Quality_Preservation:
+  Information_Density: "每權杖更高的資訊比"
+  Clarity_Maintenance: "壓縮但仍清楚"
+  Context_Preservation: "保留關鍵資訊"
+  Reversibility: "可展開以詳細解釋"
+  
+Compression_Validation:
+  Meaning_Preservation: "核心資訊完整"
+  Actionability: "指令仍可執行"
+  Clarity_Check: "目標受眾可理解"
+  Token_Reduction: "達成可衡量的減少"
+```
+
+## 效能最佳化策略
+
+```yaml
+Command_Optimization:
+  Parallel_Processing:
+    Tool_Calls: "在可能的情況下並行檔案操作"
+    MCP_Requests: "平行 MCP 伺服器呼叫"
+    Background_Tasks: "非阻塞操作"
+    
+  Caching_Strategies:
+    Result_Caching: "快取指令輸出以供重用"
+    Context_Caching: "保留分析結果"
+    Pattern_Caching: "儲存成功的工作流程模式"
+    
+  Resource_Management:
+    Memory_Efficiency: "串流大檔案，清理臨時資料"
+    CPU_Optimization: "高效演算法，避免冗餘工作"
+    Network_Optimization: "批次請求，壓縮傳輸"
+
+System_Performance:
+  Startup_Optimization:
+    Lazy_Loading: "按需載入元件"
+    Cache_Warmup: "預載入常用資料"
+    Configuration_Caching: "快取解析的設定檔"
+    
+  Runtime_Optimization:
+    Context_Compression: "壓縮長時間執行的上下文"
+    Garbage_Collection: "清理未使用的參考"
+    Resource_Pooling: "重用昂貴的資源"
+    
+  Shutdown_Optimization:
+    Graceful_Cleanup: "正確關閉資源"
+    State_Persistence: "儲存有價值的會話資料"
+    Cache_Cleanup: "移除臨時快取"
+```
+
+## 監控與分析
+
+```yaml
+Performance_Dashboard:
+  Real_Time_Metrics:
+    Current_Command: "活動操作狀態"
+    Token_Usage: "當前會話消耗"
+    Resource_Utilization: "CPU、記憶體、網路使用"
+    
+  Historical_Analysis:
+    Command_Trends: "隨時間的效能"
+    Token_Efficiency: "成本效益分析"
+    Error_Patterns: "失敗趨勢分析"
+    
+  Optimization_Recommendations:
+    Performance_Bottlenecks: "識別緩慢操作"
+    Token_Waste: "突顯低效模式"
+    Caching_Opportunities: "建議結果快取"
+
+Alerting_System:
+  Performance_Alerts:
+    Slow_Commands: "超過基準的操作"
+    High_Token_Usage: "接近預算限制"
+    Resource_Exhaustion: "記憶體/CPU 閾值警告"
+    
+  Quality_Alerts:
+    Error_Rate_Increase: "上升的失敗模式"
+    User_Satisfaction_Drop: "效能下降"
+    System_Degradation: "整體效能下降"
+```
+
+---
+*壓縮與效能模式 v3 - 統一 UltraCompressed 模式、權杖最佳化和效能監控*

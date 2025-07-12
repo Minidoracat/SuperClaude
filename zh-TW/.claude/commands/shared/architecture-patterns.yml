@@ -1,0 +1,504 @@
+# 架構模式與設計知識
+# 用於系統設計和開發的架構模式摘錄
+
+@include universal-constants.yml#Universal_Legend
+
+## 領域驅動設計 (DDD) 模式
+
+```yaml
+DDD_Building_Blocks:
+  Entities:
+    Definition: "具有唯一身份且會隨時間持續存在的物件"
+    Characteristics: ["唯一身份", "可變狀態", "業務行為"]
+    Implementation: ["ID 欄位", "依 ID 判斷相等性", "生命週期管理"]
+    Examples: ["User", "Order", "Product", "Account"]
+    
+  Value_Objects:
+    Definition: "由其屬性定義的不可變物件"
+    Characteristics: ["無身份", "不可變", "可替換"]
+    Implementation: ["依值判斷相等性", "無 setter", "在建構子中驗證"]
+    Examples: ["Email", "Money", "Address", "DateRange"]
+    
+  Aggregates:
+    Definition: "具有聚合根的一致性邊界"
+    Characteristics: ["交易邊界", "一致性規則", "透過根存取"]
+    Implementation: ["聚合根", "內部實體", "業務不變量"]
+    Examples: ["包含 LineItems 的 Order", "包含 Addresses 的 Customer"]
+    
+  Domain_Services:
+    Definition: "不屬於實體的業務邏輯"
+    Characteristics: ["無狀態", "領域操作", "跨實體邏輯"]
+    Implementation: ["純函式", "領域介面", "業務規則"]
+    Examples: ["TransferService", "PricingService", "ValidationService"]
+    
+  Repositories:
+    Definition: "為聚合抽象資料存取"
+    Characteristics: ["類集合介面", "持久化抽象", "聚合導向"]
+    Implementation: ["在領域層定義介面", "在基礎設施層實作", "工作單元"]
+    Examples: ["UserRepository", "OrderRepository", "ProductCatalog"]
+    
+  Domain_Events:
+    Definition: "捕捉重要的業務事件"
+    Characteristics: ["過去式", "不可變", "業務重要性"]
+    Implementation: ["事件發布", "事件處理器", "最終一致性"]
+    Examples: ["UserRegistered", "OrderPlaced", "PaymentProcessed"]
+    
+  Factories:
+    Definition: "複雜物件建立邏輯"
+    Characteristics: ["封裝建立", "確保不變量", "隱藏複雜性"]
+    Implementation: ["建立方法", "建造者模式", "驗證"]
+    Examples: ["OrderFactory", "UserFactory", "AggregateFactory"]
+    
+  Application_Services:
+    Definition: "為用例協調領域操作"
+    Characteristics: ["薄協調層", "交易邊界", "DTO 轉換"]
+    Implementation: ["用例方法", "領域協調", "基礎設施協調"]
+    Examples: ["UserRegistrationService", "OrderProcessingService"]
+```
+
+## DDD 戰略模式
+
+```yaml
+Strategic_Design:
+  Bounded_Contexts:
+    Definition: "領域模型的明確邊界"
+    Purpose: ["模型隔離", "團隊自主", "技術獨立"]
+    Implementation: ["上下文映射", "防腐層", "已發布語言"]
+    Examples: ["銷售上下文", "庫存上下文", "計費上下文"]
+    
+  Context_Mapping:
+    Patterns:
+      Shared_Kernel: "上下文之間的共享程式碼"
+      Customer_Supplier: "上游/下游關係"
+      Conformist: "下游遵從上游"
+      Anti_Corruption_Layer: "外部系統的轉換層"
+      Open_Host_Service: "為多個消費者發布的 API"
+      Published_Language: "通用架構/協定"
+      Separate_Ways: "上下文之間無整合"
+      Big_Ball_of_Mud: "舊系統整合"
+    
+  Ubiquitous_Language:
+    Definition: "領域專家與開發者之間的共同語言"
+    Implementation: ["領域詞彙表", "程式碼命名", "文件"]
+    Maintenance: ["定期改進", "回饋循環", "持續對齊"]
+    
+  Event_Driven_Architecture:
+    Patterns: ["領域事件", "事件溯源", "CQRS", "Saga 模式"]
+    Implementation: ["事件儲存", "事件處理器", "讀取模型", "流程管理器"]
+    Benefits: ["鬆散耦合", "可擴展性", "稽核軌跡", "時間解耦"]
+```
+
+## API 設計模式
+
+```yaml
+REST_API_Patterns:
+  Resource_Design:
+    Principles: ["資源導向的 URL", "名詞非動詞", "階層結構"]
+    URL_Structure: ["集合: /users", "資源: /users/123", "子資源: /users/123/orders"]
+    HTTP_Verbs: ["GET (讀取)", "POST (建立)", "PUT (更新/取代)", "PATCH (部分更新)", "DELETE (移除)"]
+    
+  Response_Design:
+    Status_Codes:
+      Success: ["200 OK", "201 Created", "202 Accepted", "204 No Content"]
+      Client_Error: ["400 Bad Request", "401 Unauthorized", "403 Forbidden", "404 Not Found", "409 Conflict"]
+      Server_Error: ["500 Internal Server Error", "502 Bad Gateway", "503 Service Unavailable"]
+    
+    Response_Format:
+      JSON_Structure: ["一致格式", "錯誤物件", "包含中繼資料"]
+      Pagination: ["偏移/限制", "基於游標", "連結標頭"]
+      Filtering: ["查詢參數", "欄位選擇", "搜尋語法"]
+      
+  API_Evolution:
+    Versioning_Strategies:
+      URL_Versioning: "/v1/users", "/v2/users"
+      Header_Versioning: "Accept: application/vnd.api+json;version=1"
+      Parameter_Versioning: "/users?version=1"
+    
+    Backward_Compatibility: ["附加變更", "可選欄位", "棄用通知"]
+    
+  Security_Patterns:
+    Authentication: ["JWT 權杖", "OAuth 2.0", "API 金鑰", "基本驗證"]
+    Authorization: ["基於角色", "基於權限", "基於資源", "基於屬性"]
+    Rate_Limiting: ["固定視窗", "滑動視窗", "權杖桶", "漏桶"]
+    
+  HATEOAS:
+    Definition: "超媒體作為應用程式狀態引擎"
+    Implementation: ["連結關係", "資源導航", "狀態轉換"]
+    Benefits: ["可發現性", "鬆散耦合", "可演化性"]
+```
+
+## GraphQL 模式
+
+```yaml
+GraphQL_Design:
+  Schema_Design:
+    Type_System: ["純量類型", "物件類型", "介面類型", "聯合類型", "列舉類型"]
+    Field_Design: ["可空 vs 非空", "欄位參數", "預設值"]
+    Schema_Stitching: ["多服務", "架構聯合", "閘道模式"]
+    
+  Query_Patterns:
+    Query_Structure: ["嵌套查詢", "欄位選擇", "片段使用"]
+    Variables: ["類型化變數", "預設值", "指令使用"]
+    Batching: ["DataLoader 模式", "查詢批次處理", "請求合併"]
+    
+  Mutation_Patterns:
+    Mutation_Design: ["輸入類型", "載荷類型", "錯誤處理"]
+    Optimistic_Updates: ["客戶端更新", "回滾策略"]
+    Bulk_Operations: ["多個變更", "交易邊界"]
+    
+  Subscription_Patterns:
+    Real_Time: ["WebSocket 連線", "事件驅動更新", "訂閱過濾"]
+    Scalability: ["連線管理", "記憶體使用", "資源清理"]
+    
+  Performance_Optimization:
+    N_Plus_1_Prevention: ["DataLoader", "查詢最佳化", "預先載入"]
+    Query_Complexity: ["深度限制", "成本分析", "查詢逾時"]
+    Caching: ["欄位級快取", "查詢結果快取", "CDN 整合"]
+```
+
+## 微服務架構模式
+
+```yaml
+Service_Design:
+  Service_Boundaries:
+    Principles: ["單一職責", "業務能力對齊", "資料所有權"]
+    Decomposition: ["領域驅動邊界", "團隊拓撲", "資料流分析"]
+    Size_Guidelines: ["小到可以重寫", "大到有用", "團隊所有權"]
+    
+  Communication_Patterns:
+    Synchronous: ["HTTP/REST", "gRPC", "GraphQL"]
+    Asynchronous: ["訊息佇列", "事件串流", "發布/訂閱"]
+    Data_Consistency: ["最終一致性", "Saga 模式", "分散式交易"]
+    
+  Data_Management:
+    Database_Per_Service: ["資料隔離", "技術選擇", "架構演進"]
+    Data_Synchronization: ["事件溯源", "變更資料擷取", "API 組合"]
+    
+  Deployment_Patterns:
+    Containerization: ["Docker", "容器編排", "服務網格"]
+    CI_CD: ["每服務管線", "獨立部署", "藍綠部署"]
+    
+Service_Discovery:
+  Patterns: ["服務註冊", "客戶端發現", "伺服器端發現"]
+  Implementation: ["Consul", "Eureka", "Kubernetes DNS", "API 閘道"]
+  
+Circuit_Breaker:
+  Pattern: "透過快速失敗防止級聯故障"
+  States: ["關閉 (正常)", "開啟 (失敗)", "半開 (測試)"]
+  Implementation: ["失敗閾值", "逾時", "恢復測試"]
+  
+Bulkhead_Pattern:
+  Purpose: "隔離資源以防止整體系統故障"
+  Implementation: ["執行緒池", "連線池", "資源隔離"]
+```
+
+## 事件驅動架構模式
+
+```yaml
+Event_Patterns:
+  Event_Types:
+    Domain_Events: "業務重要發生事件"
+    Integration_Events: "跨服務通訊"
+    System_Events: "技術/基礎設施事件"
+    
+  Event_Design:
+    Structure: ["事件 ID", "時間戳記", "事件類型", "載荷", "中繼資料"]
+    Naming: ["過去式", "業務語言", "特定動作"]
+    Versioning: ["架構演進", "向後相容", "事件遷移"]
+    
+  Event_Sourcing:
+    Concept: "將事件儲存為主要真實來源"
+    Implementation: ["事件儲存", "事件重播", "快照", "投影"]
+    Benefits: ["稽核軌跡", "時間查詢", "除錯", "分析"]
+    
+  CQRS:
+    Pattern: "命令查詢責任分離"
+    Implementation: ["分離模型", "讀/寫資料庫", "事件驅動同步"]
+    Benefits: ["最佳化讀取", "可擴展寫入", "複雜查詢"]
+    
+  Saga_Pattern:
+    Purpose: "管理分散式交易"
+    Types: ["編排", "編舞"]
+    Implementation: ["補償動作", "狀態機", "事件協調"]
+```
+
+## 分層架構模式
+
+```yaml
+Clean_Architecture:
+  Layers:
+    Domain: "核心業務邏輯與實體"
+    Application: "用例與協調"
+    Infrastructure: "外部關注點與框架"
+    Presentation: "UI/API 與使用者介面"
+    
+  Dependency_Rules:
+    Direction: "相依性向內指向領域"
+    Abstraction: "內層定義介面"
+    Implementation: "外層提供實作"
+    
+Hexagonal_Architecture:
+  Core: "具有業務邏輯的應用程式核心"
+  Ports: "外部通訊的介面"
+  Adapters: "埠介面的實作"
+  Benefits: ["可測試性", "技術獨立", "可維護性"]
+  
+Onion_Architecture:
+  Center: "領域模型"
+  Layers: ["領域服務", "應用程式服務", "基礎設施"]
+  Principles: ["相依性反轉", "關注點分離", "可測試性"]
+```
+
+## 可擴展性模式
+
+```yaml
+Horizontal_Scaling:
+  Load_Balancing:
+    Types: ["輪詢", "最少連線", "IP 雜湊", "地理位置"]
+    Implementation: ["負載平衡器", "服務網格", "基於 DNS"]
+    
+  Database_Scaling:
+    Read_Replicas: ["主從複寫", "唯讀查詢", "一致性權衡"]
+    Sharding: ["水平分割", "分片金鑰", "跨分片查詢"]
+    
+Vertical_Scaling:
+  Resource_Optimization: ["CPU 擴展", "記憶體擴展", "儲存擴展"]
+  Limits: ["硬體限制", "成本影響", "單點故障"]
+  
+Caching_Strategies:
+  Levels:
+    Application: ["記憶體內快取", "應用程式狀態", "計算結果"]
+    Database: ["查詢結果快取", "連線池", "陳述式快取"]
+    CDN: ["靜態內容", "地理分布", "邊緣快取"]
+    
+  Patterns:
+    Cache_Aside: "應用程式管理快取"
+    Write_Through: "寫入快取與資料庫"
+    Write_Behind: "非同步資料庫寫入"
+    Refresh_Ahead: "主動快取重新整理"
+```
+
+## 整合模式
+
+```yaml
+Integration_Styles:
+  File_Transfer: ["批次處理", "排程傳輸", "檔案格式"]
+  Shared_Database: ["通用架構", "資料所有權", "一致性問題"]
+  Remote_Procedure: ["同步呼叫", "強耦合", "阻塞行為"]
+  Messaging: ["非同步", "鬆散耦合", "事件驅動"]
+  
+Message_Patterns:
+  Point_to_Point: ["基於佇列", "單一消費者", "負載平衡"]
+  Publish_Subscribe: ["基於主題", "多個消費者", "事件廣播"]
+  Request_Reply: ["相關 ID", "回應路由", "逾時處理"]
+  
+API_Gateway:
+  Functions: ["請求路由", "驗證", "速率限制", "回應轉換"]
+  Benefits: ["單一進入點", "橫切關注點", "協定轉換"]
+  Patterns: ["前端後端", "微閘道", "服務網格整合"]
+```
+
+## 品質屬性模式
+
+```yaml
+Performance_Patterns:
+  Response_Time: ["快取", "CDN", "資料庫最佳化", "演算法最佳化"]
+  Throughput: ["負載平衡", "水平擴展", "資源池"]
+  Resource_Utilization: ["連線池", "執行緒管理", "記憶體最佳化"]
+  
+Reliability_Patterns:
+  Fault_Tolerance: ["斷路器", "隔板", "逾時", "指數退避重試"]
+  Recovery: ["健康檢查", "優雅降級", "故障轉移", "自我修復"]
+  Monitoring: ["指標收集", "警報", "分散式追蹤", "日誌聚合"]
+  
+Security_Patterns:
+  Authentication: ["多因素", "單一登入", "基於權杖", "基於憑證"]
+  Authorization: ["RBAC", "ABAC", "OAuth", "JWT"]
+  Data_Protection: ["靜態加密", "傳輸加密", "金鑰管理"]
+  
+Maintainability_Patterns:
+  Modularity: ["鬆散耦合", "高內聚", "介面隔離"]
+  Testability: ["相依性注入", "模擬物件", "測試替身"]
+  Documentation: ["活文件", "架構決策記錄", "API 文件"]
+```
+
+## PRD 範本
+
+```yaml
+PRD_Templates:
+  Executive_Overview:
+    Problem_Statement: "清楚描述要解決的問題"
+    Solution_Overview: "解決方案的高階方法"
+    Expected_Impact: "業務價值與可衡量的成果"
+    Key_Stakeholders: "主要使用者、決策者、受影響的團隊"
+    
+  Goals_Success_Metrics:
+    Primary_Objectives: "成功必須達成的目標"
+    Secondary_Goals: "最好有的改進"
+    Success_KPIs: "可衡量的關鍵績效指標"
+    Measurement_Plan: "如何以及何時追蹤指標"
+    
+  User_Stories_Requirements:
+    User_Personas: "目標使用者概況與特徵"
+    User_Journeys: "關鍵使用者工作流程與互動"
+    Functional_Requirements: "核心系統功能"
+    Non_Functional_Requirements: "效能、安全性、可擴展性需求"
+    Acceptance_Criteria: "功能完成的定義"
+    
+  Technical_Specifications:
+    Architecture_Overview: "高階系統設計"
+    Technology_Choices: "選擇的框架、語言、工具"
+    Integration_Points: "外部系統與 API"
+    Security_Requirements: "驗證、資料保護、合規需求"
+    Performance_Targets: "回應時間、吞吐量、可用性"
+    
+  Timeline_Risks:
+    Development_Phases: "主要里程碑與交付項目"
+    Dependencies_Blockers: "外部相依性與潛在阻礙"
+    Risk_Assessment: "技術、資源與時程風險"
+    Mitigation_Strategies: "處理已識別風險的計畫"
+    
+  Templates_By_Type:
+    Feature_PRD: "新功能開發範本"
+    API_PRD: "API 產品需求範本"
+    Integration_PRD: "系統整合需求"
+    Migration_PRD: "系統遷移與現代化"
+```
+
+## API 設計模式
+
+```yaml
+API_Design_Patterns:
+  REST_Design:
+    Resource_Identification:
+      URI_Design: "名詞非動詞 | /users/123 而非 /getUser/123"
+      Hierarchy: "邏輯資源關係 | /users/123/orders/456"
+      Consistency: "一致的命名慣例 | 複數名詞"
+      
+    HTTP_Methods:
+      GET: "擷取資源 | 安全且冪等 | 無副作用"
+      POST: "建立新資源 | 非冪等 | 回傳 201 Created"
+      PUT: "更新整個資源 | 冪等 | 回傳 200 或 204"
+      PATCH: "部分資源更新 | 可能冪等 | 回傳 200"
+      DELETE: "移除資源 | 冪等 | 回傳 204 No Content"
+      
+    Response_Patterns:
+      Status_Codes: "200 OK | 201 Created | 400 Bad Request | 401 Unauthorized | 404 Not Found | 500 Internal Error"
+      Error_Format: "一致的錯誤結構 | 代碼、訊息、詳細資訊"
+      Pagination: "偏移/限制或基於游標 | 包含中繼資料"
+      
+    Content_Negotiation:
+      Accept_Headers: "application/json | application/xml | text/html"
+      Versioning: "URI 路徑 (/v1/) | 標頭 (Accept: application/vnd.api+json;version=1)"
+      
+  GraphQL_Design:
+    Schema_Design:
+      Types: "強類型 | 純量、物件、介面、聯合、列舉"
+      Queries: "讀取操作 | 嵌套欄位選擇 | 高效資料擷取"
+      Mutations: "寫入操作 | 輸入類型 | 清楚的回傳類型"
+      Subscriptions: "即時更新 | 事件驅動 | 資源效率"
+      
+    Performance_Patterns:
+      DataLoader: "批次與快取資料庫查詢 | 解決 N+1 問題"
+      Query_Complexity: "深度限制 | 成本分析 | 速率限制"
+      Caching: "欄位級快取 | 查詢結果快取"
+      
+  Authentication_Authorization:
+    JWT_Patterns:
+      Structure: "Header.Payload.Signature | 無狀態權杖"
+      Claims: "標準 (iss, exp, aud) | 自訂業務宣告"
+      Security: "強密鑰 | 權杖輪換 | 到期管理"
+      
+    OAuth2_Flow:
+      Authorization_Code: "Web 應用程式 | 伺服器端權杖交換"
+      Client_Credentials: "服務對服務 | 機器驗證"
+      Resource_Owner: "使用者名稱/密碼 | 不建議用於新 API"
+      
+    API_Keys:
+      Usage: "簡單驗證 | 速率限制 | 使用追蹤"
+      Security: "定期輪換 | 環境特定 | 永不在程式碼中"
+      
+  Rate_Limiting:
+    Strategies:
+      Fixed_Window: "簡單實作 | 在固定間隔重設"
+      Sliding_Window: "更準確 | 更高記憶體使用"
+      Token_Bucket: "突發處理 | 平滑速率限制"
+      
+    Implementation:
+      Headers: "X-RateLimit-Limit | X-RateLimit-Remaining | X-RateLimit-Reset"
+      Response: "429 Too Many Requests | Retry-After 標頭"
+      
+  API_Documentation:
+    OpenAPI_Specification:
+      Structure: "路徑、元件、安全性、資訊"
+      Examples: "請求/回應範例 | 錯誤情境"
+      Validation: "架構驗證 | 參數約束"
+      
+    Documentation_Standards:
+      Completeness: "所有端點都有文件 | 提供範例"
+      Clarity: "清楚的描述 | 解釋用例"
+      Maintenance: "保持文件與程式碼同步"
+```
+
+## DDD 模式
+
+```yaml
+DDD_Patterns:
+  Strategic_Design:
+    Domain_Modeling:
+      Ubiquitous_Language: "領域專家與開發者之間的共享詞彙"
+      Bounded_Context: "模型定義和適用的明確邊界"
+      Context_Mapping: "限界上下文之間的關係"
+      
+    Context_Boundaries:
+      Identification: "語言變化 | 團隊所有權 | 資料所有權"
+      Integration_Patterns: "共享核心 | 客戶/供應商 | 遵從者"
+      Anti_Corruption_Layer: "保護領域免受外部影響"
+      
+  Tactical_Design:
+    Building_Blocks:
+      Entities: "具有唯一身份的物件 | 可變 | 業務行為"
+      Value_Objects: "由屬性定義的不可變物件 | 無身份"
+      Aggregates: "一致性邊界 | 交易邊界 | 透過根存取"
+      Domain_Services: "不屬於實體的業務邏輯"
+      
+    Aggregate_Design:
+      Root_Entity: "單一進入點 | 維護不變量"
+      Size_Guidelines: "小聚合 | 最小化交易範圍"
+      Reference_Style: "跨聚合按 ID 引用"
+      
+    Repository_Pattern:
+      Purpose: "封裝資料存取邏輯 | 領域導向介面"
+      Interface: "領域層定義介面 | 基礎設施實作"
+      Collections: "類似記憶體內集合 | 隱藏持久化細節"
+      
+  Event_Driven_DDD:
+    Domain_Events:
+      Definition: "領域中發生的重要事件"
+      Characteristics: "不可變 | 過去式 | 豐富的業務上下文"
+      Publishing: "聚合發布事件 | 基礎設施處理傳遞"
+      
+    Event_Sourcing:
+      Concept: "儲存事件，而非當前狀態 | 從事件重建狀態"
+      Benefits: "稽核軌跡 | 時間查詢 | 重播功能"
+      Challenges: "事件版本控制 | 快照策略 | 查詢複雜性"
+      
+    CQRS_Pattern:
+      Separation: "命令端 (寫入) 與查詢端 (讀取) 分離"
+      Benefits: "最佳化模型 | 獨立擴展 | 明確職責"
+      Implementation: "分離模型 | 事件同步 | 最終一致性"
+      
+  Implementation_Patterns:
+    Layered_Architecture:
+      Domain_Layer: "核心業務邏輯 | 不依賴其他層"
+      Application_Layer: "用例 | 協調領域物件"
+      Infrastructure_Layer: "外部關注點 | 資料庫、網路、訊息"
+      
+    Hexagonal_Architecture:
+      Core_Principle: "領域在中心 | 適配器處理外部關注點"
+      Ports: "領域定義的介面 | 輸入/輸出邊界"
+      Adapters: "埠的實作 | 框架特定程式碼"
+```
+
+---
+*架構模式 v2 - SuperClaude 設計指令的綜合架構知識模式*

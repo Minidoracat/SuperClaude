@@ -1,0 +1,226 @@
+# 旗標繼承系統
+# SuperClaude 指令的統一旗標定義
+
+## 圖例
+@include universal-constants.yml#Universal_Legend
+
+## 通用旗標 (所有指令)
+
+```yaml
+Universal_Always:
+  Planning:
+    --plan: "執行前顯示執行計畫"
+    
+  Compression:
+    --uc: "UltraCompressed 模式 (大幅減少權杖)"
+    --ultracompressed: "--uc 的別名"
+    
+  Thinking_Modes:
+    --think: "多檔案分析 w/ 上下文 (4K 權杖)"
+    --think-hard: "深度架構分析 (10K 權杖)"
+    --ultrathink: "關鍵系統重新設計 (32K 權杖)"
+    
+  MCP_Control:
+    --c7: "啟用 Context7→程式庫文件查詢"
+    --seq: "啟用 Sequential→複雜分析與思考"
+    --magic: "啟用 Magic→UI 元件生成"
+    --pup: "啟用 Puppeteer→瀏覽器自動化與測試"
+    --all-mcp: "啟用所有 MCP 伺服器"
+    --no-mcp: "停用所有 MCP 伺服器 (僅原生工具)"
+    --no-c7: "特別停用 Context7"
+    --no-seq: "特別停用 Sequential 思考"
+    --no-magic: "特別停用 Magic UI 建構器"
+    --no-pup: "特別停用 Puppeteer"
+    
+  Persona_Control:
+    --persona-architect: "系統架構師思考模式 (順序設計、模式)"
+    --persona-frontend: "前端開發者模式 (UI/UX 重點、Magic 元件)"
+    --persona-backend: "後端開發者模式 (API 設計、可擴展性重點)"
+    --persona-analyzer: "深度分析模式 (根因、基於證據)"
+    --persona-security: "安全導向模式 (威脅建模、漏洞)"
+    --persona-mentor: "教學/指導模式 (引導學習、解釋)"
+    --persona-refactorer: "程式碼重構模式 (品質改進、清理)"
+    --persona-performance: "效能最佳化模式 (分析、瓶頸)"
+    --persona-qa: "品質保證模式 (測試、邊界案例、驗證)"
+    
+  Introspection:
+    --introspect: "深度透明模式 - 公開思考、決策、工作流程"
+    --introspection: "--introspect 的別名"
+```
+
+## 常見工作流程旗標 (3+ 指令)
+
+```yaml
+Execution_Control:
+  --watch: "持續監控 w/ 即時回饋"
+  --interactive: "逐步引導過程 w/ 使用者控制"
+  --dry-run: "預覽變更而不執行"
+  --force: "覆蓋安全檢查和確認"
+  
+Quality_Assurance:
+  --validate: "執行前安全和驗證檢查"
+  --security: "安全分析和漏洞掃描"
+  --coverage: "生成全面的覆蓋率分析"
+  --strict: "零容忍模式 w/ 增強驗證"
+  
+Performance:
+  --profile: "詳細的效能分析和指標"
+  --iterate: "迭代改進直到達到閾值"
+  --threshold: "設定品質目標 (預設高)"
+  --watch-perf: "持續效能監控"
+  
+Development:
+  --tdd: "測試驅動開發工作流程"
+  --feature: "功能導向實作"
+  --init: "初始化新專案/元件"
+  --all: "跨所有區域的全面操作"
+```
+
+## 指令群組範本
+
+```yaml
+Analysis_Commands:
+  # analyze, scan, troubleshoot
+  Standard_Flags:
+    --code: "分析程式碼品質和結構"
+    --arch: "分析系統架構和設計"
+    --perf: "分析效能和瓶頸"
+    --profile: "詳細的效能分析"
+    --security: "安全漏洞分析"
+    --deps: "相依性分析和稽核"
+    
+Build_Commands:
+  # build, design, deploy  
+  Standard_Flags:
+    --init: "初始化新專案 w/ 堆疊設定"
+    --feature: "使用現有模式實作功能"
+    --api: "API 導向開發"
+    --react: "React/前端導向建置"
+    --tdd: "測試驅動開發工作流程"
+    --magic: "使用 Magic 進行 UI 元件生成"
+    
+Quality_Commands:
+  # test, improve, cleanup
+  Standard_Flags:
+    --coverage: "生成全面的測試覆蓋率"
+    --quality: "專注於程式碼品質改進"
+    --iterate: "迭代改進直到閾值"
+    --threshold: "設定品質目標 (預設高)"
+    --all: "跨所有區域的全面操作"
+    --quick: "快速操作專注於關鍵問題"
+    
+Documentation_Commands:
+  # document, explain
+  Standard_Flags:
+    --api: "API 文件和參考"
+    --user: "使用者友好的指南和教學"
+    --depth: "解釋深度 (ELI5|初學者|中級|專家)"
+    --visual: "包含圖表和視覺輔助"
+    --examples: "包含實用程式碼範例"
+    
+Operations_Commands:
+  # deploy, migrate, git
+  Standard_Flags:
+    --env: "目標環境 (dev|staging|prod)"
+    --rollback: "回滾到先前狀態"
+    --checkpoint: "操作前建立檢查點"
+    --sync: "與遠端/上游同步"
+```
+
+## 旗標使用範本
+
+```yaml
+High_Risk_Operations:
+  # 可能導致資料遺失/系統變更的指令
+  Required_Flags:
+    - "--validate (除非 --force)"
+    - "--dry-run 建議"
+  Optional_Safety:
+    - "--checkpoint (自動建立備份)"
+    - "--interactive (逐步控制)"
+    
+Development_Workflow:
+  # 標準開發操作  
+  Recommended_Combinations:
+    - "--tdd --coverage (品質優先開發)"
+    - "--watch --interactive (引導即時開發)"
+    - "--profile --iterate (效能最佳化)"
+    - "--security --validate (安全部署)"
+    
+Research_Operations:
+  # 需要外部研究的操作
+  Auto_Enable:
+    - "--c7 (程式庫文件查詢)"
+    - "--seq (複雜分析)"
+  Manual_Override:
+    - "--no-mcp (僅原生工具)"
+    
+Complex_Analysis:
+  # 需要深度思考的操作
+  Progressive_Flags:
+    - "無旗標: 基本單檔案操作"
+    - "--think: 多檔案協調"  
+    - "--think-hard: 系統架構分析"
+    - "--ultrathink: 關鍵系統重新設計"
+```
+
+## 旗標繼承規則
+
+```yaml
+Inheritance_Priority:
+  1: "指令特定旗標覆蓋群組旗標"
+  2: "群組旗標覆蓋常見旗標"
+  3: "常見旗標覆蓋通用旗標"
+  4: "通用旗標總是可用"
+  
+Conflict_Resolution:
+  --force_overrides: ["--validate", "--dry-run", "--interactive"]
+  --no-mcp_overrides: ["--c7", "--seq", "--magic", "--pup", "--all-mcp"]
+  --strict_enhances: ["--validate", "--security", "--coverage"]
+  
+Auto_Combinations:
+  --all + group_flags: "啟用指令群組中的所有旗標"
+  --strict + quality_flags: "所有品質操作的增強驗證"
+  --watch + interactive: "即時引導操作"
+  
+Validation_Rules:
+  Conflicting_Flags:
+    - "--dry-run + --force" → "警告: dry-run 否定 force"
+    - "--no-mcp + 任何 MCP 旗標" → "警告: no-mcp 覆蓋特定 MCP 旗標"
+    - "--quick + --all" → "警告: 快速模式與全面操作相矛盾"
+```
+
+## 使用範例
+
+```yaml
+Template_Usage:
+  Command_File_Header: |
+    @include flag-inheritance.yml#Universal_Always
+    @include flag-inheritance.yml#Execution_Control
+    @include flag-inheritance.yml#Analysis_Commands
+    
+  Flag_Reference: |
+    通用旗標: @see shared/flag-inheritance.yml#Universal_Always
+    品質旗標: @see shared/flag-inheritance.yml#Quality_Assurance
+    
+  Command_Specific_Only: |
+    # 僅定義此指令獨有的旗標
+    --special-flag: "指令特定功能"
+```
+
+## 最佳化指標
+
+```yaml
+Duplication_Reduction:
+  Before: "18 個指令中約 400 行旗標定義"
+  After: "範本中約 80 行 + 約 120 行指令特定"
+  Savings: "旗標定義大幅減少"
+  
+Consistency_Improvements:
+  Standardized_Descriptions: "旗標意義的單一真實來源"
+  Unified_Behavior: "所有指令的一致旗標行為"
+  Reduced_Maintenance: "在一處更新旗標影響所有指令"
+```
+
+---
+*旗標繼承 v2 - 用於一致指令介面的統一旗標系統*
