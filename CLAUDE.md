@@ -238,6 +238,38 @@ Usage:
 - **Record factual relationships**: When learning about entity connections, store these as facts
 - **Use specific categories**: Label preferences and procedures with clear categories for better retrieval
 
+#### 🔐 Project Isolation and Storage Standards
+- **Use group_id for project isolation**: Each project uses its root directory name as group_id
+  - _Standard format_: `project_[directory_name]` (e.g., `project_superclaude`)
+  - _Benefits_: Intuitive, easy to identify, avoids memory confusion
+  
+- **Explicitly specify group_id when storing**:
+  ```python
+  # Example: Store preferences for specific project
+  # Assuming current directory is /home/user/superclaude
+  mcp__graphiti-memory__add_memory(
+      name="Code style preferences",
+      episode_body="Use 4 spaces for indentation, max line length 80 chars",
+      group_id="project_superclaude",  # Use project directory name
+      source="text"
+  )
+  ```
+
+- **Filter by group_id when searching**:
+  ```python
+  # Example: Search only current project's memories
+  mcp__graphiti-memory__search_memory_nodes(
+      query="code style",
+      group_ids=["project_superclaude"],  # Limit search scope
+      entity="Preference"
+  )
+  ```
+
+- **Knowledge management strategy**:
+  - Project-specific memories: Use `project_[directory_name]` format
+  - Global shared preferences: Use `global_preferences` as group_id
+  - Auto-detection: Claude Code should automatically set appropriate group_id based on current working directory
+
 #### 🎯 During Your Work
 - **Respect discovered preferences**: Align work with found preferences
 - **Follow procedures exactly**: If finding a procedure for current task, follow it step by step

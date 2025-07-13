@@ -244,6 +244,38 @@
 - **記錄事實關係**：了解實體之間的連接時，將這些儲存為事實
 - **使用特定分類**：為偏好和程序加上清晰的類別標籤，以便後續檢索
 
+#### 🔐 項目隔離與儲存規範
+- **使用 group_id 實現項目隔離**：每個項目使用其根目錄名稱作為 group_id
+  - _標準格式_：`project_[目錄名稱]`（例如：`project_superclaude`）
+  - _優點_：直觀易懂、易於識別、避免記憶混淆
+  
+- **儲存時明確指定 group_id**：
+  ```python
+  # 範例：為特定項目儲存偏好
+  # 假設當前在 /home/user/superclaude 目錄
+  mcp__graphiti-memory__add_memory(
+      name="程式碼風格偏好",
+      episode_body="使用 4 空格縮排，最大行長 80 字元",
+      group_id="project_superclaude",  # 使用項目目錄名稱
+      source="text"
+  )
+  ```
+
+- **搜尋時過濾 group_id**：
+  ```python
+  # 範例：只搜尋當前項目的記憶
+  mcp__graphiti-memory__search_memory_nodes(
+      query="程式碼風格",
+      group_ids=["project_superclaude"],  # 限定搜尋範圍
+      entity="Preference"
+  )
+  ```
+
+- **知識管理策略**：
+  - 項目特定記憶：使用 `project_[目錄名稱]` 格式
+  - 全局共享偏好：使用 `global_preferences` 作為 group_id
+  - 自動檢測：Claude Code 應根據當前工作目錄自動設定適當的 group_id
+
 #### 🎯 工作期間
 - **尊重已發現的偏好**：將工作與找到的偏好保持一致
 - **精確遵循程序**：如果找到當前任務的程序，請逐步遵循
