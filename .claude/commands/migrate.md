@@ -128,6 +128,63 @@ Performance:
 - Query optimization
 - Resource limits
 
+## Graph Integration (--graph flag)
+
+When --graph flag is present, store migration history and patterns:
+
+```yaml
+Migration_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Migration_History:
+    Entities:
+      - type: "Migration"
+        properties: ["version", "type", "status", "applied_at", "duration"]
+      - type: "SchemaChange"
+        properties: ["object", "change_type", "before_state", "after_state"]
+      - type: "MigrationIssue"
+        properties: ["error", "resolution", "impact", "prevention"]
+    
+    Relationships:
+      - "includes" (Migration → SchemaChange)
+      - "caused" (Migration → MigrationIssue)
+      - "depends_on" (Migration → Migration)
+    
+    Facts:
+      - Migration patterns and best practices
+      - Common issues and resolutions
+      - Performance impact of migrations
+      - Rollback procedures that worked
+  
+  Data_Transformations:
+    Store:
+      - Transformation rules applied
+      - Data validation results
+      - Performance metrics
+      - Edge cases handled
+
+Example_Storage:
+  - entity: "AddUserIndexMigration"
+    type: "Migration"
+    properties:
+      version: "20240115_001"
+      type: "database"
+      duration: "45s"
+      status: "completed"
+      
+  - entity: "UserEmailIndex"
+    type: "SchemaChange"
+    properties:
+      object: "users.email"
+      change_type: "add_index"
+      
+  - fact: "Adding indexes during off-peak hours reduces migration time by 60%"
+  
+  - procedure: "Safe migration process: 1) Backup database, 2) Run migration in transaction, 3) Verify data integrity, 4) Update application code"
+```
+
+@include shared/graph-integration.yml#Operations_Commands
+
 ## Examples
 
 ```bash

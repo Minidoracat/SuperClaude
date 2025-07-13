@@ -121,7 +121,9 @@ Build projects, features, and components using modern stack templates.
 /build --init --react --magic --tdd         # New React app with AI components
 /build --feature "auth system" --tdd        # Feature with tests
 /build --api --openapi --seq                # API with documentation
-/build --react --graph                      # React app with memory persistence
+/build --react --graph                      # React app that remembers your preferences
+   # Stores: tech stack choices, patterns used, team conventions
+   # Next time: Automatically follows your established patterns
 ```
 
 #### `/dev-setup` - Development Environment
@@ -200,6 +202,8 @@ Comprehensive analysis of code, architecture, performance, and security.
 /analyze --code --architecture --seq       # Full analysis
 /analyze --profile --deep --persona-performance  # Performance deep-dive
 /analyze --architecture --graph --seq    # Architecture analysis with memory
+   # Stores: system components, relationships, design decisions
+   # Future benefit: Query "what's our caching strategy?" returns stored insights
 /analyze --deps --brave --security       # Latest dependency security info
 ```
 
@@ -220,6 +224,8 @@ Systematic debugging and issue resolution.
 /troubleshoot --prod --five-whys --seq    # Production RCA
 /troubleshoot --perf --fix --playwright          # Performance fix
 /troubleshoot --investigate --graph --seq # Investigation with memory tracking
+   # Stores: issues found, root causes, solutions applied
+   # Future benefit: "Similar issue occurred before?" finds past solutions
 /troubleshoot --prod --brave --hotfix    # Latest production issue fixes
 ```
 
@@ -240,6 +246,8 @@ Evidence-based improvements with measurable outcomes.
 /improve --quality --iterate --threshold 95%    # Quality improvement
 /improve --performance --cache --playwright            # Performance boost
 /improve --refactor --graph --quality        # Refactoring with preference memory
+   # Stores: code smells fixed, patterns applied, metrics improved
+   # Future benefit: Consistent refactoring based on team preferences
 /improve --modernize --brave --frameworks    # Latest framework updates
 ```
 
@@ -261,6 +269,8 @@ Generate comprehensive explanations and documentation.
 /explain --api --examples --c7             # API docs with examples
 /explain --brave "latest React 19 features" # Latest tech documentation
 /explain --architecture --graph --seq      # Architecture docs with memory
+   # Stores: concepts explained, examples, key decisions
+   # Future benefit: Build knowledge base for onboarding
 /explain --tutorial --brave --frameworks   # Latest tutorial content
 ```
 
@@ -405,6 +415,8 @@ Professional system design with specifications.
 /design --api --ddd --openapi --seq      # API with DDD
 /design --microservices --event-driven   # Microservices design
 /design --system --graph --patterns      # System design with pattern memory
+   # Stores: architecture decisions, components, patterns used
+   # Future benefit: "Why did we choose microservices?" has documented answer
 /design --api --brave --best-practices   # API design with latest practices
 ```
 
@@ -569,6 +581,10 @@ Complex feature management across sessions with automatic breakdown and recovery
 **Testing**: Use `--playwright` for browser automation
 **Latest Information**: Use `--brave` for real-time web search
 **Personalization**: Use `--graph` for memory persistence
+   - Stores analysis results, decisions, and patterns in searchable knowledge graph
+   - Each project gets its own memory space (project_[dirname])
+   - Query past decisions: "Why did we implement X this way?"
+   - Build institutional knowledge over time
 **Token Saving**: Add `--uc` for 70% reduction
 
 ---

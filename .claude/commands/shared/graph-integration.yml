@@ -1,0 +1,219 @@
+# Graph Integration Patterns
+# Unified patterns for Graphiti Memory integration across commands
+
+## Graph Integration Standards
+
+```yaml
+Graph_Integration_Standards:
+  Purpose: "Persist analysis results and insights as searchable knowledge"
+  Philosophy: "Transform ephemeral analysis into permanent organizational memory"
+  
+  Core_Principles:
+    - "Every significant discovery should be stored"
+    - "Relationships are as important as entities"
+    - "Facts capture the 'why' behind decisions"
+    - "Knowledge compounds over time"
+
+  Group_ID_Convention:
+    Format: "project_[directory_name]"
+    Examples:
+      - "/home/user/my-app" → "project_my-app"
+      - "/projects/ecommerce" → "project_ecommerce"
+    Fallback: "project_default" (if directory name unavailable)
+
+  Storage_Triggers:
+    Automatic:
+      - "Analysis completion with --graph flag"
+      - "Significant findings or patterns discovered"
+      - "User preferences or workflows identified"
+    
+    Manual:
+      - "Explicit user request to remember"
+      - "Important decisions or rationale"
+```
+
+## Command-Specific Patterns
+
+```yaml
+Analysis_Commands:
+  # For analyze, troubleshoot, review
+  Pattern:
+    Store_Findings:
+      - Issues: "Problems discovered → entities"
+      - Patterns: "Recurring themes → facts"
+      - Solutions: "Fixes applied → procedures"
+    
+    Example_Storage:
+      entity:
+        type: "PerformanceIssue"
+        name: "N+1 Query in UserController"
+        properties:
+          severity: "high"
+          impact: "3s page load"
+          location: "src/controllers/user.js:45"
+      
+      fact: "Database queries increase linearly with user count"
+      
+      procedure: "Add eager loading to user.findAll() queries"
+
+Build_Commands:
+  # For build, design, dev-setup
+  Pattern:
+    Store_Decisions:
+      - Architecture: "Design choices → entities + facts"
+      - Stack: "Technology selections → facts"
+      - Patterns: "Implementation patterns → procedures"
+    
+    Example_Storage:
+      entity:
+        type: "ArchitectureDecision"
+        name: "Microservices over Monolith"
+        properties:
+          rationale: "Need independent scaling"
+          date: "2024-01-15"
+      
+      fact: "Team chose React for frontend due to existing expertise"
+
+Documentation_Commands:
+  # For explain, document
+  Pattern:
+    Store_Knowledge:
+      - Concepts: "Key concepts explained → entities"
+      - Examples: "Code examples → procedures"
+      - References: "External resources → facts"
+    
+    Example_Storage:
+      entity:
+        type: "Concept"
+        name: "Event Sourcing Pattern"
+        properties:
+          complexity: "advanced"
+          use_cases: ["audit trails", "time travel"]
+
+Operations_Commands:
+  # For deploy, migrate, git
+  Pattern:
+    Store_Operations:
+      - Changes: "What was modified → facts"
+      - Procedures: "How it was done → procedures"
+      - Outcomes: "Results and metrics → facts"
+    
+    Example_Storage:
+      fact: "Production deployment on 2024-01-15 reduced API latency by 40%"
+      
+      procedure: "Blue-green deployment: 1) Deploy to staging, 2) Run smoke tests, 3) Switch router"
+```
+
+## Query Patterns
+
+```yaml
+Retrieval_Patterns:
+  Before_Task:
+    - "Search for related prior analyses"
+    - "Check for established patterns or preferences"
+    - "Review previous decisions and rationale"
+  
+  During_Task:
+    - "Cross-reference with stored knowledge"
+    - "Validate against historical data"
+    - "Identify deviations from patterns"
+  
+  After_Task:
+    - "Update existing knowledge with new findings"
+    - "Create new entities for novel discoveries"
+    - "Link related concepts with relationships"
+
+Example_Queries:
+  Architecture:
+    search: "architecture decisions for authentication"
+    returns: "Previous auth implementations and their outcomes"
+  
+  Performance:
+    search: "performance bottlenecks in API"
+    returns: "Historical issues and successful optimizations"
+  
+  Patterns:
+    search: "coding patterns in frontend"
+    returns: "Established patterns and team preferences"
+```
+
+## Integration Examples
+
+```yaml
+Full_Workflow_Example:
+  Command: "/analyze --architecture --graph"
+  
+  Steps:
+    1_Analyze:
+      action: "Analyze system architecture"
+      discover:
+        - "3-tier architecture"
+        - "Redis for caching"
+        - "PostgreSQL for persistence"
+    
+    2_Store:
+      entities:
+        - {type: "Component", name: "API Gateway"}
+        - {type: "Component", name: "Cache Layer"}
+        - {type: "Component", name: "Database"}
+      
+      relationships:
+        - {from: "API Gateway", to: "Cache Layer", type: "uses"}
+        - {from: "Cache Layer", to: "Database", type: "fallback_to"}
+      
+      facts:
+        - "System handles 10K requests/second with current architecture"
+        - "Cache hit rate is 85% for user queries"
+    
+    3_Future_Use:
+      query: "How is caching implemented?"
+      result: "Redis cache layer with 85% hit rate, falls back to PostgreSQL"
+
+Memory_Persistence_Example:
+  First_Session:
+    command: "/troubleshoot --prod --graph"
+    stores: "Identified memory leak in payment service"
+  
+  Later_Session:
+    command: "/analyze --code payment-service"
+    recalls: "Previous memory leak issue"
+    action: "Focus analysis on memory management patterns"
+```
+
+## Best Practices
+
+```yaml
+Storage_Guidelines:
+  Do_Store:
+    - "Architectural decisions and rationale"
+    - "Performance benchmarks and optimizations"
+    - "Security vulnerabilities and fixes"
+    - "Team preferences and coding standards"
+    - "Complex problem solutions"
+    - "System dependencies and relationships"
+  
+  Don't_Store:
+    - "Temporary debugging output"
+    - "Personal information or secrets"
+    - "Redundant or obvious information"
+    - "Implementation details that change frequently"
+
+Quality_Checks:
+  Before_Storing:
+    - "Is this information valuable for future tasks?"
+    - "Does it represent a pattern or decision?"
+    - "Will it help avoid repeated analysis?"
+  
+  Entity_Design:
+    - "Use clear, descriptive names"
+    - "Include relevant properties"
+    - "Maintain consistent typing"
+  
+  Relationship_Design:
+    - "Use semantic relationship names"
+    - "Capture directionality correctly"
+    - "Include relationship properties when relevant"
+```
+
+---
+*Graph Integration Patterns v1.0 - Unified approach to knowledge persistence with Graphiti Memory*

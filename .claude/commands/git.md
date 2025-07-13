@@ -40,3 +40,65 @@ Git operations:
 @include shared/docs-patterns.yml#Standard_Notifications
 
 @include shared/universal-constants.yml#Standard_Messages_Templates
+
+## Graph Integration (--graph flag)
+
+When --graph flag is present, track git workflows and team patterns:
+
+```yaml
+Git_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Workflow_Patterns:
+    Entities:
+      - type: "GitWorkflow"
+        properties: ["type", "frequency", "success_rate", "avg_duration"]
+      - type: "CommitPattern"
+        properties: ["pattern", "author", "frequency", "quality_score"]
+      - type: "BranchStrategy"
+        properties: ["strategy", "naming_convention", "lifecycle"]
+    
+    Relationships:
+      - "uses" (GitWorkflow → BranchStrategy)
+      - "follows" (CommitPattern → GitWorkflow)
+    
+    Facts:
+      - Team git conventions and preferences
+      - Successful workflow patterns
+      - Common merge conflict sources
+      - Branch naming conventions used
+  
+  Code_Review_Insights:
+    Store:
+      - PR review turnaround times
+      - Common review feedback patterns
+      - Reviewer expertise areas
+      - Approval patterns and requirements
+  
+  Repository_Health:
+    Track:
+      - Commit frequency and patterns
+      - Branch lifecycle metrics
+      - Merge conflict frequency
+      - CI/CD success rates
+
+Example_Storage:
+  - entity: "FeatureBranchWorkflow"
+    type: "GitWorkflow"
+    properties:
+      type: "feature_branch"
+      success_rate: "95%"
+      avg_duration: "3 days"
+      
+  - entity: "ConventionalCommits"
+    type: "CommitPattern"
+    properties:
+      pattern: "type(scope): description"
+      frequency: "always"
+      
+  - fact: "Team prefers squash merges for feature branches to maintain clean history"
+  
+  - procedure: "Standard PR workflow: 1) Create feature branch, 2) Make atomic commits, 3) Push and create PR, 4) Address review feedback, 5) Squash and merge"
+```
+
+@include shared/graph-integration.yml#Operations_Commands

@@ -37,3 +37,51 @@ Explanation modes:
 @include shared/docs-patterns.yml#Standard_Notifications
 
 @include shared/universal-constants.yml#Standard_Messages_Templates
+
+## Graph Integration (--graph flag)
+
+When --graph flag is present, store explanations and knowledge:
+
+```yaml
+Explanation_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Concept_Documentation:
+    Entities:
+      - type: "Concept"
+        properties: ["name", "complexity", "category", "prerequisites"]
+      - type: "Example"
+        properties: ["code", "language", "use_case", "explanation"]
+      - type: "Reference"
+        properties: ["source", "type", "relevance"]
+    
+    Relationships:
+      - "prerequisite_of" (Concept → Concept)
+      - "demonstrates" (Example → Concept)
+      - "references" (Concept → Reference)
+    
+    Facts:
+      - Key insights and learnings
+      - Common misconceptions clarified
+      - Best practices explained
+  
+  Architecture_Explanations:
+    Store:
+      - System design rationale
+      - Pattern usage explanations
+      - Technology choice reasoning
+      - Trade-off decisions
+
+Example_Storage:
+  - entity: "EventSourcingPattern"
+    type: "Concept"
+    properties:
+      complexity: "advanced"
+      category: "architecture_pattern"
+      
+  - fact: "Event sourcing provides complete audit trail but increases storage requirements by ~3x"
+  
+  - procedure: "To implement event sourcing: 1) Define events, 2) Create event store, 3) Build projections, 4) Handle eventual consistency"
+```
+
+@include shared/graph-integration.yml#Documentation_Commands

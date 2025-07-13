@@ -59,3 +59,61 @@ Examples:
 **Knowledge Base:** Problem→Solution mapping | Troubleshooting guides | Common patterns | Prevention checklist
 
 @include shared/universal-constants.yml#Standard_Messages_Templates
+
+## Graph Integration (--graph flag)
+
+When --graph flag is present, persist debugging insights to Graphiti Memory:
+
+```yaml
+Troubleshooting_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Issue_Documentation:
+    Entities:
+      - type: "Issue"
+        properties: ["description", "symptoms", "frequency", "impact"]
+      - type: "RootCause"
+        properties: ["category", "evidence", "confirmed_by"]
+      - type: "Solution"
+        properties: ["approach", "implementation", "effectiveness"]
+    
+    Relationships:
+      - "caused_by" (Issue → RootCause)
+      - "fixed_by" (Issue → Solution)
+      - "related_to" (Issue → Issue)
+    
+    Facts:
+      - Problem patterns and frequencies
+      - Successful debugging strategies
+      - Environment-specific issues
+  
+  Performance_Issues:
+    Store:
+      - Bottleneck locations and measurements
+      - Optimization strategies that worked
+      - Performance baselines before/after
+  
+  Debug_Procedures:
+    Capture:
+      - Step-by-step troubleshooting process
+      - Diagnostic commands and their outputs
+      - Resolution steps that worked
+
+Example_Storage:
+  - entity: "LoginTimeout"
+    type: "Issue"
+    properties:
+      symptoms: "Users timeout after 30s"
+      impact: "critical"
+      
+  - relationship:
+      from: "LoginTimeout"
+      to: "DBConnectionPool"
+      type: "caused_by"
+      
+  - fact: "Database connection pool exhaustion occurs during peak hours (>1000 concurrent users)"
+  
+  - procedure: "To diagnose connection pool issues: 1) Check active connections with 'SHOW PROCESSLIST', 2) Monitor pool metrics, 3) Analyze slow query log"
+```
+
+@include shared/graph-integration.yml#Analysis_Commands

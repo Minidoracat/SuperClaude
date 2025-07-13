@@ -1,0 +1,219 @@
+# 圖譜整合模式
+# 跨指令的 Graphiti Memory 整合統一模式
+
+## 圖譜整合標準
+
+```yaml
+Graph_Integration_Standards:
+  Purpose: "將分析結果和洞察持久化為可搜尋的知識"
+  Philosophy: "將短暫的分析轉化為永久的組織記憶"
+  
+  Core_Principles:
+    - "每個重要的發現都應該被儲存"
+    - "關係與實體同等重要"
+    - "事實捕捉決策背後的「為什麼」"
+    - "知識隨時間累積複利效應"
+
+  Group_ID_Convention:
+    Format: "project_[目錄名稱]"
+    Examples:
+      - "/home/user/my-app" → "project_my-app"
+      - "/projects/ecommerce" → "project_ecommerce"
+    Fallback: "project_default" (如果無法取得目錄名稱)
+
+  Storage_Triggers:
+    Automatic:
+      - "使用 --graph 旗標完成分析時"
+      - "發現重要發現或模式時"
+      - "識別使用者偏好或工作流程時"
+    
+    Manual:
+      - "使用者明確要求記憶"
+      - "重要決策或理由"
+```
+
+## 指令特定模式
+
+```yaml
+Analysis_Commands:
+  # 用於 analyze、troubleshoot、review
+  Pattern:
+    Store_Findings:
+      - Issues: "發現的問題 → 實體"
+      - Patterns: "重複出現的主題 → 事實"
+      - Solutions: "應用的修復 → 程序"
+    
+    Example_Storage:
+      entity:
+        type: "PerformanceIssue"
+        name: "UserController 中的 N+1 查詢"
+        properties:
+          severity: "high"
+          impact: "3秒頁面載入"
+          location: "src/controllers/user.js:45"
+      
+      fact: "資料庫查詢隨使用者數量線性增長"
+      
+      procedure: "為 user.findAll() 查詢添加預先載入"
+
+Build_Commands:
+  # 用於 build、design、dev-setup
+  Pattern:
+    Store_Decisions:
+      - Architecture: "設計選擇 → 實體 + 事實"
+      - Stack: "技術選型 → 事實"
+      - Patterns: "實作模式 → 程序"
+    
+    Example_Storage:
+      entity:
+        type: "ArchitectureDecision"
+        name: "選擇微服務而非單體架構"
+        properties:
+          rationale: "需要獨立擴展"
+          date: "2024-01-15"
+      
+      fact: "團隊因現有專業知識選擇 React 作為前端框架"
+
+Documentation_Commands:
+  # 用於 explain、document
+  Pattern:
+    Store_Knowledge:
+      - Concepts: "解釋的關鍵概念 → 實體"
+      - Examples: "程式碼範例 → 程序"
+      - References: "外部資源 → 事實"
+    
+    Example_Storage:
+      entity:
+        type: "Concept"
+        name: "事件溯源模式"
+        properties:
+          complexity: "advanced"
+          use_cases: ["稽核追蹤", "時間旅行"]
+
+Operations_Commands:
+  # 用於 deploy、migrate、git
+  Pattern:
+    Store_Operations:
+      - Changes: "修改的內容 → 事實"
+      - Procedures: "執行方式 → 程序"
+      - Outcomes: "結果和指標 → 事實"
+    
+    Example_Storage:
+      fact: "2024-01-15 的生產部署將 API 延遲降低了 40%"
+      
+      procedure: "藍綠部署：1) 部署到預備環境，2) 執行冒煙測試，3) 切換路由器"
+```
+
+## 查詢模式
+
+```yaml
+Retrieval_Patterns:
+  Before_Task:
+    - "搜尋相關的先前分析"
+    - "檢查已建立的模式或偏好"
+    - "審查過往的決策和理由"
+  
+  During_Task:
+    - "與儲存的知識交叉參照"
+    - "根據歷史資料驗證"
+    - "識別偏離模式的情況"
+  
+  After_Task:
+    - "使用新發現更新現有知識"
+    - "為新發現建立新實體"
+    - "使用關係連結相關概念"
+
+Example_Queries:
+  Architecture:
+    search: "認證的架構決策"
+    returns: "先前的認證實作及其結果"
+  
+  Performance:
+    search: "API 中的效能瓶頸"
+    returns: "歷史問題和成功的優化"
+  
+  Patterns:
+    search: "前端的編碼模式"
+    returns: "已建立的模式和團隊偏好"
+```
+
+## 整合範例
+
+```yaml
+Full_Workflow_Example:
+  Command: "/analyze --architecture --graph"
+  
+  Steps:
+    1_Analyze:
+      action: "分析系統架構"
+      discover:
+        - "三層式架構"
+        - "Redis 用於快取"
+        - "PostgreSQL 用於持久化"
+    
+    2_Store:
+      entities:
+        - {type: "Component", name: "API 閘道"}
+        - {type: "Component", name: "快取層"}
+        - {type: "Component", name: "資料庫"}
+      
+      relationships:
+        - {from: "API 閘道", to: "快取層", type: "uses"}
+        - {from: "快取層", to: "資料庫", type: "fallback_to"}
+      
+      facts:
+        - "系統以目前架構處理每秒 10K 請求"
+        - "使用者查詢的快取命中率為 85%"
+    
+    3_Future_Use:
+      query: "快取是如何實作的？"
+      result: "Redis 快取層，命中率 85%，回退到 PostgreSQL"
+
+Memory_Persistence_Example:
+  First_Session:
+    command: "/troubleshoot --prod --graph"
+    stores: "在支付服務中發現記憶體洩漏"
+  
+  Later_Session:
+    command: "/analyze --code payment-service"
+    recalls: "先前的記憶體洩漏問題"
+    action: "專注分析記憶體管理模式"
+```
+
+## 最佳實踐
+
+```yaml
+Storage_Guidelines:
+  Do_Store:
+    - "架構決策和理由"
+    - "效能基準和優化"
+    - "安全漏洞和修復"
+    - "團隊偏好和編碼標準"
+    - "複雜問題的解決方案"
+    - "系統相依性和關係"
+  
+  Don't_Store:
+    - "臨時的除錯輸出"
+    - "個人資訊或密鑰"
+    - "冗餘或顯而易見的資訊"
+    - "經常變更的實作細節"
+
+Quality_Checks:
+  Before_Storing:
+    - "這個資訊對未來的任務有價值嗎？"
+    - "它代表一種模式或決策嗎？"
+    - "它能幫助避免重複分析嗎？"
+  
+  Entity_Design:
+    - "使用清晰、描述性的名稱"
+    - "包含相關屬性"
+    - "保持一致的類型"
+  
+  Relationship_Design:
+    - "使用語義化的關係名稱"
+    - "正確捕捉方向性"
+    - "在相關時包含關係屬性"
+```
+
+---
+*圖譜整合模式 v1.0 - 使用 Graphiti Memory 進行知識持久化的統一方法*

@@ -51,3 +51,69 @@ Best practices: Start w/ user needs & business goals | Design→change & evoluti
 @include shared/docs-patterns.yml#Standard_Notifications
 
 @include shared/universal-constants.yml#Standard_Messages_Templates
+
+## Graph Integration (--graph flag)
+
+When --graph flag is present, persist design decisions and architecture:
+
+```yaml
+Design_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Architecture_Decisions:
+    Entities:
+      - type: "ArchitectureDecision"
+        properties: ["title", "status", "decision", "rationale", "consequences"]
+      - type: "SystemComponent"
+        properties: ["name", "type", "responsibility", "technology"]
+      - type: "DesignPattern"
+        properties: ["name", "category", "applicability", "implementation"]
+    
+    Relationships:
+      - "uses" (SystemComponent → DesignPattern)
+      - "depends_on" (SystemComponent → SystemComponent)
+      - "impacts" (ArchitectureDecision → SystemComponent)
+    
+    Facts:
+      - Design principles adopted
+      - Technology stack decisions
+      - Scalability requirements
+      - Trade-off analyses
+  
+  API_Design:
+    Store:
+      - Endpoint definitions and purposes
+      - Authentication strategies
+      - Rate limiting policies
+      - Error handling patterns
+  
+  Domain_Model:
+    Capture:
+      - Bounded contexts and their relationships
+      - Aggregates and entities
+      - Domain events and workflows
+      - Ubiquitous language terms
+
+Example_Storage:
+  - entity: "MicroservicesDecision"
+    type: "ArchitectureDecision"
+    properties:
+      decision: "Adopt microservices architecture"
+      rationale: "Need independent scaling and deployment"
+      consequences: "Increased complexity, need service mesh"
+      
+  - entity: "UserService"
+    type: "SystemComponent"
+    properties:
+      responsibility: "User authentication and profile management"
+      technology: "Node.js with Express"
+      
+  - relationship:
+      from: "UserService"
+      to: "EventSourcingPattern"
+      type: "uses"
+      
+  - fact: "System designed for 100K concurrent users with <100ms response time"
+```
+
+@include shared/graph-integration.yml#Build_Commands

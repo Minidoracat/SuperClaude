@@ -179,6 +179,7 @@ SuperClaude 的 @include 範本系統有助於管理代幣使用：
 /scan --security --validate --persona-security               # 安全審查
 /build --api --tdd --coverage --persona-backend              # 實作
 /analyze --architecture --graph --seq                        # 帶記憶的架構分析
+   # 儲存架構決策和設計模式供未來查詢
 ```
 
 ### 生產問題解決

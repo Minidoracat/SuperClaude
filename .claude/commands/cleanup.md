@@ -43,3 +43,59 @@ Cleanup modes:
 @include shared/docs-patterns.yml#Standard_Notifications
 
 @include shared/universal-constants.yml#Standard_Messages_Templates
+
+## Graph Integration (--graph flag)
+
+When --graph flag is present, track cleanup patterns and technical debt:
+
+```yaml
+Cleanup_Graph_Storage:
+  Group_ID: "project_[working_directory_name]"
+  
+  Technical_Debt_Tracking:
+    Entities:
+      - type: "TechnicalDebt"
+        properties: ["category", "location", "impact", "effort", "cleaned"]
+      - type: "CleanupOperation"
+        properties: ["type", "files_affected", "size_saved", "date"]
+      - type: "MaintenancePattern"
+        properties: ["pattern", "frequency", "automation_possible"]
+    
+    Relationships:
+      - "resolves" (CleanupOperation → TechnicalDebt)
+      - "prevents" (MaintenancePattern → TechnicalDebt)
+    
+    Facts:
+      - Common sources of technical debt
+      - Effective cleanup strategies
+      - Maintenance schedules that work
+      - Impact of regular cleanup on performance
+  
+  Cleanup_History:
+    Store:
+      - Files and patterns frequently cleaned
+      - Dependencies removed and why
+      - Space savings achieved
+      - Performance improvements from cleanup
+
+Example_Storage:
+  - entity: "UnusedImports"
+    type: "TechnicalDebt"
+    properties:
+      category: "code_quality"
+      impact: "low"
+      effort: "automated"
+      
+  - entity: "DependencyCleanup20240115"
+    type: "CleanupOperation"
+    properties:
+      type: "dependencies"
+      files_affected: 3
+      size_saved: "45MB"
+      
+  - fact: "Running dependency cleanup monthly reduces node_modules size by average 30%"
+  
+  - procedure: "Automated cleanup workflow: 1) Run linter fixes, 2) Remove unused deps, 3) Clean build artifacts, 4) Optimize git history"
+```
+
+@include shared/graph-integration.yml#Operations_Commands
