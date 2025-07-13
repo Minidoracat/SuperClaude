@@ -158,8 +158,10 @@ cd SuperClaude
 - **Sequential**：多步驟推理功能
 - **Magic**：AI 生成的 UI 元件
 - **Puppeteer**：瀏覽器測試和自動化
+- **Brave Search**：即時網路搜尋最新資訊
+- **Graphiti Memory**：知識圖譜實現個人化協助
 
-**⚠️ 重要：** SuperClaude 不包含 MCP 伺服器。您需要在 Claude Code 的 MCP 設定中單獨安裝它們以使用 MCP 相關標誌（--c7、--seq、--magic、--pup）。
+**⚠️ 重要：** SuperClaude 不包含 MCP 伺服器。您需要在 Claude Code 的 MCP 設定中單獨安裝它們以使用 MCP 相關標誌（--c7、--seq、--magic、--pup、--brave、--graph）。
 
 ### 📊 **代幣效率**
 SuperClaude 的 @include 範本系統有助於管理代幣使用：

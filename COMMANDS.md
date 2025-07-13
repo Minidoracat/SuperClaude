@@ -46,12 +46,16 @@
 | `--seq` | Enable Sequential thinking analysis |
 | `--magic` | Enable Magic UI component generation |
 | `--pup` | Enable Puppeteer browser automation |
+| `--brave` | Enable Brave Search for real-time web search |
+| `--graph` | Enable Graphiti Memory for knowledge persistence |
 | `--all-mcp` | Enable all MCP servers for maximum capability |
 | `--no-mcp` | Disable all MCP servers (native tools only) |
 | `--no-c7` | Disable Context7 specifically |
 | `--no-seq` | Disable Sequential thinking specifically |
 | `--no-magic` | Disable Magic UI builder specifically |
 | `--no-pup` | Disable Puppeteer specifically |
+| `--no-brave` | Disable Brave Search specifically |
+| `--no-graph` | Disable Graphiti Memory specifically |
 
 ### 🔍 Analysis & Introspection
 | Flag | Description |
@@ -117,6 +121,7 @@ Build projects, features, and components using modern stack templates.
 /build --init --react --magic --tdd         # New React app with AI components
 /build --feature "auth system" --tdd        # Feature with tests
 /build --api --openapi --seq                # API with documentation
+/build --react --graph                      # React app with memory persistence
 ```
 
 #### `/dev-setup` - Development Environment
@@ -248,6 +253,7 @@ Generate comprehensive explanations and documentation.
 ```bash
 /explain --depth expert --visual --seq     # Expert documentation
 /explain --api --examples --c7             # API docs with examples
+/explain --brave "latest React 19 features" # Latest tech documentation
 ```
 
 ### ⚙️ Operations Commands (6)
@@ -518,6 +524,8 @@ Complex feature management across sessions with automatic breakdown and recovery
    ```bash
    /build --react --magic --seq --c7
    /test --e2e --pup --coverage
+   /analyze --architecture --seq --graph    # Analysis with memory
+   /explain --brave --c7 "Next.js 15"       # Latest docs + official refs
    ```
 
 4. **Progressive thinking for complex tasks**
@@ -534,6 +542,8 @@ Complex feature management across sessions with automatic breakdown and recovery
 **Complex Analysis**: Use `--seq` for reasoning
 **UI Development**: Enable `--magic` for AI components
 **Testing**: Use `--pup` for browser automation
+**Latest Information**: Use `--brave` for real-time web search
+**Personalization**: Use `--graph` for memory persistence
 **Token Saving**: Add `--uc` for 70% reduction
 
 ---

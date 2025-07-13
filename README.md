@@ -119,8 +119,10 @@ Development lifecycle coverage:
 - **Sequential**: Multi-step reasoning capabilities
 - **Magic**: AI-generated UI components
 - **Puppeteer**: Browser testing and automation
+- **Brave Search**: Real-time web search for latest information
+- **Graphiti Memory**: Knowledge graph for personalized assistance
 
-**⚠️ Important:** SuperClaude does not include MCP servers. You need to install them separately in Claude Code's MCP settings to use MCP-related flags (--c7, --seq, --magic, --pup).
+**⚠️ Important:** SuperClaude does not include MCP servers. You need to install them separately in Claude Code's MCP settings to use MCP-related flags (--c7, --seq, --magic, --pup, --brave, --graph).
 
 ### 📊 **Token Efficiency**
 SuperClaude's @include template system helps manage token usage:
