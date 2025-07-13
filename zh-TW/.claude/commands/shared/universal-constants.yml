@@ -235,13 +235,15 @@ MCP_Servers:
   Context7: "mcp__context7__*"
   Sequential: "mcp__sequential-thinking__*"
   Magic: "mcp__magic__*"
-  Puppeteer: "mcp__puppeteer__*"
+  Playwright: "mcp__playwright__*"
+  Brave_Search: "mcp__brave-search__*"
+  Graphiti_Memory: "mcp__graphiti-memory__*"
   
 Universal_Flags:
   Planning: "--plan"
   Thinking: ["--think", "--think-hard", "--ultrathink"]
   Compression: ["--uc", "--ultracompressed"]
-  MCP_Control: ["--c7", "--seq", "--magic", "--pup", "--all-mcp", "--no-mcp"]
+  MCP_Control: ["--c7", "--seq", "--magic", "--playwright", "--brave", "--graph", "--all-mcp", "--no-mcp"]
   Execution: ["--dry-run", "--watch", "--interactive", "--force"]
   Quality: ["--tdd", "--iterate", "--threshold", "--validate", "--security"]
   

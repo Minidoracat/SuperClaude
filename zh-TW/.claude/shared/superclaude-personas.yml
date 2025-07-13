@@ -174,7 +174,7 @@ Performance_Commands:
   performance: "/analyze --profile | /improve --performance | /test --performance"
 
 Development_Commands:
-  frontend: "/build --react --magic | /test --e2e --pup | /improve --accessibility"
+  frontend: "/build --react --magic | /test --e2e --playwright | /improve --accessibility"
   backend: "/build --api | /analyze --scalability | /deploy --production"
 
 Investigation_Commands:
@@ -201,9 +201,9 @@ Security_Audit:
 Performance_Optimization:
   persona: "--persona-performance"
   commands:
-    - "/analyze --profile --bottlenecks --resource-usage --pup"
+    - "/analyze --profile --bottlenecks --resource-usage --playwright"
     - "/improve --performance --cache --optimize --iterate"
-    - "/test --performance --load --stress --monitoring --pup"
+    - "/test --performance --load --stress --monitoring --playwright"
 
 Quality_Assurance:
   persona: "--persona-qa"
@@ -217,7 +217,7 @@ Full_Stack_Development:
     persona: "--persona-frontend"
     commands:
       - "/build --react --magic --accessibility --responsive"
-      - "/test --e2e --visual --interaction --pup"
+      - "/test --e2e --visual --interaction --playwright"
   backend:
     persona: "--persona-backend"
     commands:

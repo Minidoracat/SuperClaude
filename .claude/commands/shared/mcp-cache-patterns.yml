@@ -13,7 +13,9 @@ Cache_Storage:
     Context7: ".claude/.cache/context7/"
     Sequential: ".claude/.cache/sequential/"
     Magic: ".claude/.cache/magic/"
-    Puppeteer: ".claude/.cache/puppeteer/"
+    Playwright: ".claude/.cache/playwright/"
+    Brave_Search: ".claude/.cache/brave/"
+    Graphiti_Memory: ".claude/.cache/graphiti/"
   
   Session_Management:
     Session_ID: "Generated at session start"
@@ -244,7 +246,9 @@ Phase_2_Implementation:
     - [ ] Modify Context7 calls to check cache
     - [ ] Add Sequential result caching
     - [ ] Implement Magic component cache
-    - [ ] Add Puppeteer result caching
+    - [ ] Add Playwright result caching
+    - [ ] Add Brave Search result caching
+    - [ ] Add Graphiti Memory query caching
     
   Parallel_Execution:
     - [ ] Detect parallel opportunities

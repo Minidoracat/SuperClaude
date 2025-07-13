@@ -129,7 +129,9 @@ Universal_Flags_Always_Available:
     --c7: "Context7→文件和範例"
     --seq: "Sequential→複雜思考"
     --magic: "Magic→UI 元件生成"
-    --pup: "Puppeteer→瀏覽器自動化"
+    --playwright: "Playwright→瀏覽器自動化"
+    --brave: "Brave Search→即時網路搜尋"
+    --graph: "Graphiti Memory→知識持久化"
     --all-mcp: "啟用所有 MCP 伺服器"
     --no-mcp: "停用所有 MCP 伺服器"
 

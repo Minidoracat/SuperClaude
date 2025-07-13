@@ -31,7 +31,7 @@ Commands: `/cmd --flags` | 19 total | Universal flags available
 ```yaml
 Power User Patterns:
   Deep Analysis: /analyze --architecture --seq --think-hard
-  UI Development: /build --react --magic --pup --watch
+  UI Development: /build --react --magic --playwright --watch
   Production Deploy: /scan --validate --seq → /deploy --env prod --think-hard
   Emergency Debug: /troubleshoot --prod --ultrathink --seq
   

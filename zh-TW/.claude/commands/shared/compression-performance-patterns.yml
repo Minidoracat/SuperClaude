@@ -137,19 +137,25 @@ MCP_Server_Performance:
     Context7: "快速回應 (取決於網路)"
     Sequential: "中等持續時間 (取決於複雜度)"
     Magic: "快速到中等 (元件複雜度)"
-    Puppeteer: "快速到中等 (取決於頁面載入)"
+    Playwright: "快速到中等 (取決於頁面載入)"
+    Brave_Search: "快速回應 (取決於網路)"
+    Graphiti_Memory: "非常快速 (本地資料庫)"
     
   Resource_Usage_Profiles:
     Context7: "低 CPU，中等網路"
     Sequential: "高 CPU，低網路"
     Magic: "中等 CPU，高網路"
-    Puppeteer: "中等 CPU，低網路"
+    Playwright: "中等 CPU，低網路"
+    Brave_Search: "低 CPU，高網路"
+    Graphiti_Memory: "低 CPU，極低網路"
     
   Reliability_Scoring:
     Context7: "非常高 (取決於程式庫可用性)"
     Sequential: "非常高 (內部處理)"
     Magic: "高 (外部服務相依性)"
-    Puppeteer: "非常高 (瀏覽器相依性)"
+    Playwright: "非常高 (瀏覽器相依性)"
+    Brave_Search: "高 (外部服務相依性)"
+    Graphiti_Memory: "非常高 (本地儲存)"
 
 MCP_Optimization_Strategies:
   Caching_Patterns:

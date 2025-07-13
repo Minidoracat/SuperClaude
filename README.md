@@ -94,7 +94,7 @@ Development lifecycle coverage:
 ```bash
 /build --react --magic --tdd    # Development with AI components
 /dev-setup --ci --monitor       # Environment setup
-/test --coverage --e2e --pup    # Testing strategies
+/test --coverage --e2e --playwright    # Testing strategies
 ```
 
 **Analysis & Quality**
@@ -118,11 +118,11 @@ Development lifecycle coverage:
 - **Context7**: Access to library documentation
 - **Sequential**: Multi-step reasoning capabilities
 - **Magic**: AI-generated UI components
-- **Puppeteer**: Browser testing and automation
+- **Playwright**: Browser testing and automation
 - **Brave Search**: Real-time web search for latest information
 - **Graphiti Memory**: Knowledge graph for personalized assistance
 
-**⚠️ Important:** SuperClaude does not include MCP servers. You need to install them separately in Claude Code's MCP settings to use MCP-related flags (--c7, --seq, --magic, --pup, --brave, --graph).
+**⚠️ Important:** SuperClaude does not include MCP servers. You need to install them separately in Claude Code's MCP settings to use MCP-related flags (--c7, --seq, --magic, --playwright, --brave, --graph).
 
 ### 📊 **Token Efficiency**
 SuperClaude's @include template system helps manage token usage:
@@ -139,6 +139,7 @@ SuperClaude's @include template system helps manage token usage:
 /estimate --detailed --worst-case --seq                      # Resource planning
 /scan --security --validate --persona-security               # Security review
 /build --api --tdd --coverage --persona-backend              # Implementation
+/analyze --architecture --graph --seq                        # Architecture analysis with memory
 ```
 
 ### Production Issue Resolution
@@ -146,7 +147,8 @@ SuperClaude's @include template system helps manage token usage:
 /troubleshoot --investigate --prod --persona-analyzer        # Analysis
 /analyze --profile --perf --seq                             # Performance review
 /improve --performance --threshold 95% --persona-performance # Optimization
-/test --integration --e2e --pup                             # Validation
+/test --integration --e2e --playwright                             # Validation
+/troubleshoot --prod --brave --hotfix                       # Latest production fixes
 ```
 
 ### Framework Troubleshooting & Improvement
@@ -161,6 +163,8 @@ SuperClaude's @include template system helps manage token usage:
 /build --react --magic --watch --persona-frontend           # UI development
 /test --coverage --e2e --strict --persona-qa                # Quality assurance
 /scan --validate --deps --persona-security                  # Security check
+/build --react --graph --preferences                        # Build with user preferences
+/explain --brave --latest-features                          # Explain latest tech features
 ```
 
 ## 🎭 Available Personas
@@ -168,12 +172,12 @@ SuperClaude's @include template system helps manage token usage:
 | Persona | Focus Area | Tools | Use Cases |
 |---------|-----------|-------|-----------|
 | **architect** | System design | Sequential, Context7 | Architecture planning |
-| **frontend** | User experience | Magic, Puppeteer, Context7 | UI development |
+| **frontend** | User experience | Magic, Playwright, Context7 | UI development |
 | **backend** | Server systems | Context7, Sequential | API development |
 | **security** | Security analysis | Sequential, Context7 | Security reviews |
 | **analyzer** | Problem solving | All MCP tools | Debugging |
-| **qa** | Quality assurance | Puppeteer, Context7 | Testing |
-| **performance** | Optimization | Puppeteer, Sequential | Performance tuning |
+| **qa** | Quality assurance | Playwright, Context7 | Testing |
+| **performance** | Optimization | Playwright, Sequential | Performance tuning |
 | **refactorer** | Code quality | Sequential, Context7 | Code improvement |
 | **mentor** | Knowledge sharing | Context7, Sequential | Documentation |
 

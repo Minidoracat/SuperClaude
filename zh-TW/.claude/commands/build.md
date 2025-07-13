@@ -16,7 +16,7 @@
 範例：
 - `/建構 --react --magic` - React 應用程式含 UI 生成
 - `/建構 --api --c7` - API 含文檔
-- `/建構 --react --magic --pup` - 建構並測試 UI
+- `/建構 --react --magic --playwright` - 建構並測試 UI
 
 建構前：移除工件（dist/、build/、.next/）| 清理臨時檔案與快取 | 驗證相依性 | 移除除錯程式碼
 

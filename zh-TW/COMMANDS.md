@@ -47,7 +47,7 @@
 | `--c7` | 啟用 Context7 文檔查詢 |
 | `--seq` | 啟用順序思考分析 |
 | `--magic` | 啟用 Magic UI 元件生成 |
-| `--pup` | 啟用 Puppeteer 瀏覽器自動化 |
+| `--playwright` | 啟用 Playwright 瀏覽器自動化 |
 | `--brave` | 啟用 Brave Search 即時網路搜尋 |
 | `--graph` | 啟用 Graphiti Memory 知識持久化 |
 | `--all-mcp` | 啟用所有 MCP 伺服器以獲得最大能力 |
@@ -55,7 +55,7 @@
 | `--no-c7` | 特別停用 Context7 |
 | `--no-seq` | 特別停用順序思考 |
 | `--no-magic` | 特別停用 Magic UI 建構器 |
-| `--no-pup` | 特別停用 Puppeteer |
+| `--no-playwright` | 特別停用 Playwright |
 | `--no-brave` | 特別停用 Brave Search |
 | `--no-graph` | 特別停用 Graphiti Memory |
 
@@ -159,7 +159,7 @@
 
 **範例**：
 ```bash
-/測試 --coverage --e2e --pup              # 完整測試套件
+/測試 --coverage --e2e --playwright              # 完整測試套件
 /測試 --mutation --strict                 # 測試品質驗證
 ```
 
@@ -199,8 +199,9 @@
 
 **範例**：
 ```bash
-/分析 --code --architecture --seq         # 完整分析
+/分析 --code --architecture --seq --graph  # 完整分析並存入記憶庫
 /分析 --profile --deep --角色-效能專家      # 效能深入探討
+/分析 --deps --brave --security            # 最新依賴安全資訊分析
 ```
 
 #### `/故障排除` (`/troubleshoot`) - 專業除錯
@@ -218,7 +219,9 @@
 **範例**：
 ```bash
 /故障排除 --prod --five-whys --seq        # 生產環境 RCA
-/故障排除 --perf --fix --pup              # 效能修復
+/故障排除 --perf --fix --playwright              # 效能修復
+/故障排除 --investigate --graph --seq           # 帶記憶追蹤的調查
+/故障排除 --prod --brave --hotfix              # 最新生產問題修復
 ```
 
 #### `/改善` (`/improve`) - 增強與優化
@@ -236,7 +239,9 @@
 **範例**：
 ```bash
 /改善 --quality --iterate --threshold 95%  # 品質改進
-/改善 --performance --cache --pup          # 效能提升
+/改善 --performance --cache --playwright          # 效能提升
+/改善 --refactor --graph --quality              # 帶偏好記憶的重構
+/改善 --modernize --brave --frameworks          # 最新框架更新
 ```
 
 #### `/解釋` (`/explain`) - 技術文檔
@@ -256,6 +261,8 @@
 /解釋 --depth 專家 --visual --seq         # 專家文檔
 /解釋 --api --examples --c7               # 含範例的 API 文檔
 /解釋 --brave "最新的 React 19 功能"       # 最新技術文檔
+/解釋 --architecture --graph --seq        # 帶記憶的架構文檔
+/解釋 --tutorial --brave --frameworks      # 最新教程內容
 ```
 
 ### ⚙️ 操作命令（6 個）
@@ -294,6 +301,8 @@
 ```bash
 /遷移 --database --backup --validate      # 安全的資料庫遷移
 /遷移 --code --dry-run                    # 預覽程式碼變更
+/遷移 --dependencies --brave --latest    # 最新依賴版本遷移
+/遷移 --config --graph --preferences     # 帶使用者偏好的遷移
 ```
 
 #### `/掃描` (`/scan`) - 安全與驗證
@@ -312,6 +321,8 @@
 ```bash
 /掃描 --security --owasp --fix            # 安全掃描與修復
 /掃描 --compliance --report                # 合規性報告
+/掃描 --security --brave --latest         # 最新安全漏洞掃描
+/掃描 --quality --playwright --e2e        # 帶瀏覽器測試的品質掃描
 ```
 
 #### `/估算` (`/estimate`) - 專案估算
@@ -330,6 +341,8 @@
 ```bash
 /估算 --detailed --risk --buffer          # 完整估算
 /估算 --sprint --team                     # Sprint 計劃
+/估算 --detailed --graph --historical     # 帶歷史數據的估算
+/估算 --risk --brave --market-trends      # 帶最新趨勢的風險分析
 ```
 
 #### `/清理` (`/cleanup`) - 程式碼與專案清理
@@ -348,6 +361,8 @@
 ```bash
 /清理 --all --analyze                     # 分析並清理
 /清理 --code --deps --dry-run             # 預覽清理
+/清理 --all --graph --preserve-prefs       # 保留偏好的清理
+/清理 --deps --brave --security            # 帶最新安全資訊的清理
 ```
 
 #### `/git` - Git 操作與工作流程
@@ -366,6 +381,8 @@
 ```bash
 /git --commit --角色-導師                  # 生成提交訊息
 /git --sync --cleanup                     # 同步並清理
+/git --commit --graph --message-prefs      # 帶訊息偏好的提交
+/git --sync --brave --remote-updates       # 帶最新遠端變更的同步
 ```
 
 ### 📋 任務與協調命令（4 個）
@@ -459,6 +476,8 @@
 ```bash
 /文檔 --api --openapi                     # API 文檔
 /文檔 --user --visual                     # 使用者指南
+/文檔 --api --brave --latest-standards     # 帶最新標準的文檔
+/文檔 --architecture --graph --patterns   # 帶模式記憶的架構文檔
 ```
 
 #### `/設計` (`/design`) - 系統設計
@@ -477,6 +496,8 @@
 ```bash
 /設計 --api --ddd --patterns              # API 設計與 DDD
 /設計 --system --diagrams --c7            # 系統圖表
+/設計 --system --graph --patterns          # 帶模式記憶的系統設計
+/設計 --api --brave --best-practices       # 帶最新實踐的 API 設計
 ```
 
 ---
@@ -487,7 +508,7 @@
 ```yaml
 高級使用者模式：
   深度分析：/分析 --architecture --seq --think-hard
-  UI 開發：/建構 --react --magic --pup --watch
+  UI 開發：/建構 --react --magic --playwright --watch
   生產部署：/掃描 --validate --seq → /部署 --env prod --think-hard
   緊急除錯：/故障排除 --prod --ultrathink --seq
   記憶增強：/建構 --react --graph → /測試 --graph  # 記住偏好設定

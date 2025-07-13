@@ -32,7 +32,7 @@
 ```yaml
 進階使用者模式:
   深度分析: /analyze --architecture --seq --think-hard
-  UI 開發: /build --react --magic --pup --watch
+  UI 開發: /build --react --magic --playwright --watch
   生產部署: /scan --validate --seq → /deploy --env prod --think-hard
   緊急除錯: /troubleshoot --prod --ultrathink --seq
   

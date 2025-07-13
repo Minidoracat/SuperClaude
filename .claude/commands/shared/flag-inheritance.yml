@@ -24,7 +24,7 @@ Universal_Always:
     --c7: "Enable Context7→library documentation lookup"
     --seq: "Enable Sequential→complex analysis & thinking"
     --magic: "Enable Magic→UI component generation"
-    --pup: "Enable Puppeteer→browser automation & testing"
+    --playwright: "Enable Playwright→browser automation & testing"
     --brave: "Enable Brave Search→real-time web search & latest info"
     --graph: "Enable Graphiti Memory→knowledge graph & user preferences"
     --all-mcp: "Enable all MCP servers"
@@ -32,7 +32,7 @@ Universal_Always:
     --no-c7: "Disable Context7 specifically"
     --no-seq: "Disable Sequential thinking specifically"
     --no-magic: "Disable Magic UI builder specifically"
-    --no-pup: "Disable Puppeteer specifically"
+    --no-playwright: "Disable Playwright specifically"
     --no-brave: "Disable Brave Search specifically"
     --no-graph: "Disable Graphiti Memory specifically"
     
@@ -179,7 +179,7 @@ Inheritance_Priority:
   
 Conflict_Resolution:
   --force_overrides: ["--validate", "--dry-run", "--interactive"]
-  --no-mcp_overrides: ["--c7", "--seq", "--magic", "--pup", "--brave", "--graph", "--all-mcp"]
+  --no-mcp_overrides: ["--c7", "--seq", "--magic", "--playwright", "--brave", "--graph", "--all-mcp"]
   --strict_enhances: ["--validate", "--security", "--coverage"]
   
 Auto_Combinations:

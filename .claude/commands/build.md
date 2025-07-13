@@ -16,7 +16,7 @@ Build project/feature based on req in $ARGUMENTS.
 Examples:
 - `/build --react --magic` - React app w/ UI gen
 - `/build --api --c7` - API w/ docs
-- `/build --react --magic --pup` - Build & test UI
+- `/build --react --magic --playwright` - Build & test UI
 
 Pre-build: Remove artifacts (dist/, build/, .next/) | Clean temp files & cache | Validate deps | Remove debug
 

@@ -123,12 +123,12 @@ cd SuperClaude
 # 繁體中文版
 /建構 --react --magic --tdd    # 使用 AI 元件進行開發
 /開發設置 --ci --monitor       # 環境設定
-/測試 --coverage --e2e --pup   # 測試策略
+/測試 --coverage --e2e --playwright   # 測試策略
 
 # 英文版相容
 /build --react --magic --tdd    # 使用 AI 元件進行開發
 /dev-setup --ci --monitor       # 環境設定
-/test --coverage --e2e --pup    # 測試策略
+/test --coverage --e2e --playwright    # 測試策略
 ```
 
 **分析與品質**
@@ -157,11 +157,11 @@ cd SuperClaude
 - **Context7**：存取程式庫文件
 - **Sequential**：多步驟推理功能
 - **Magic**：AI 生成的 UI 元件
-- **Puppeteer**：瀏覽器測試和自動化
+- **Playwright**：瀏覽器測試和自動化
 - **Brave Search**：即時網路搜尋最新資訊
 - **Graphiti Memory**：知識圖譜實現個人化協助
 
-**⚠️ 重要：** SuperClaude 不包含 MCP 伺服器。您需要在 Claude Code 的 MCP 設定中單獨安裝它們以使用 MCP 相關標誌（--c7、--seq、--magic、--pup、--brave、--graph）。
+**⚠️ 重要：** SuperClaude 不包含 MCP 伺服器。您需要在 Claude Code 的 MCP 設定中單獨安裝它們以使用 MCP 相關標誌（--c7、--seq、--magic、--playwright、--brave、--graph）。
 
 ### 📊 **代幣效率**
 SuperClaude 的 @include 範本系統有助於管理代幣使用：
@@ -178,6 +178,7 @@ SuperClaude 的 @include 範本系統有助於管理代幣使用：
 /estimate --detailed --worst-case --seq                      # 資源規劃
 /scan --security --validate --persona-security               # 安全審查
 /build --api --tdd --coverage --persona-backend              # 實作
+/analyze --architecture --graph --seq                        # 帶記憶的架構分析
 ```
 
 ### 生產問題解決
@@ -185,7 +186,8 @@ SuperClaude 的 @include 範本系統有助於管理代幣使用：
 /troubleshoot --investigate --prod --persona-analyzer        # 分析
 /analyze --profile --perf --seq                             # 效能審查
 /improve --performance --threshold 95% --persona-performance # 優化
-/test --integration --e2e --pup                             # 驗證
+/test --integration --e2e --playwright                             # 驗證
+/troubleshoot --prod --brave --hotfix                       # 最新生產修復
 ```
 
 ### 框架疑難排解與改進
@@ -200,6 +202,8 @@ SuperClaude 的 @include 範本系統有助於管理代幣使用：
 /build --react --magic --watch --persona-frontend           # UI 開發
 /test --coverage --e2e --strict --persona-qa                # 品質保證
 /scan --validate --deps --persona-security                  # 安全檢查
+/build --react --graph --preferences                        # 帶使用者偏好的建構
+/explain --brave --latest-features                          # 解釋最新技術功能
 ```
 
 ## 🎭 可用角色
@@ -207,12 +211,12 @@ SuperClaude 的 @include 範本系統有助於管理代幣使用：
 | 角色 | 重點領域 | 工具 | 使用案例 |
 |---------|-----------|-------|-----------|
 | **architect** | 系統設計 | Sequential、Context7 | 架構規劃 |
-| **frontend** | 使用者體驗 | Magic、Puppeteer、Context7 | UI 開發 |
+| **frontend** | 使用者體驗 | Magic、Playwright、Context7 | UI 開發 |
 | **backend** | 伺服器系統 | Context7、Sequential | API 開發 |
 | **security** | 安全分析 | Sequential、Context7 | 安全審查 |
 | **analyzer** | 問題解決 | 所有 MCP 工具 | 除錯 |
-| **qa** | 品質保證 | Puppeteer、Context7 | 測試 |
-| **performance** | 優化 | Puppeteer、Sequential | 效能調整 |
+| **qa** | 品質保證 | Playwright、Context7 | 測試 |
+| **performance** | 優化 | Playwright、Sequential | 效能調整 |
 | **refactorer** | 程式碼品質 | Sequential、Context7 | 程式碼改進 |
 | **mentor** | 知識分享 | Context7、Sequential | 文件 |
 

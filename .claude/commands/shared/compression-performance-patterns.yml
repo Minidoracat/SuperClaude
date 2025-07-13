@@ -137,25 +137,29 @@ MCP_Server_Performance:
     Context7: "Fast response (network dependent)"
     Sequential: "Moderate duration (complexity dependent)"
     Magic: "Fast to moderate (component complexity)"
-    Puppeteer: "Fast to moderate (page load dependent)"
+    Playwright: "Fast to moderate (page load dependent)"
     
   Resource_Usage_Profiles:
     Context7: "Low CPU, Medium Network"
     Sequential: "High CPU, Low Network"
     Magic: "Medium CPU, High Network"
-    Puppeteer: "Medium CPU, Low Network"
+    Playwright: "Medium CPU, Low Network"
     
   Reliability_Scoring:
     Context7: "Very high (library availability dependent)"
     Sequential: "Very high (internal processing)"
     Magic: "High (external service dependency)"
-    Puppeteer: "Very high (browser dependency)"
+    Playwright: "Very high (browser dependency)"
+    Brave_Search: "High (external service dependency)"
+    Graphiti_Memory: "Very high (local storage)"
 
 MCP_Optimization_Strategies:
   Caching_Patterns:
     Context7_Cache: "Library docs + examples (session-persistent)"
     Sequential_Cache: "Analysis patterns + solutions (cross-session)"
     Magic_Cache: "Component templates + variations (persistent)"
+    Brave_Cache: "Search results + recent queries (time-limited)"
+    Graphiti_Cache: "Query patterns + frequent nodes (persistent)"
     
   Fallback_Performance:
     MCP_Timeout: "5-10 second timeout → fallback to native"

@@ -85,19 +85,42 @@ Servers:
     Success_Rate: "常見元件高"
     Fallback: "在專案中搜尋現有元件"
     
-  Puppeteer:
+  Playwright:
     Purpose: "瀏覽器自動化和測試"
     Best_For: ["E2E 測試", "截圖", "網頁爬蟲", "效能測試"]
     Token_Cost: "低 (最少權杖，主要是動作)"
     Capabilities:
-      - connect_active_tab: "連接到 Chrome 除錯"
-      - navigate: "導航到 URL"
-      - screenshot: "擷取頁面/元素截圖"
-      - click: "點擊元素"
-      - fill: "填寫表單輸入"
-      - evaluate: "執行 JavaScript"
+      - browser_navigate: "導航到 URL"
+      - browser_take_screenshot: "擷取頁面/元素截圖"
+      - browser_click: "點擊元素"
+      - browser_type: "填寫表單輸入"
+      - browser_wait_for: "等待元素或條件"
     Success_Rate: "標準網頁互動非常高"
     Fallback: "手動測試指導"
+    
+  Brave_Search:
+    Purpose: "即時網路搜尋最新資訊"
+    Best_For: ["最新文檔", "當前趨勢", "突發新聞", "最近更新"]
+    Token_Cost: "低-中等使用量"
+    Capabilities:
+      - brave_web_search: "一般網路搜尋與最新結果"
+      - brave_news_search: "最新新聞和熱門話題"
+      - brave_local_search: "本地商家和位置搜尋"
+      - brave_image_search: "圖片和視覺內容搜尋"
+    Success_Rate: "當前資訊高"
+    Fallback: "靜態文檔查詢"
+    
+  Graphiti_Memory:
+    Purpose: "知識圖譜和使用者偏好持久化"
+    Best_For: ["使用者偏好", "專案模式", "歷史背景", "個人化"]
+    Token_Cost: "低使用量"
+    Capabilities:
+      - add_memory: "儲存事實、偏好和程序"
+      - search_memory_nodes: "尋找相關知識節點"
+      - search_memory_facts: "查詢事實關係"
+      - get_episodes: "檢索最近的事件"
+    Success_Rate: "儲存的資料非常高"
+    Fallback: "僅限會話記憶"
 
 MCP_Parallel_Execution:
   "@include mcp-cache-patterns.yml#Parallel_MCP_Execution"
@@ -116,8 +139,12 @@ MCP_Control_Flags:
     --no-seq: "停用 Sequential"
     --magic: "僅啟用 Magic"
     --no-magic: "停用 Magic"
-    --pup: "僅啟用 Puppeteer"
-    --no-pup: "停用 Puppeteer"
+    --playwright: "僅啟用 Playwright"
+    --no-playwright: "停用 Playwright"
+    --brave: "僅啟用 Brave Search"
+    --no-brave: "停用 Brave Search"
+    --graph: "僅啟用 Graphiti Memory"
+    --no-graph: "停用 Graphiti Memory"
     
   Combined:
     --all-mcp: "啟用所有 MCP 伺服器"
@@ -156,17 +183,21 @@ Intelligent_MCP_Selection:
   Command_Defaults:
     analyze + --architecture: "建議 --seq 進行系統分析"
     build + --react: "建議 --magic 用於 UI 元件"
-    test + --e2e: "建議 --pup 用於瀏覽器測試"
+    test + --e2e: "建議 --playwright 用於瀏覽器測試"
     explain + library_name: "建議 --c7 用於文件"
     design + --api: "建議 --seq --c7 進行全面設計"
     troubleshoot + --investigate: "建議 --seq 進行根因分析"
-    improve + --performance: "建議 --seq --pup 進行最佳化分析"
+    improve + --performance: "建議 --seq --playwright 進行最佳化分析"
+    explain + latest_info: "建議 --brave 用於當前文檔"
+    analyze + user_preferences: "建議 --graph 用於個人化分析"
     
   Context_Triggers:
     Import_Errors: "→ C7 查詢必需"
     Complex_Debugging: "→ Sequential 思考"
     UI_Requests: "→ Magic 建構器"
-    E2E_Testing: "→ Puppeteer 自動化"
+    E2E_Testing: "→ Playwright 自動化"
+    Latest_Info_Requests: "→ Brave Search"
+    User_Preference_Context: "→ Graphiti Memory"
 
 ## 自動 MCP 上下文偵測
 
@@ -196,7 +227,7 @@ Context_Detection_Patterns:
   Browser_Automation_Needs:
     Keywords: ["截圖", "e2e", "整合測試", "瀏覽器", "selenium", "自動化"]
     Test_Patterns: ["cypress", "playwright", "puppeteer", "webdriver"]
-    Action: "→ Puppeteer 自動化建議"
+    Action: "→ Playwright 自動化建議"
     
 Research_Requirements:
   External_Library_Detection:
@@ -223,12 +254,14 @@ Auto_Activation_Rules:
   Command_Based:
     /build + UI_keywords: "建議 --magic 用於元件生成"
     /analyze + complexity_indicators: "建議 --seq 用於深度分析"
-    /test + browser_keywords: "建議 --pup 用於自動化"
+    /test + browser_keywords: "建議 --playwright 用於自動化"
+    /explain + current_info: "建議 --brave 用於最新資訊"
+    /analyze + personalization: "建議 --graph 用於使用者背景"
     /explain + library_name: "建議 --c7 用於文件"
     
   File_Based:
     "*.tsx|*.jsx": "前端上下文 → --magic 可用"
-    "*.test.*|*.spec.*": "測試上下文 → --pup 可用"
+    "*.test.*|*.spec.*": "測試上下文 → --playwright 可用"
     "*api*|*server*": "後端上下文 → --seq 用於設計"
     
   Error_Based:
@@ -240,11 +273,14 @@ Override_Controls:
   User_Flags_Priority: "明確旗標 > 自動偵測 > 預設"
   Disable_All: "--no-mcp 覆蓋所有自動偵測"
   Selective_Disable: "--no-c7, --no-seq, --no-magic, --no-pup"
-  Force_Enable: "--c7, --seq, --magic, --pup 覆蓋上下文偵測"
+  Force_Enable: "--c7, --seq, --magic, --playwright, --brave, --graph 覆蓋上下文偵測"
 ```
     
   Synergistic_Patterns:
-    --magic + --pup: "生成 UI 元件並立即測試"
+    --magic + --playwright: "生成 UI 元件並立即測試"
+    --brave + --c7: "最新資訊結合官方文檔"
+    --graph + --seq: "個人化分析與逐步推理"
+    --graph + --brave: "使用者偏好與當前資訊"
     --seq + --c7: "複雜分析與權威文件"
     --seq + --think-hard: "深度架構分析與文件"
     --c7 + --uc: "研究與壓縮輸出以提高權杖效率"
@@ -401,19 +437,25 @@ Server_Performance:
     Context7: "快速回應 (取決於網路)"
     Sequential: "中等持續時間 (取決於複雜度)"
     Magic: "快速到中等 (元件複雜度)"
-    Puppeteer: "快速到中等 (取決於頁面載入)"
+    Playwright: "快速到中等 (取決於頁面載入)"
+    Brave_Search: "快速回應 (取決於網路)"
+    Graphiti_Memory: "非常快速 (本地資料庫)"
     
   Resource_Usage:
     Context7: "低 CPU，中等網路"
     Sequential: "高 CPU，低網路"
     Magic: "中等 CPU，高網路"
-    Puppeteer: "中等 CPU，低網路"
+    Playwright: "中等 CPU，低網路"
+    Brave_Search: "低 CPU，高網路"
+    Graphiti_Memory: "低 CPU，極低網路"
     
   Reliability_Scores:
     Context7: "非常高 (取決於程式庫可用性)"
     Sequential: "非常高 (內部處理)"
     Magic: "高 (外部服務相依性)"
-    Puppeteer: "非常高 (瀏覽器相依性)"
+    Playwright: "非常高 (瀏覽器相依性)"
+    Brave_Search: "高 (外部服務相依性)"
+    Graphiti_Memory: "非常高 (本地儲存)"
 ```
 
 ## 指令整合
@@ -439,7 +481,7 @@ Command_Hooks:
     Post: ["驗證輸出", "執行煙霧測試", "更新清單", "記錄 MCP 效能"]
     
   Test_Hooks:
-    Pre: ["重設測試資料", "啟動服務", "清除快取", "如需要連接 Puppeteer"]
+    Pre: ["重設測試資料", "啟動服務", "清除快取", "如需要連接 Playwright"]
     During: ["追蹤覆蓋率", "監控效能", "擷取日誌", "處理瀏覽器事件"]
     Post: ["生成報告", "清理測試資料", "封存結果", "斷開瀏覽器連接"]
     

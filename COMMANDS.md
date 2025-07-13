@@ -45,7 +45,7 @@
 | `--c7` | Enable Context7 documentation lookup |
 | `--seq` | Enable Sequential thinking analysis |
 | `--magic` | Enable Magic UI component generation |
-| `--pup` | Enable Puppeteer browser automation |
+| `--playwright` | Enable Playwright browser automation |
 | `--brave` | Enable Brave Search for real-time web search |
 | `--graph` | Enable Graphiti Memory for knowledge persistence |
 | `--all-mcp` | Enable all MCP servers for maximum capability |
@@ -53,7 +53,7 @@
 | `--no-c7` | Disable Context7 specifically |
 | `--no-seq` | Disable Sequential thinking specifically |
 | `--no-magic` | Disable Magic UI builder specifically |
-| `--no-pup` | Disable Puppeteer specifically |
+| `--no-playwright` | Disable Playwright specifically |
 | `--no-brave` | Disable Brave Search specifically |
 | `--no-graph` | Disable Graphiti Memory specifically |
 
@@ -157,7 +157,7 @@ Create, run, and maintain testing strategies across the stack.
 
 **Examples:**
 ```bash
-/test --coverage --e2e --pup               # Full test suite
+/test --coverage --e2e --playwright               # Full test suite
 /test --mutation --strict                  # Test quality validation
 ```
 
@@ -199,6 +199,8 @@ Comprehensive analysis of code, architecture, performance, and security.
 ```bash
 /analyze --code --architecture --seq       # Full analysis
 /analyze --profile --deep --persona-performance  # Performance deep-dive
+/analyze --architecture --graph --seq    # Architecture analysis with memory
+/analyze --deps --brave --security       # Latest dependency security info
 ```
 
 #### `/troubleshoot` - Professional Debugging
@@ -216,7 +218,9 @@ Systematic debugging and issue resolution.
 **Examples:**
 ```bash
 /troubleshoot --prod --five-whys --seq    # Production RCA
-/troubleshoot --perf --fix --pup          # Performance fix
+/troubleshoot --perf --fix --playwright          # Performance fix
+/troubleshoot --investigate --graph --seq # Investigation with memory tracking
+/troubleshoot --prod --brave --hotfix    # Latest production issue fixes
 ```
 
 #### `/improve` - Enhancement & Optimization
@@ -234,7 +238,9 @@ Evidence-based improvements with measurable outcomes.
 **Examples:**
 ```bash
 /improve --quality --iterate --threshold 95%    # Quality improvement
-/improve --performance --cache --pup            # Performance boost
+/improve --performance --cache --playwright            # Performance boost
+/improve --refactor --graph --quality        # Refactoring with preference memory
+/improve --modernize --brave --frameworks    # Latest framework updates
 ```
 
 #### `/explain` - Technical Documentation
@@ -254,6 +260,8 @@ Generate comprehensive explanations and documentation.
 /explain --depth expert --visual --seq     # Expert documentation
 /explain --api --examples --c7             # API docs with examples
 /explain --brave "latest React 19 features" # Latest tech documentation
+/explain --architecture --graph --seq      # Architecture docs with memory
+/explain --tutorial --brave --frameworks   # Latest tutorial content
 ```
 
 ### ⚙️ Operations Commands (6)
@@ -292,6 +300,8 @@ Safe migrations with rollback capabilities.
 ```bash
 /migrate --database --backup --validate    # Safe DB migration
 /migrate --code --dry-run                  # Preview code changes
+/migrate --dependencies --brave --latest  # Latest dependency versions
+/migrate --config --graph --preferences   # Migration with user preferences
 ```
 
 #### `/scan` - Security & Validation
@@ -308,6 +318,8 @@ Comprehensive security auditing and compliance.
 ```bash
 /scan --security --owasp --deps           # Security audit
 /scan --compliance --gdpr --strict        # Compliance check
+/scan --security --brave --latest         # Latest security vulnerabilities
+/scan --quality --playwright --e2e        # Quality with browser testing
 ```
 
 #### `/estimate` - Project Estimation
@@ -327,6 +339,8 @@ Professional estimation with risk assessment.
 ```bash
 /estimate --detailed --complexity --risk   # Full estimation
 /estimate --agile --story-points          # Agile planning
+/estimate --detailed --graph --historical # Estimation with historical data
+/estimate --risk --brave --market-trends  # Risk analysis with latest trends
 ```
 
 #### `/cleanup` - Project Maintenance
@@ -345,6 +359,8 @@ Professional cleanup with safety validations.
 ```bash
 /cleanup --all --dry-run                  # Preview cleanup
 /cleanup --code --deps --validate         # Code cleanup
+/cleanup --all --graph --preserve-prefs   # Cleanup preserving user preferences
+/cleanup --deps --brave --security        # Cleanup with latest security info
 ```
 
 #### `/git` - Git Workflow Management
@@ -365,7 +381,8 @@ Professional Git operations with safety features.
 /git --checkpoint "before refactor"       # Safety checkpoint
 /git --commit --validate --test          # Safe commit
 /git --pre-commit                        # Setup pre-commit hooks
-/git --commit --pre-commit               # Commit with validation
+/git --commit --graph --message-prefs    # Commit with message preferences
+/git --sync --brave --remote-updates     # Sync with latest remote changes
 ```
 
 ### 🎨 Design & Architecture Commands (1)
@@ -387,6 +404,8 @@ Professional system design with specifications.
 ```bash
 /design --api --ddd --openapi --seq      # API with DDD
 /design --microservices --event-driven   # Microservices design
+/design --system --graph --patterns      # System design with pattern memory
+/design --api --brave --best-practices   # API design with latest practices
 ```
 
 ### 🔄 Workflow Commands (4)
@@ -406,6 +425,8 @@ Spawn focused agents for parallel tasks.
 ```bash
 /spawn --task "frontend tests" --parallel  # Parallel testing
 /spawn --collaborative --sync              # Team simulation
+/spawn --task "e2e testing" --playwright   # Browser testing agent
+/spawn --specialized --graph --domain      # Specialized agent with memory
 ```
 
 #### `/document` - Documentation Creation
@@ -423,6 +444,8 @@ Professional documentation in multiple formats.
 ```bash
 /document --api --interactive --examples   # API documentation
 /document --user --visual --multilingual   # User guides
+/document --api --brave --latest-standards # Documentation with latest standards
+/document --architecture --graph --patterns # Architecture docs with pattern memory
 ```
 
 #### `/load` - Project Context Loading
@@ -441,6 +464,8 @@ Load and analyze project context.
 ```bash
 /load --depth deep --patterns --seq       # Deep analysis
 /load --structure --health --standards   # Project assessment
+/load --context --graph --preferences    # Load with user preferences
+/load --patterns --brave --frameworks    # Load with latest framework patterns
 ```
 
 #### `/task` - Task Management
@@ -478,7 +503,7 @@ Complex feature management across sessions with automatic breakdown and recovery
 ```bash
 /design --api --ddd --persona-architect
 /build --fullstack --tdd --magic
-/test --coverage --e2e --pup
+/test --coverage --e2e --playwright
 /deploy --env staging --validate
 ```
 
@@ -493,7 +518,7 @@ Complex feature management across sessions with automatic breakdown and recovery
 **Performance Optimization**
 ```bash
 /analyze --profile --deep --persona-performance
-/troubleshoot --perf --investigate --pup
+/troubleshoot --perf --investigate --playwright
 /improve --performance --iterate --threshold 90%
 /test --performance --load
 ```
@@ -523,7 +548,7 @@ Complex feature management across sessions with automatic breakdown and recovery
 3. **Combine MCP servers for maximum capability**
    ```bash
    /build --react --magic --seq --c7
-   /test --e2e --pup --coverage
+   /test --e2e --playwright --coverage
    /analyze --architecture --seq --graph    # Analysis with memory
    /explain --brave --c7 "Next.js 15"       # Latest docs + official refs
    ```
@@ -541,7 +566,7 @@ Complex feature management across sessions with automatic breakdown and recovery
 **Documentation Tasks**: Enable `--c7` for library lookups
 **Complex Analysis**: Use `--seq` for reasoning
 **UI Development**: Enable `--magic` for AI components
-**Testing**: Use `--pup` for browser automation
+**Testing**: Use `--playwright` for browser automation
 **Latest Information**: Use `--brave` for real-time web search
 **Personalization**: Use `--graph` for memory persistence
 **Token Saving**: Add `--uc` for 70% reduction

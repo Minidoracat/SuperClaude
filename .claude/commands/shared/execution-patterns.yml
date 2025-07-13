@@ -85,19 +85,42 @@ Servers:
     Success_Rate: "High for common components"
     Fallback: "Search existing components in project"
     
-  Puppeteer:
+  Playwright:
     Purpose: "Browser automation and testing"
     Best_For: ["E2E tests", "screenshots", "web scraping", "performance testing"]
     Token_Cost: "Low (minimal tokens, mostly actions)"
     Capabilities:
-      - connect_active_tab: "Connect to Chrome debugging"
-      - navigate: "Navigate to URLs"
-      - screenshot: "Capture page/element screenshots"
-      - click: "Click elements"
-      - fill: "Fill form inputs"
-      - evaluate: "Execute JavaScript"
+      - browser_navigate: "Navigate to URLs"
+      - browser_take_screenshot: "Capture page/element screenshots"
+      - browser_click: "Click elements"
+      - browser_type: "Fill form inputs"
+      - browser_wait_for: "Wait for elements or conditions"
     Success_Rate: "Very high for standard web interactions"
     Fallback: "Manual testing guidance"
+    
+  Brave_Search:
+    Purpose: "Real-time web search for latest information"
+    Best_For: ["Latest documentation", "current trends", "breaking news", "recent updates"]
+    Token_Cost: "Low-Medium usage"
+    Capabilities:
+      - brave_web_search: "General web search with recent results"
+      - brave_news_search: "Latest news and trending topics"
+      - brave_local_search: "Local business and location searches"
+      - brave_image_search: "Image and visual content search"
+    Success_Rate: "High for current information"
+    Fallback: "Static documentation lookup"
+    
+  Graphiti_Memory:
+    Purpose: "Knowledge graph and user preference persistence"
+    Best_For: ["User preferences", "project patterns", "historical context", "personalization"]
+    Token_Cost: "Low usage"
+    Capabilities:
+      - add_memory: "Store facts, preferences, and procedures"
+      - search_memory_nodes: "Find relevant knowledge nodes"
+      - search_memory_facts: "Query factual relationships"
+      - get_episodes: "Retrieve recent episodes"
+    Success_Rate: "Very high for stored data"
+    Fallback: "Session-only memory"
 
 MCP_Parallel_Execution:
   "@include mcp-cache-patterns.yml#Parallel_MCP_Execution"
@@ -116,8 +139,12 @@ MCP_Control_Flags:
     --no-seq: "Disable Sequential"
     --magic: "Enable Magic only"
     --no-magic: "Disable Magic"
-    --pup: "Enable Puppeteer only"
-    --no-pup: "Disable Puppeteer"
+    --playwright: "Enable Playwright only"
+    --no-playwright: "Disable Playwright"
+    --brave: "Enable Brave Search only"
+    --no-brave: "Disable Brave Search"
+    --graph: "Enable Graphiti Memory only"
+    --no-graph: "Disable Graphiti Memory"
     
   Combined:
     --all-mcp: "Enable all MCP servers"
@@ -156,17 +183,21 @@ Intelligent_MCP_Selection:
   Command_Defaults:
     analyze + --architecture: "Suggest --seq for system analysis"
     build + --react: "Suggest --magic for UI components"
-    test + --e2e: "Suggest --pup for browser testing"
+    test + --e2e: "Suggest --playwright for browser testing"
     explain + library_name: "Suggest --c7 for documentation"
     design + --api: "Suggest --seq --c7 for comprehensive design"
     troubleshoot + --investigate: "Suggest --seq for root cause analysis"
-    improve + --performance: "Suggest --seq --pup for optimization analysis"
+    improve + --performance: "Suggest --seq --playwright for optimization analysis"
+    explain + latest_info: "Suggest --brave for current documentation"
+    analyze + user_preferences: "Suggest --graph for personalized analysis"
     
   Context_Triggers:
     Import_Errors: "→ C7 lookup REQUIRED"
     Complex_Debugging: "→ Sequential thinking"
     UI_Requests: "→ Magic builder"
-    E2E_Testing: "→ Puppeteer automation"
+    E2E_Testing: "→ Playwright automation"
+    Latest_Info_Requests: "→ Brave Search"
+    User_Preference_Context: "→ Graphiti Memory"
 
 ## Automatic MCP Context Detection
 
@@ -195,8 +226,18 @@ Context_Detection_Patterns:
     
   Browser_Automation_Needs:
     Keywords: ["screenshot", "e2e", "integration test", "browser", "selenium", "automation"]
-    Test_Patterns: ["cypress", "playwright", "puppeteer", "webdriver"]
-    Action: "→ Puppeteer automation RECOMMENDED"
+    Test_Patterns: ["cypress", "playwright", "webdriver"]
+    Action: "→ Playwright automation RECOMMENDED"
+    
+  Real_Time_Information_Needs:
+    Keywords: ["latest", "current", "recent", "breaking", "trending", "up-to-date", "newest"]
+    Phrases: ["what's new", "latest version", "current status", "recent updates"]
+    Action: "→ Brave Search RECOMMENDED"
+    
+  Personalization_Context:
+    Keywords: ["preference", "remember", "user setting", "customize", "personal", "history"]
+    Phrases: ["how I like", "my usual", "last time", "previously"]
+    Action: "→ Graphiti Memory RECOMMENDED"
     
 Research_Requirements:
   External_Library_Detection:
@@ -223,12 +264,14 @@ Auto_Activation_Rules:
   Command_Based:
     /build + UI_keywords: "Suggest --magic for component generation"
     /analyze + complexity_indicators: "Suggest --seq for deep analysis"
-    /test + browser_keywords: "Suggest --pup for automation"
+    /test + browser_keywords: "Suggest --playwright for automation"
     /explain + library_name: "Suggest --c7 for documentation"
+    /explain + current_info: "Suggest --brave for latest information"
+    /analyze + personalization: "Suggest --graph for user context"
     
   File_Based:
     "*.tsx|*.jsx": "Frontend context → --magic available"
-    "*.test.*|*.spec.*": "Testing context → --pup available"
+    "*.test.*|*.spec.*": "Testing context → --playwright available"
     "*api*|*server*": "Backend context → --seq for design"
     
   Error_Based:
@@ -239,15 +282,18 @@ Auto_Activation_Rules:
 Override_Controls:
   User_Flags_Priority: "Explicit flags > Auto-detection > Defaults"
   Disable_All: "--no-mcp overrides all auto-detection"
-  Selective_Disable: "--no-c7, --no-seq, --no-magic, --no-pup"
-  Force_Enable: "--c7, --seq, --magic, --pup override context detection"
+  Selective_Disable: "--no-c7, --no-seq, --no-magic, --no-playwright, --no-brave, --no-graph"
+  Force_Enable: "--c7, --seq, --magic, --playwright, --brave, --graph override context detection"
 ```
     
   Synergistic_Patterns:
-    --magic + --pup: "Generate UI components and test immediately"
+    --magic + --playwright: "Generate UI components and test immediately"
     --seq + --c7: "Complex analysis with authoritative documentation"
     --seq + --think-hard: "Deep architectural analysis with documentation"
     --c7 + --uc: "Research with compressed output for token efficiency"
+    --brave + --c7: "Latest information combined with official documentation"
+    --graph + --seq: "Personalized analysis with step-by-step reasoning"
+    --graph + --brave: "User preferences with current information"
 ```
 
 ## Development Workflows
@@ -256,7 +302,7 @@ Override_Controls:
 Full_Stack_Development:
   Chain: "load→analyze→design→build→test→scan→deploy"
   Flags: ["--think", "--magic", "--validate"]
-  MCP_Usage: ["--c7 for docs", "--magic for UI", "--seq for design"]
+  MCP_Usage: ["--c7 for docs", "--magic for UI", "--seq for design", "--playwright for testing", "--brave for latest info", "--graph for preferences"]
   Time: "Typical development session"
   Context_Handoff:
     load→analyze: "Project understanding"
@@ -269,19 +315,19 @@ Full_Stack_Development:
 Feature_Implementation:
   Chain: "analyze --code→design --feature→build --feature→test→git --commit"
   Flags: ["--think", "--magic"]
-  MCP_Usage: ["--magic for components", "--c7 for patterns"]
+  MCP_Usage: ["--magic for components", "--c7 for patterns", "--graph for user preferences"]
   Time: "Moderate duration"
 
 Bug_Investigation_Fix:
   Chain: "troubleshoot --investigate→analyze --code→improve --quality→test→git --commit"
   Flags: ["--think-hard", "--seq"]
-  MCP_Usage: ["--seq for investigation", "--c7 for solutions"]
+  MCP_Usage: ["--seq for investigation", "--c7 for solutions", "--brave for latest fixes"]
   Time: "Variable duration"
 
 Tech_Debt_Reduction:
   Chain: "analyze --architecture→design --refactor→improve --quality→test→document"
   Flags: ["--think-hard", "--refactor", "--quality"]
-  MCP_Usage: ["--seq for analysis", "--c7 for patterns"]
+  MCP_Usage: ["--seq for analysis", "--c7 for patterns", "--graph for historical context"]
   Time: "Extended session"
 ```
 
@@ -401,19 +447,25 @@ Server_Performance:
     Context7: "Fast response (network dependent)"
     Sequential: "Moderate duration (complexity dependent)"
     Magic: "Fast to moderate (component complexity)"
-    Puppeteer: "Fast to moderate (page load dependent)"
+    Playwright: "Fast to moderate (page load dependent)"
+    Brave_Search: "Fast response (network dependent)"
+    Graphiti_Memory: "Very fast (local database)"
     
   Resource_Usage:
     Context7: "Low CPU, Medium Network"
     Sequential: "High CPU, Low Network"
     Magic: "Medium CPU, High Network"
-    Puppeteer: "Medium CPU, Low Network"
+    Playwright: "Medium CPU, Low Network"
+    Brave_Search: "Low CPU, High Network"
+    Graphiti_Memory: "Low CPU, Very Low Network"
     
   Reliability_Scores:
     Context7: "Very high (dependent on library availability)"
     Sequential: "Very high (internal processing)"
     Magic: "High (external service dependency)"
-    Puppeteer: "Very high (browser dependency)"
+    Playwright: "Very high (browser dependency)"
+    Brave_Search: "High (external service dependency)"
+    Graphiti_Memory: "Very high (local storage)"
 ```
 
 ## Command Integration
@@ -439,7 +491,7 @@ Command_Hooks:
     Post: ["Verify output", "Run smoke tests", "Update manifests", "Log MCP performance"]
     
   Test_Hooks:
-    Pre: ["Reset test data", "Start services", "Clear caches", "Connect Puppeteer if needed"]
+    Pre: ["Reset test data", "Start services", "Clear caches", "Connect Playwright if needed"]
     During: ["Track coverage", "Monitor performance", "Capture logs", "Handle browser events"]
     Post: ["Generate reports", "Clean test data", "Archive results", "Disconnect browser"]
     

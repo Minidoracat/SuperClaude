@@ -24,7 +24,7 @@ Universal_Always:
     --c7: "啟用 Context7→程式庫文件查詢"
     --seq: "啟用 Sequential→複雜分析與思考"
     --magic: "啟用 Magic→UI 元件生成"
-    --pup: "啟用 Puppeteer→瀏覽器自動化與測試"
+    --playwright: "啟用 Playwright→瀏覽器自動化與測試"
     --brave: "啟用 Brave Search→即時網路搜尋與最新資訊"
     --graph: "啟用 Graphiti Memory→知識圖譜與使用者偏好"
     --all-mcp: "啟用所有 MCP 伺服器"
@@ -32,7 +32,7 @@ Universal_Always:
     --no-c7: "特別停用 Context7"
     --no-seq: "特別停用 Sequential 思考"
     --no-magic: "特別停用 Magic UI 建構器"
-    --no-pup: "特別停用 Puppeteer"
+    --no-playwright: "特別停用 Playwright"
     --no-brave: "特別停用 Brave Search"
     --no-graph: "特別停用 Graphiti Memory"
     
@@ -179,7 +179,7 @@ Inheritance_Priority:
   
 Conflict_Resolution:
   --force_overrides: ["--validate", "--dry-run", "--interactive"]
-  --no-mcp_overrides: ["--c7", "--seq", "--magic", "--pup", "--brave", "--graph", "--all-mcp"]
+  --no-mcp_overrides: ["--c7", "--seq", "--magic", "--playwright", "--brave", "--graph", "--all-mcp"]
   --strict_enhances: ["--validate", "--security", "--coverage"]
   
 Auto_Combinations:

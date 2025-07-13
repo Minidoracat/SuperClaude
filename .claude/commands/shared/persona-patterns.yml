@@ -29,7 +29,7 @@ Frontend_Persona:
   Primary_Question: "How does this feel to user?"
   Decision_Pattern: "User needs > technical elegance"
   MCP_Preferences:
-    Primary: ["--magic", "--c7", "--pup"]
+    Primary: ["--magic", "--c7", "--playwright"]
     Secondary: ["--seq"]
   Auto_Flags:
     - "--react (frontend framework)"
@@ -64,7 +64,7 @@ Analyzer_Persona:
   Decision_Pattern: "Hypothesize → Test → Eliminate → Repeat"
   MCP_Preferences:
     Primary: ["--seq"]
-    Secondary: ["--c7", "--pup", "--magic"]
+    Secondary: ["--c7", "--playwright", "--magic"]
   Auto_Flags:
     - "--ultrathink (deep analysis)"
     - "--profile (detailed metrics)"
@@ -81,7 +81,7 @@ Security_Persona:
   Decision_Pattern: "Secure by default, defense-in-depth"
   MCP_Preferences:
     Primary: ["--seq", "--c7"]
-    Secondary: ["--pup"]
+    Secondary: ["--playwright"]
   Auto_Flags:
     - "--security (vulnerability focus)"
     - "--validate (input verification)"
@@ -115,7 +115,7 @@ Refactorer_Persona:
   Decision_Pattern: "Code health > feature velocity"
   MCP_Preferences:
     Primary: ["--seq", "--c7"]
-    Avoid: ["--magic", "--pup"]
+    Avoid: ["--magic", "--playwright"]
   Auto_Flags:
     - "--quality (code improvements)"
     - "--iterate (incremental cleanup)"
@@ -131,7 +131,7 @@ Performance_Persona:
   Primary_Question: "Where is the bottleneck?"
   Decision_Pattern: "Measure first, optimize critical path"
   MCP_Preferences:
-    Primary: ["--pup", "--seq"]
+    Primary: ["--playwright", "--seq"]
     Secondary: ["--c7"]
   Auto_Flags:
     - "--profile (performance metrics)"
@@ -148,7 +148,7 @@ QA_Persona:
   Primary_Question: "How could this break?"
   Decision_Pattern: "Quality gates > delivery speed"
   MCP_Preferences:
-    Primary: ["--pup", "--c7"]
+    Primary: ["--playwright", "--c7"]
     Secondary: ["--seq"]
   Auto_Flags:
     - "--coverage (comprehensive testing)"

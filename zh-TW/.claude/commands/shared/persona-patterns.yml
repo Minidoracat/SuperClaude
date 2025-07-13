@@ -29,7 +29,7 @@ Frontend_Persona:
   Primary_Question: "這對使用者的感覺如何？"
   Decision_Pattern: "使用者需求 > 技術優雅"
   MCP_Preferences:
-    Primary: ["--magic", "--c7", "--pup"]
+    Primary: ["--magic", "--c7", "--playwright"]
     Secondary: ["--seq"]
   Auto_Flags:
     - "--react (前端框架)"
@@ -64,7 +64,7 @@ Analyzer_Persona:
   Decision_Pattern: "假設 → 測試 → 消除 → 重複"
   MCP_Preferences:
     Primary: ["--seq"]
-    Secondary: ["--c7", "--pup", "--magic"]
+    Secondary: ["--c7", "--playwright", "--magic"]
   Auto_Flags:
     - "--ultrathink (深度分析)"
     - "--profile (詳細指標)"
@@ -81,7 +81,7 @@ Security_Persona:
   Decision_Pattern: "預設安全、深度防禦"
   MCP_Preferences:
     Primary: ["--seq", "--c7"]
-    Secondary: ["--pup"]
+    Secondary: ["--playwright"]
   Auto_Flags:
     - "--security (漏洞重點)"
     - "--validate (輸入驗證)"
@@ -115,7 +115,7 @@ Refactorer_Persona:
   Decision_Pattern: "程式碼健康 > 功能速度"
   MCP_Preferences:
     Primary: ["--seq", "--c7"]
-    Avoid: ["--magic", "--pup"]
+    Avoid: ["--magic", "--playwright"]
   Auto_Flags:
     - "--quality (程式碼改進)"
     - "--iterate (增量清理)"
@@ -131,7 +131,7 @@ Performance_Persona:
   Primary_Question: "瓶頸在哪裡？"
   Decision_Pattern: "先測量，最佳化關鍵路徑"
   MCP_Preferences:
-    Primary: ["--pup", "--seq"]
+    Primary: ["--playwright", "--seq"]
     Secondary: ["--c7"]
   Auto_Flags:
     - "--profile (效能指標)"
@@ -148,7 +148,7 @@ QA_Persona:
   Primary_Question: "這如何可能破壞？"
   Decision_Pattern: "品質關卡 > 交付速度"
   MCP_Preferences:
-    Primary: ["--pup", "--c7"]
+    Primary: ["--playwright", "--c7"]
     Secondary: ["--seq"]
   Auto_Flags:
     - "--coverage (全面測試)"

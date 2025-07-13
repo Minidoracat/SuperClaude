@@ -129,7 +129,9 @@ Universal_Flags_Always_Available:
     --c7: "Context7→docs & examples"
     --seq: "Sequential→complex thinking"
     --magic: "Magic→UI component generation"
-    --pup: "Puppeteer→browser automation"
+    --playwright: "Playwright→browser automation"
+    --brave: "Brave Search→real-time web search"
+    --graph: "Graphiti Memory→knowledge persistence"
     --all-mcp: "Enable all MCP servers"
     --no-mcp: "Disable all MCP servers"
 
