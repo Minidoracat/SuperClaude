@@ -209,6 +209,50 @@ Usage:
 - Deep thinking: Use "think harder", "think more", "think deeply"
 - Sequential Thinking integration: For multi-step reasoning problems
 
+### 🧠 Graphiti Memory Usage Guide
+
+> **💡 When to Use Graphiti Memory**
+> - Remember user preferences and workflows
+> - Build and maintain knowledge graphs
+> - Track project requirements and fact relationships
+> - Enable personalized assistant features
+
+> **⚠️ Important Note**
+> When the following situations arise, prioritize using the Graphiti Memory tool:
+> - User mentions personal preferences or habits
+> - Need to remember project-specific workflows
+> - Building long-term knowledge management systems
+> - Enabling personalized development experience
+
+#### 📋 Before Starting Any Task
+- **Always search first**: Use `search_nodes` tool to find relevant preferences and procedures
+- **Search for facts**: Use `search_facts` tool to discover relationships and factual information
+- **Filter by entity type**: Specify `Preference`, `Procedure`, or `Requirement` in node searches
+- **Review all matches**: Carefully examine preferences, procedures, or facts relevant to current task
+
+#### 📝 Saving New or Updated Information
+- **Capture requirements and preferences immediately**: When user expresses requirements or preferences, immediately use `add_memory` to store
+  - _Best practice:_ Split very long requirements into shorter, logical chunks
+- **Be explicit about updates**: If updating existing knowledge, only add what's changed or new
+- **Document procedures clearly**: When discovering user workflows, record them as procedures
+- **Record factual relationships**: When learning about entity connections, store these as facts
+- **Use specific categories**: Label preferences and procedures with clear categories for better retrieval
+
+#### 🎯 During Your Work
+- **Respect discovered preferences**: Align work with found preferences
+- **Follow procedures exactly**: If finding a procedure for current task, follow it step by step
+- **Apply relevant facts**: Use factual information to inform decisions and recommendations
+- **Stay consistent**: Maintain consistency with previously identified preferences, procedures, and facts
+
+#### 💡 Best Practices
+- **Search before suggesting**: Always check for established knowledge before making recommendations
+- **Combine node and fact searches**: For complex tasks, search both nodes and facts for complete picture
+- **Use `center_node_uuid`**: When exploring related information, center search around specific node
+- **Prioritize specific matches**: More specific information takes precedence over general information
+- **Be proactive**: If noticing user behavior patterns, consider storing them as preferences or procedures
+
+**Remember**: The knowledge graph is your memory. Use it consistently to provide personalized assistance that respects the user's established preferences, procedures, and factual context.
+
 ## 🚨 Technical Debt Prevention Best Practices
 
 ### Workflow
