@@ -94,6 +94,14 @@ Examples:
         help="Run system diagnostics and show installation help"
     )
     
+    parser.add_argument(
+        "--language",
+        type=str,
+        choices=["en", "zh-TW"],
+        default="en",
+        help="Language for commands installation (default: en)"
+    )
+    
     return parser
 
 
@@ -344,8 +352,12 @@ def perform_installation(components: List[str], args: argparse.Namespace) -> boo
         registry = ComponentRegistry(PROJECT_ROOT / "setup" / "components")
         registry.discover_components()
         
-        # Create component instances
-        component_instances = registry.create_component_instances(components, args.install_dir)
+        # Create component instances with language support
+        kwargs = {}
+        if hasattr(args, 'language') and args.language:
+            kwargs['language'] = args.language
+            
+        component_instances = registry.create_component_instances(components, args.install_dir, **kwargs)
         
         if not component_instances:
             logger.error("No valid component instances created")

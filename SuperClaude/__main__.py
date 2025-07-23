@@ -18,20 +18,17 @@ import difflib
 from pathlib import Path
 from typing import Dict, Callable
 
-# Add the 'setup' directory to the Python import path (with deprecation-safe logic)
+# Add the 'setup' directory to the Python import path
 import sys
+from pathlib import Path
 
-try:
-    # Python 3.9+ preferred modern way
-    from importlib.resources import files, as_file
-    with as_file(files("setup")) as resource:
-        setup_dir = str(resource)
-except (ImportError, ModuleNotFoundError, AttributeError):
-    # Fallback for Python < 3.9
-    from pkg_resources import resource_filename
-    setup_dir = resource_filename('setup', '')
+# Find the project root directory
+current_file = Path(__file__).resolve()
+project_root = current_file.parent.parent  # Go up from SuperClaude/__main__.py to project root
+setup_dir = project_root / "setup"
 
-# Add to sys.path
+# Add both project root and setup directory to sys.path
+sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(setup_dir))
 
 

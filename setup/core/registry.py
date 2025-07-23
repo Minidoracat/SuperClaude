@@ -124,13 +124,14 @@ class ComponentRegistry:
         self.discover_components()
         return self.component_classes.get(component_name)
     
-    def get_component_instance(self, component_name: str, install_dir: Optional[Path] = None) -> Optional[Component]:
+    def get_component_instance(self, component_name: str, install_dir: Optional[Path] = None, **kwargs) -> Optional[Component]:
         """
         Get component instance by name
         
         Args:
             component_name: Name of component
             install_dir: Installation directory (creates new instance with this dir)
+            **kwargs: Additional keyword arguments for component initialization
             
         Returns:
             Component instance or None if not found
@@ -142,7 +143,11 @@ class ComponentRegistry:
             component_class = self.component_classes.get(component_name)
             if component_class:
                 try:
-                    return component_class(install_dir)
+                    # Special handling for components that support language
+                    if component_name in ["commands", "core"] and "language" in kwargs:
+                        return component_class(install_dir, language=kwargs["language"])
+                    else:
+                        return component_class(install_dir)
                 except Exception as e:
                     print(f"Error creating component instance {component_name}: {e}")
                     return None
@@ -341,13 +346,14 @@ class ComponentRegistry:
         
         return levels
     
-    def create_component_instances(self, component_names: List[str], install_dir: Optional[Path] = None) -> Dict[str, Component]:
+    def create_component_instances(self, component_names: List[str], install_dir: Optional[Path] = None, **kwargs) -> Dict[str, Component]:
         """
         Create instances for multiple components
         
         Args:
             component_names: List of component names
             install_dir: Installation directory for instances
+            **kwargs: Additional keyword arguments for component initialization
             
         Returns:
             Dict mapping component names to instances
@@ -356,7 +362,7 @@ class ComponentRegistry:
         instances = {}
         
         for name in component_names:
-            instance = self.get_component_instance(name, install_dir)
+            instance = self.get_component_instance(name, install_dir, **kwargs)
             if instance:
                 instances[name] = instance
             else:

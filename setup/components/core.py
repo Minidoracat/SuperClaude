@@ -5,23 +5,37 @@ Core component for SuperClaude framework files installation
 from typing import Dict, List, Tuple, Optional, Any
 from pathlib import Path
 import shutil
+import os
 
 from ..base.component import Component
 
 class CoreComponent(Component):
     """Core SuperClaude framework files component"""
     
-    def __init__(self, install_dir: Optional[Path] = None):
-        """Initialize core component"""
+    def __init__(self, install_dir: Optional[Path] = None, language: Optional[str] = None):
+        """Initialize core component
+        
+        Args:
+            install_dir: Installation directory
+            language: Language code (e.g., 'zh-TW' for Traditional Chinese)
+        """
+        # Get language from environment variable if not provided
+        if language is None:
+            language = os.environ.get('SUPERCLAUDE_LANG', 'en')
+        
+        self.language = language
         super().__init__(install_dir)
     
     def get_metadata(self) -> Dict[str, str]:
         """Get component metadata"""
+        lang_desc = f" ({self.language.upper()})" if self.language != 'en' else ""
+        
         return {
             "name": "core",
             "version": "3.0.0",
-            "description": "SuperClaude framework documentation and core files",
-            "category": "core"
+            "description": f"SuperClaude framework documentation and core files{lang_desc}",
+            "category": "core",
+            "language": self.language
         }
     
     def get_metadata_modifications(self) -> Dict[str, Any]:
@@ -218,6 +232,14 @@ class CoreComponent(Component):
         # Assume we're in SuperClaude/setup/components/core.py
         # and framework files are in SuperClaude/SuperClaude/Core/
         project_root = Path(__file__).parent.parent.parent
+        
+        # Check if language-specific directory exists
+        if self.language == 'zh-TW':
+            lang_dir = project_root / "zh-TW" / "SuperClaude" / "Core"
+            if lang_dir.exists():
+                return lang_dir
+        
+        # Default to English core files
         return project_root / "SuperClaude" / "Core"
     
     def get_size_estimate(self) -> int:

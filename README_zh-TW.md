@@ -187,6 +187,9 @@ python3 SuperClaude install
 # 互動式選擇（選擇元件）
 python3 SuperClaude install --interactive
 
+# 繁體中文版
+python3 SuperClaude install --language zh-TW
+
 # 最小安裝（僅核心框架）
 python3 SuperClaude install --minimal
 

@@ -16,7 +16,9 @@
       "category": "commands",
       "dependencies": ["core"],
       "enabled": true,
-      "required_tools": []
+      "required_tools": [],
+      "languages": ["en", "zh-TW"],
+      "default_language": "en"
     },
     "mcp": {
       "name": "mcp",

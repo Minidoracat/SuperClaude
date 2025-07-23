@@ -4,23 +4,44 @@ Commands component for SuperClaude slash command definitions
 
 from typing import Dict, List, Tuple, Optional, Any
 from pathlib import Path
+import os
 
 from ..base.component import Component
 
 class CommandsComponent(Component):
     """SuperClaude slash commands component"""
     
-    def __init__(self, install_dir: Optional[Path] = None):
-        """Initialize commands component"""
-        super().__init__(install_dir, Path("commands/sc"))
+    def __init__(self, install_dir: Optional[Path] = None, language: Optional[str] = None):
+        """Initialize commands component
+        
+        Args:
+            install_dir: Installation directory
+            language: Language code (e.g., 'zh-TW' for Traditional Chinese)
+        """
+        # Get language from environment variable if not provided
+        if language is None:
+            language = os.environ.get('SUPERCLAUDE_LANG', 'en')
+        
+        self.language = language
+        
+        # Determine namespace based on language
+        if language == 'zh-TW':
+            namespace = Path("commands/sc-zh")
+        else:
+            namespace = Path("commands/sc")
+            
+        super().__init__(install_dir, namespace)
     
     def get_metadata(self) -> Dict[str, str]:
         """Get component metadata"""
+        lang_desc = f" ({self.language.upper()})" if self.language != 'en' else ""
+        
         return {
-            "name": "commands",
+            "name": "commands",  # Keep name consistent regardless of language
             "version": "3.0.0",
-            "description": "SuperClaude slash command definitions",
-            "category": "commands"
+            "description": f"SuperClaude slash command definitions{lang_desc}",
+            "category": "commands",
+            "language": self.language
         }
     
     def get_metadata_modifications(self) -> Dict[str, Any]:
@@ -72,10 +93,13 @@ class CommandsComponent(Component):
     def uninstall(self) -> bool:
         """Uninstall commands component"""
         try:
-            self.logger.info("Uninstalling SuperClaude commands component...")
+            self.logger.info(f"Uninstalling SuperClaude commands component ({self.language})...")
             
-            # Remove command files from sc subdirectory
-            commands_dir = self.install_dir / "commands" / "sc"
+            # Remove command files from appropriate subdirectory
+            if self.language == 'zh-TW':
+                commands_dir = self.install_dir / "commands" / "sc-zh"
+            else:
+                commands_dir = self.install_dir / "commands" / "sc"
             removed_count = 0
             
             for filename in self.component_files:
@@ -162,7 +186,10 @@ class CommandsComponent(Component):
             self.logger.info(f"Updating commands component from {current_version} to {target_version}")
             
             # Create backup of existing command files
-            commands_dir = self.install_dir / "commands" / "sc"
+            if self.language == 'zh-TW':
+                commands_dir = self.install_dir / "commands" / "sc-zh"
+            else:
+                commands_dir = self.install_dir / "commands" / "sc"
             backup_files = []
             
             if commands_dir.exists():
@@ -207,10 +234,14 @@ class CommandsComponent(Component):
         """Validate commands component installation"""
         errors = []
         
-        # Check if sc commands directory exists
-        commands_dir = self.install_dir / "commands" / "sc"
+        # Check if commands directory exists
+        if self.language == 'zh-TW':
+            commands_dir = self.install_dir / "commands" / "sc-zh"
+        else:
+            commands_dir = self.install_dir / "commands" / "sc"
+            
         if not commands_dir.exists():
-            errors.append("SC commands directory not found")
+            errors.append(f"Commands directory not found: {commands_dir}")
             return False, errors
         
         # Check if all command files exist
@@ -238,6 +269,14 @@ class CommandsComponent(Component):
         # Assume we're in SuperClaude/setup/components/commands.py
         # and command files are in SuperClaude/SuperClaude/Commands/
         project_root = Path(__file__).parent.parent.parent
+        
+        # Check if language-specific directory exists
+        if self.language == 'zh-TW':
+            lang_dir = project_root / "zh-TW" / "SuperClaude" / "Commands"
+            if lang_dir.exists():
+                return lang_dir
+        
+        # Default to English commands
         return project_root / "SuperClaude" / "Commands"
     
     def get_size_estimate(self) -> int:
@@ -257,13 +296,19 @@ class CommandsComponent(Component):
     
     def get_installation_summary(self) -> Dict[str, Any]:
         """Get installation summary"""
+        if self.language == 'zh-TW':
+            install_dir = str(self.install_dir / "commands" / "sc-zh")
+        else:
+            install_dir = str(self.install_dir / "commands" / "sc")
+            
         return {
             "component": self.get_metadata()["name"],
             "version": self.get_metadata()["version"],
+            "language": self.language,
             "files_installed": len(self.component_files),
             "command_files": self.component_files,
             "estimated_size": self.get_size_estimate(),
-            "install_directory": str(self.install_dir / "commands" / "sc"),
+            "install_directory": install_dir,
             "dependencies": self.get_dependencies()
         }
     
@@ -271,7 +316,10 @@ class CommandsComponent(Component):
         """Migrate existing commands from old location to new sc subdirectory"""
         try:
             old_commands_dir = self.install_dir / "commands"
-            new_commands_dir = self.install_dir / "commands" / "sc"
+            if self.language == 'zh-TW':
+                new_commands_dir = self.install_dir / "commands" / "sc-zh"
+            else:
+                new_commands_dir = self.install_dir / "commands" / "sc"
             
             # Check if old commands exist in root commands directory
             migrated_count = 0
